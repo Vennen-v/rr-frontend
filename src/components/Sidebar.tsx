@@ -1,35 +1,69 @@
-import { House, Search, Settings, Megaphone, Bookmark } from "lucide-react";
-import { useState } from "react";
+import {
+  House,
+  Search,
+  Settings,
+  Megaphone,
+  Bookmark,
+  EllipsisVertical,
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
 function Sidebar() {
   return (
-    <div className="w-84 h-screen bg-[rgb(85,85,85)] shadow-lg shadow-[#333] mx-0  flex flex-col">
-      <h1 className="text-gray-200 text-xl font-serif font-semibold mt-7 mb-15 ml-7">
-        RogueRoad
-      </h1>
-      <ul className="w-full">
-        <li className="flex gap-3 text-md  text-gray-200 mb-5 ml-3 rounded-lg p-3 duration-300 ease-in-out hover:bg-[#8956FB] hover:cursor-pointer">
-          <House size={28} />
+    <div className="w-80 h-screen  shadow-lg shadow-[#333] mx-0  flex flex-col">
+      <Link
+        to={"/"}
+        className="text-gray-200 text-xl font-normal font-extralight mt-8 mb-15 ml-7 hover:cursor-pointer"
+      >
+        The Rogue Road
+      </Link>
+      <div className="w-full">
+        <div className="flex gap-3 text-md text-gray-200 mb-3 mx-2 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-zinc-900 hover:font-semibold hover:cursor-pointer">
+          <span>
+            <House size={24} />
+          </span>
           Home
-        </li>
-        <li className="flex gap-3 text-md text-gray-200 mb-5 ml-3 rounded p-3 duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer">
-          <Search size={28} color="#e5e7eb" />
+        </div>
+        <div className="flex gap-3 text-md text-gray-200 mb-3 mx-2 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-zinc-900 hover:font-semibold hover:cursor-pointer">
+          <span>
+            <Search size={24} />
+          </span>
           Search
-        </li>
-        <li className="flex gap-3 text-md  text-gray-200 mb-5 ml-3 rounded p-3 duration-300 ease-in-out hover:bg-purple-500 hover:cursor-pointer">
-          <Settings size={28} color="#e5e7eb" />
+        </div>
+        <div className="flex gap-3 text-md text-gray-200 mb-3 mx-2 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-zinc-900 hover:font-semibold hover:cursor-pointer">
+          <span>
+            <Settings size={24} />
+          </span>
           Settings
-        </li>
-        <li className="flex gap-3 text-md text-gray-200 mb-5 ml-3 rounded p-3 duration-300 ease-in-out hover:bg-purple-500 hover:cursor-pointer">
-          <Megaphone size={28} color="#e5e7eb" />
+        </div>
+        <div className="flex gap-3 text-md text-gray-200 mb-3 mx-2 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-zinc-900 hover:font-semibold hover:cursor-pointer">
+          <span>
+            <Megaphone size={24} />
+          </span>
           Contact
-        </li>
-        <li className="flex gap-3 text-md text-gray-200 mb-5 ml-3 rounded p-3 duration-300 ease-in-out hover:bg-purple-500 hover:cursor-pointer">
-          <Bookmark size={28} color="#e5e7eb" />
+        </div>
+        <div className="flex gap-3 text-md text-gray-200 mb-3 mx-2 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-zinc-900 hover:font-semibold hover:cursor-pointer">
+          <span>
+            <Bookmark size={24} />
+          </span>
           Saved
-        </li>
-      </ul>
-      <div className="mt-auto border-t-4 border-t-[#8956FB]">Profile</div>
+        </div>
+      </div>
+
+      {/* <div className="my-auto border-t-4 border-t-[#8956FB]"></div> */}
+      <div className="flex gap-3 items-center mt-auto mx-2 mb-3 rounded-lg text-gray-200 p-3 duration-300 ease-in-out hover:text-[#8956FB] hover:cursor-pointer">
+        <img
+          className="rounded-2xl h-10 w-10 border border-[#8956FB] "
+          src="https://www.catconworldwide.com/wp-content/uploads/2023/01/Luna.jpg"
+        />
+        <div className="flex flex-col">
+          <span className="text-sm">Yoshi Vennen</span>
+          <span className="text-sm">@yoshi35</span>
+        </div>
+        <div className="ml-auto">
+          <EllipsisVertical />
+        </div>
+      </div>
     </div>
   );
 }
