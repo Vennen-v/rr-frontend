@@ -13,7 +13,7 @@ function Sidebar() {
     <div className="w-80 h-screen  shadow-lg shadow-[#333] mx-0  flex flex-col">
       <Link
         to={"/"}
-        className="text-gray-200 text-xl font-normal font-extralight mt-8 mb-15 ml-7 hover:cursor-pointer"
+        className="text-gray-200 text-xl font-normal font-extralight mt-10 mb-12 ml-7 hover:cursor-pointer"
       >
         The Rogue Road
       </Link>
