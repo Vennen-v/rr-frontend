@@ -1,10 +1,4 @@
-import {
-  House,
-  Search,
-  Settings,
-  Bookmark,
-  EllipsisVertical,
-} from "lucide-react";
+import { House, Search, Settings, Plus, EllipsisVertical } from "lucide-react";
 import { Link } from "react-router-dom";
 
 function Sidebar() {
@@ -38,11 +32,11 @@ function Sidebar() {
           </span>
           Settings
         </div>
-        <div className="flex gap-3 text-md text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer">
-          <span>
-            <Bookmark size={24} />
+        <div className="flex items-center gap-3 text-md text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer">
+          <span className="bg-[#8956FB] rounded-md p-1">
+            <Plus size={18} />
           </span>
-          Saved
+          Create
         </div>
       </div>
 
