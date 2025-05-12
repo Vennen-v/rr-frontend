@@ -12,7 +12,7 @@ import PostPage from "./pages/PostPage";
 function App() {
   return (
     <Router>
-      <div className="flex h-screen">
+      <div className="flex h-full">
         <Sidebar />
         <Routes>
           <Route path="/" element={<Home />} />

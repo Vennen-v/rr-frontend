@@ -2,7 +2,6 @@ import {
   House,
   Search,
   Settings,
-  Megaphone,
   Bookmark,
   EllipsisVertical,
 } from "lucide-react";
@@ -10,39 +9,36 @@ import { Link } from "react-router-dom";
 
 function Sidebar() {
   return (
-    <div className="w-80 h-screen  shadow-lg shadow-[#333] mx-0  flex flex-col">
+    <div className="w-62 h-screen border-r border-r-gray-500 mx-0  flex flex-col bg-[#252525] sticky top-0">
       <Link
         to={"/"}
-        className="text-gray-200 text-xl font-normal mt-10 mb-12 ml-7 hover:cursor-pointer"
+        className="text-gray-200 text-xl font-extralight mt-10 mb-12 ml-7 duration-100 hover:cursor-pointer hover:text-[#828282]"
       >
         The Rogue Road
       </Link>
-      <div className="w-full">
-        <div className="flex gap-3 text-md text-gray-200 mb-3 mx-2 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-zinc-900 hover:font-semibold hover:cursor-pointer">
+      <div className="w-full mx-2 ">
+        <Link
+          to={"/"}
+          className="flex gap-3 text-base text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer"
+        >
           <span>
             <House size={24} />
           </span>
           Home
-        </div>
-        <div className="flex gap-3 text-md text-gray-200 mb-3 mx-2 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-zinc-900 hover:font-semibold hover:cursor-pointer">
+        </Link>
+        <button className="flex gap-3 text-md text-gray-200 w-full mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer">
           <span>
             <Search size={24} />
           </span>
           Search
-        </div>
-        <div className="flex gap-3 text-md text-gray-200 mb-3 mx-2 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-zinc-900 hover:font-semibold hover:cursor-pointer">
+        </button>
+        <div className="flex gap-3 text-md text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer">
           <span>
             <Settings size={24} />
           </span>
           Settings
         </div>
-        <div className="flex gap-3 text-md text-gray-200 mb-3 mx-2 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-zinc-900 hover:font-semibold hover:cursor-pointer">
-          <span>
-            <Megaphone size={24} />
-          </span>
-          Contact
-        </div>
-        <div className="flex gap-3 text-md text-gray-200 mb-3 mx-2 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-zinc-900 hover:font-semibold hover:cursor-pointer">
+        <div className="flex gap-3 text-md text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer">
           <span>
             <Bookmark size={24} />
           </span>
@@ -51,7 +47,7 @@ function Sidebar() {
       </div>
 
       {/* <div className="my-auto border-t-4 border-t-[#8956FB]"></div> */}
-      <div className="flex gap-3 items-center mt-auto mx-2 mb-3 rounded-lg text-gray-200 p-3 duration-300 ease-in-out hover:text-[#8956FB] hover:cursor-pointer">
+      <div className="flex gap-3 items-center mt-auto mx-2 mb-3 text-gray-200 p-3 duration-300 ease-in-out border-t border-t-gray-500 hover:text-[#8956FB] hover:cursor-pointer">
         <img
           className="rounded-2xl h-10 w-10 border border-[#8956FB] "
           src="https://www.catconworldwide.com/wp-content/uploads/2023/01/Luna.jpg"

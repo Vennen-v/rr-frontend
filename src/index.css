@@ -4,10 +4,12 @@
 :root {
   /* line-height: 1.5;
   font-weight: 400; */
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
   /* color-scheme: light dark; */
   /* color: rgba(255, 255, 255, 0.87); */
-  background-color: black;
+  background-color: rgb(20, 20, 20);
 
   /* rgb(236, 240, 245) */
   /* bg-[rgb(85,85,85)]  */
