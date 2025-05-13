@@ -41,18 +41,38 @@ function Sidebar() {
       </div>
 
       {/* <div className="my-auto border-t-4 border-t-[#8956FB]"></div> */}
-      <div className="flex gap-3 items-center mt-auto mx-2 mb-3 text-gray-200 p-3 duration-300 ease-in-out border-t border-t-gray-500 hover:text-[#8956FB] hover:cursor-pointer">
-        <img
-          className="rounded-2xl h-10 w-10 border border-[#8956FB] "
-          src="https://www.catconworldwide.com/wp-content/uploads/2023/01/Luna.jpg"
-        />
-        <div className="flex flex-col">
-          <span className="text-sm">Yoshi Vennen</span>
-          <span className="text-sm">@yoshi35</span>
+
+      <div className="dropdown dropdown-right dropdown-end mt-auto">
+        <div className="flex gap-3 items-center mx-2 mb-3 text-gray-200 p-3 duration-300 ease-in-out  border-t border-t-gray-500 ">
+          <Link
+            to={"/profile"}
+            className="flex gap-3 rounded-lg p-1 hover:bg-[#383838] hover:cursor-pointer"
+          >
+            <img
+              className="rounded-2xl h-10 w-10 border border-[#8956FB] "
+              src="https://www.catconworldwide.com/wp-content/uploads/2023/01/Luna.jpg"
+            />
+            <div className="flex flex-col">
+              <span className="text-sm">Yoshi Vennen</span>
+              <span className="text-sm">@yoshi35</span>
+            </div>
+          </Link>
+          <div
+            className="ml-auto p-2 duration-300 ease-in-out rounded-full hover:bg-[#8956FB] hover:cursor-pointer"
+            tabIndex={0}
+            role="button"
+          >
+            <EllipsisVertical />
+          </div>
         </div>
-        <div className="ml-auto">
-          <EllipsisVertical />
-        </div>
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu bg-[#252525] border border-gray-500 rounded-box z-1 w-52 p-2 shadow-sm"
+        >
+          <li>
+            <a>Logout</a>
+          </li>
+        </ul>
       </div>
     </div>
   );
