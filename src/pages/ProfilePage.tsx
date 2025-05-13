@@ -37,7 +37,9 @@ function ProfilePage() {
             Award winning author and illustrator of many silly picture books. I
             have no idea what I am doing most of the time.
           </div>
-          <button className="w-1/2 p-2 bg-[#8956FB] rounded-lg">Follow</button>
+          <button className="w-1/2 p-2 bg-[#8956FB] rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer">
+            Follow
+          </button>
           <div className="divider"></div>
           <div className="flex flex-col gap-4">
             <Post />

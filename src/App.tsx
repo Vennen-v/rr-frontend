@@ -8,6 +8,9 @@ import Home from "./pages/Home";
 import Sidebar from "./components/Sidebar";
 import ProfilePage from "./pages/ProfilePage";
 import PostPage from "./pages/PostPage";
+import SearchPage from "./pages/SearchPage";
+import SettingsPage from "./pages/SettingsPage";
+import CreatePostPage from "./pages/CreatePostPage";
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="post" element={<PostPage />} />
+          <Route path="search" element={<SearchPage />} />
+          <Route path="settings" element={<SettingsPage />} />
+          <Route path="create" element={<CreatePostPage />} />
         </Routes>
       </div>
     </Router>

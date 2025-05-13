@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Sidebar() {
   return (
-    <div className="flex-initial w-62 h-screen border-r border-r-gray-500 mx-0  flex flex-col bg-[#252525] sticky top-0">
+    <div className=" flex-initial min-w-1 max-w-62 h-screen border-r border-r-gray-500 mx-0  flex flex-col bg-[#202020] sticky top-0">
       <Link
         to={"/"}
         className="text-gray-200 text-xl font-extralight mt-10 mb-12 ml-7 duration-100 hover:cursor-pointer hover:text-[#828282]"
@@ -20,24 +20,33 @@ function Sidebar() {
           </span>
           Home
         </Link>
-        <button className="flex gap-3 text-md text-gray-200 w-full mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer">
+        <Link
+          to={"/search"}
+          className="flex gap-3 text-md text-gray-200 w-full mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer"
+        >
           <span>
             <Search size={24} />
           </span>
           Search
-        </button>
-        <div className="flex gap-3 text-md text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer">
+        </Link>
+        <Link
+          to={"/settings"}
+          className="flex gap-3 text-md text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer"
+        >
           <span>
             <Settings size={24} />
           </span>
           Settings
-        </div>
-        <div className="flex items-center gap-3 text-md text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer">
+        </Link>
+        <Link
+          to={"/create"}
+          className="flex items-center gap-3 text-md text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer"
+        >
           <span className="bg-[#8956FB] rounded-md p-1">
             <Plus size={18} />
           </span>
           Create
-        </div>
+        </Link>
       </div>
 
       {/* <div className="my-auto border-t-4 border-t-[#8956FB]"></div> */}
@@ -67,7 +76,7 @@ function Sidebar() {
         </div>
         <ul
           tabIndex={0}
-          className="dropdown-content menu bg-[#252525] border border-gray-500 rounded-box z-1 w-52 p-2 shadow-sm"
+          className="dropdown-content menu bg-[#202020] border border-gray-500 rounded-box z-1 w-52 p-2 shadow-sm"
         >
           <li>
             <a>Logout</a>
