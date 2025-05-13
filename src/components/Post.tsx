@@ -2,7 +2,7 @@ import { Heart, MessageSquare, Bookmark } from "lucide-react";
 
 function Post() {
   return (
-    <div className=" flex flex-col my-auto w-140 h-74 bg-[#252525] rounded-md">
+    <div className=" flex flex-col mx-auto w-140 h-74 bg-[#252525] rounded-md">
       <div className="border-b border-b-gray-500 p-3 flex gap-2 items-center">
         <img
           className="rounded-xl h-7 w-7 "

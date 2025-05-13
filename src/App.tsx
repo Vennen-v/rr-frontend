@@ -12,12 +12,13 @@ import PostPage from "./pages/PostPage";
 function App() {
   return (
     <Router>
-      <div className="flex h-full">
+      <div className="flex h-full relative">
         <Sidebar />
+
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="about" element={<ProfilePage />} />
-          <Route path="about" element={<PostPage />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="post" element={<PostPage />} />
         </Routes>
       </div>
     </Router>
