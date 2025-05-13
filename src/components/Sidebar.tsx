@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Sidebar() {
   return (
-    <div className="flex-initial w-62 h-screen border-r border-r-gray-500 mx-0  flex flex-col bg-[#252525] sticky top-0 left-0">
+    <div className="flex-initial w-62 h-screen border-r border-r-gray-500 mx-0  flex flex-col bg-[#252525] sticky top-0">
       <Link
         to={"/"}
         className="text-gray-200 text-xl font-extralight mt-10 mb-12 ml-7 duration-100 hover:cursor-pointer hover:text-[#828282]"

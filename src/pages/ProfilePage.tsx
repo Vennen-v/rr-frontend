@@ -2,11 +2,11 @@ import Post from "../components/Post";
 
 function ProfilePage() {
   return (
-    <div className=" flex flex-col flex-auto w-fit mx-auto">
+    <div className=" flex flex-col flex-1 w-fit h-screen mx-auto overflow-y-auto">
       <div className=" h-18 border-b border-b-gray-500 w-full text-center text-2xl text-[#eeeeee] font-bold p-5">
         Yoshi Vennen
       </div>
-      <div className="h-12 mx-auto w-full flex items-center gap-2 border-b border-b-gray-500">
+      <div className="h-13 mx-auto w-full flex items-center gap-2 border-b border-b-gray-500">
         <div role="tablist" className="tabs tabs-border h-full m-auto">
           <a role="tab" className="tab tab-active ">
             Posts
@@ -17,8 +17,8 @@ function ProfilePage() {
         </div>
       </div>
 
-      <div className="container w-max mx-auto rounded-md flex flex-col">
-        <div className="flex flex-col gap-5 h-100 w-140 mx-auto mt-10 text-[#eeeeee]">
+      <div className="container w-max mx-auto rounded-md flex flex-col h-full">
+        <div className="flex flex-col gap-5 h-100 w-145 mx-auto mt-10 text-[#eeeeee]">
           <div className="flex gap-5 justify-between items-center">
             <div className="flex flex-col gap-3">
               <div>@yoshi35</div>
@@ -39,9 +39,12 @@ function ProfilePage() {
           </div>
           <button className="w-1/2 p-2 bg-[#8956FB] rounded-lg">Follow</button>
           <div className="divider"></div>
-          <Post />
-          <Post />
-          <Post />
+          <div className="flex flex-col gap-4">
+            <Post />
+            <Post />
+            <Post />
+            <Post />
+          </div>
         </div>
       </div>
     </div>

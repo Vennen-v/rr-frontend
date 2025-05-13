@@ -11,15 +11,15 @@ function Post() {
 
         <span className="text-sm">Emma S</span>
       </div>
-      <div className="flex items-center p-5">
-        <div className="flex flex-col gap-4">
+      <div className="flex items-center p-5 ">
+        <div className="flex flex-col gap-4 ">
           <div className="text-xl">
             Cats: Are they getting a little telepathic?
           </div>
           <div className="text-sm text-[#a8a8a8]">5 days ago</div>
         </div>
         <img
-          className="h-36 w-52 object-cover rounded-md bg-zinc-950 "
+          className="h-36 w-52 object-cover rounded-md  "
           src="https://skooncatlitter.com/blog/wp-content/uploads/2022/03/blog-COVER-2000x1200px-0.jpg"
         />
       </div>
