@@ -29,7 +29,7 @@ function ProfilePage() {
               </div>
             </div>
             <img
-              className="object-cover  rounded-md h-22 w-22 border-2 border-gray-500"
+              className="object-cover rounded-md h-22 w-22 "
               src="https://www.catconworldwide.com/wp-content/uploads/2023/01/Luna.jpg"
             />
           </div>

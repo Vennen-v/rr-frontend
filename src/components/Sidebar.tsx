@@ -58,7 +58,7 @@ function Sidebar() {
             className="flex gap-3 rounded-lg p-1 hover:bg-[#383838] hover:cursor-pointer"
           >
             <img
-              className="rounded-2xl h-10 w-10 border border-[#8956FB] "
+              className="rounded-2xl h-10 w-10 "
               src="https://www.catconworldwide.com/wp-content/uploads/2023/01/Luna.jpg"
             />
             <div className="flex flex-col">
