@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Sidebar() {
   return (
-    <div className=" flex-initial min-w-1 max-w-62 h-screen border-r border-r-gray-500 mx-0  flex flex-col bg-[#202020] sticky top-0">
+    <div className="hidden flex-initial w-62 h-screen border-r border-r-gray-500 mx-0  md:flex flex-col bg-[#202020] sticky top-0">
       <Link
         to={"/"}
         className="text-gray-200 text-xl font-extralight mt-10 mb-12 ml-7 duration-100 hover:cursor-pointer hover:text-[#828282]"
@@ -22,7 +22,7 @@ function Sidebar() {
         </Link>
         <Link
           to={"/search"}
-          className="flex gap-3 text-md text-gray-200 w-full mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer"
+          className="flex gap-3 text-base text-gray-200 w-full mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer"
         >
           <span>
             <Search size={24} />
@@ -31,7 +31,7 @@ function Sidebar() {
         </Link>
         <Link
           to={"/settings"}
-          className="flex gap-3 text-md text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer"
+          className="flex gap-3 text-based text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer"
         >
           <span>
             <Settings size={24} />
@@ -40,7 +40,7 @@ function Sidebar() {
         </Link>
         <Link
           to={"/create"}
-          className="flex items-center gap-3 text-md text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer"
+          className="flex items-center gap-3 text-base text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer"
         >
           <span className="bg-[#8956FB] rounded-md p-1">
             <Plus size={18} />

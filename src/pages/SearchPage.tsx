@@ -4,7 +4,7 @@ function SearchPage() {
   return (
     <div className="h-screen overflow-y-auto w-full flex-1">
       <div className="flex flex-col container w-max mx-auto gap-4">
-        <label className="input w-150 mt-14 bg-[#202020] ">
+        <label className="input w-92 sm:w-80 md:w-150 mt-14 bg-[#202020] ">
           <svg
             className="h-[1em] opacity-50"
             xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@ function SearchPage() {
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXgwGl5-0mC66avbg7_TzilB0lMAH4sP7iGA&s"
           />
           <div className="flex flex-col ">
-            <span className="text-md">Emma S</span>
+            <span className="text-base">Emma S</span>
             <span className="text-sm text-[#a8a8a8]">@sward140</span>
           </div>
         </div>

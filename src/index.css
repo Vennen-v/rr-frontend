@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@theme {
+  --breakpoint-sm: 20rem;
+}
 
 :root {
   /* line-height: 1.5;

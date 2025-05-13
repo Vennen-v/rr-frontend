@@ -18,14 +18,14 @@ function ProfilePage() {
       </div>
 
       <div className="container w-max mx-auto rounded-md flex flex-col h-full">
-        <div className="flex flex-col gap-5 h-100 w-145 mx-auto mt-10 text-[#eeeeee]">
+        <div className="flex flex-col gap-5 h-100 w-92 sm:w-80 md:w-145 mx-auto mt-10 text-[#eeeeee]">
           <div className="flex gap-5 justify-between items-center">
             <div className="flex flex-col gap-3">
-              <div>@yoshi35</div>
-              <div className=" flex gap-2 text-md text-[#a8a8a8]">
-                <span>15 Followers</span>
-                <span>•</span>
-                <span>3 Posts</span>
+              <div className="text-lg md:text-base">@yoshi35</div>
+              <div className=" flex gap-2  text-[#a8a8a8]">
+                <span className="text-sm md:text-base">15 Followers</span>
+                <span className="text-sm md:text-base">•</span>
+                <span className="text-smmd:text-base">3 Posts</span>
               </div>
             </div>
             <img
@@ -33,7 +33,7 @@ function ProfilePage() {
               src="https://www.catconworldwide.com/wp-content/uploads/2023/01/Luna.jpg"
             />
           </div>
-          <div>
+          <div className="text-sm md:text-base">
             Award winning author and illustrator of many silly picture books. I
             have no idea what I am doing most of the time.
           </div>
