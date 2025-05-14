@@ -1,6 +1,14 @@
+import { useState } from "react";
 import UserSearch from "../components/UserSearch";
+import { Link } from "react-router-dom";
+import Post from "../components/Post";
 
 function SearchPage() {
+  const [activeTab, setActiveTab] = useState<string>("tab 1");
+
+  function handleTabChange(tabId: string) {
+    setActiveTab(tabId);
+  }
   return (
     <div className="h-screen overflow-y-auto w-full flex-1">
       <div className="flex flex-col container w-max mx-auto gap-4">
@@ -24,25 +32,50 @@ function SearchPage() {
           <input type="search" required placeholder="Search" />
         </label>
         <div role="tablist" className="tabs tabs-border mb-10">
-          <a role="tab" className="tab ">
+          <button
+            onClick={() => handleTabChange("tab 1")}
+            role="tab"
+            className={`tab duration-300 ${
+              activeTab === "tab 1" && "tab-active"
+            }`}
+          >
             Posts
-          </a>
-          <a role="tab" className="tab tab-active">
+          </button>
+          <button
+            onClick={() => handleTabChange("tab 2")}
+            role="tab"
+            className={`tab duration-300  ${
+              activeTab === "tab 2" && "tab-active"
+            }`}
+          >
             People
-          </a>
+          </button>
         </div>
-
-        <div className="flex gap-5 p-5 border-b border-b-gray-500">
-          <img
-            className="rounded-2xl h-10 w-10 "
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXgwGl5-0mC66avbg7_TzilB0lMAH4sP7iGA&s"
-          />
-          <div className="flex flex-col ">
-            <span className="text-base">Emma S</span>
-            <span className="text-sm text-[#a8a8a8]">@sward140</span>
+        {activeTab === "tab 1" && (
+          <div className="flex flex-col gap-7">
+            <Post />
+            <Post />
           </div>
-        </div>
-        <UserSearch />
+        )}
+        {activeTab === "tab 2" && (
+          <div className="flex flex-col gap-2">
+            <Link
+              to={"/profile"}
+              className="flex gap-5 p-5 border-b border-b-gray-500 duration-300 rounded-md hover:bg-[#383838] hover:cursor-pointer"
+            >
+              <img
+                className="rounded-2xl h-10 w-10 "
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXgwGl5-0mC66avbg7_TzilB0lMAH4sP7iGA&s"
+              />
+              <div className="flex flex-col ">
+                <span className="text-base">Emma S</span>
+                <span className="text-sm text-[#a8a8a8]">@sward140</span>
+              </div>
+            </Link>
+            <UserSearch />
+            <UserSearch />
+          </div>
+        )}
       </div>
     </div>
   );
