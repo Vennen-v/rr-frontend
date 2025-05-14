@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="profile" element={<ProfilePage />} />
-          <Route path="post" element={<PostPage />} />
+          <Route path="posts" element={<PostPage />} />
           <Route path="search" element={<SearchPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="create" element={<CreatePostPage />} />

@@ -51,7 +51,7 @@ function Sidebar() {
 
       {/* <div className="my-auto border-t-4 border-t-[#8956FB]"></div> */}
 
-      <div className="dropdown dropdown-right dropdown-end mt-auto">
+      <div className=" mt-auto">
         <div className="flex gap-3 items-center mx-2 mb-3 text-gray-200 p-3 duration-300 ease-in-out  border-t border-t-gray-500 ">
           <Link
             to={"/profile"}
@@ -66,22 +66,24 @@ function Sidebar() {
               <span className="text-sm">@yoshi35</span>
             </div>
           </Link>
-          <div
-            className="ml-auto p-2 duration-300 ease-in-out rounded-full hover:bg-[#8956FB] hover:cursor-pointer"
-            tabIndex={0}
-            role="button"
-          >
-            <EllipsisVertical />
+          <div className="dropdown dropdown-right dropdown-end">
+            <div
+              className="ml-auto p-2 duration-300 ease-in-out rounded-full hover:bg-[#8956FB] hover:cursor-pointer focus:bg-[#8956FB]"
+              tabIndex={0}
+              role="button"
+            >
+              <EllipsisVertical />
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-[#202020] border border-gray-500 rounded-box z-1 w-52 p-2 shadow-sm"
+            >
+              <li>
+                <a>Logout</a>
+              </li>
+            </ul>
           </div>
         </div>
-        <ul
-          tabIndex={0}
-          className="dropdown-content menu bg-[#202020] border border-gray-500 rounded-box z-1 w-52 p-2 shadow-sm"
-        >
-          <li>
-            <a>Logout</a>
-          </li>
-        </ul>
       </div>
     </div>
   );

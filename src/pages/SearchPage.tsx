@@ -69,7 +69,7 @@ function SearchPage() {
               />
               <div className="flex flex-col ">
                 <span className="text-base">Emma S</span>
-                <span className="text-sm text-[#a8a8a8]">@sward140</span>
+                <span className="text-sm text-[#a8a8a8]">@swardy140</span>
               </div>
             </Link>
             <UserSearch />

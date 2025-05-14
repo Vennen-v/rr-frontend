@@ -1,8 +1,12 @@
 import { Heart, MessageSquare, Bookmark } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function Post() {
   return (
-    <div className=" flex flex-col mx-auto w-92 h-60 sm:w-80 md:w-140 md:h-74 bg-[#202020] rounded-md">
+    <Link
+      to={"/posts"}
+      className=" flex flex-col mx-auto w-92 h-60 sm:w-80 md:w-140 md:h-74 bg-[#202020] rounded-md duration-300 hover:bg-[#303030]"
+    >
       <div className="border-b border-b-gray-500 p-3 flex gap-2 items-center">
         <img
           className="rounded-xl h-7 w-7 "
@@ -35,7 +39,7 @@ function Post() {
           <Bookmark size={18} /> <span className="text-sm md:text-base">2</span>
         </button>
       </div>
-    </div>
+    </Link>
   );
 }
 

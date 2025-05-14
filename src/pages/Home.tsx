@@ -9,7 +9,7 @@ function Home() {
   }
 
   return (
-    <div className="h-screen overflow-y-auto w-full flex-1">
+    <div className="h-screen overflow-y-auto w-full flex-1 scrollbar">
       <div className="container mx-auto w-max mt-14 flex flex-col gap-5 ">
         <div role="tablist" className="tabs tabs-border mb-14">
           <button

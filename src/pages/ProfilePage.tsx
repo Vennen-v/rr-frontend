@@ -1,6 +1,12 @@
+import { useState } from "react";
 import Post from "../components/Post";
 
 function ProfilePage() {
+  const [activeTab, setActiveTab] = useState<string>("tab 1");
+
+  function handleTabChange(tabId: string) {
+    setActiveTab(tabId);
+  }
   return (
     <div className=" flex flex-col flex-1 w-fit h-screen mx-auto overflow-y-auto">
       <div className=" h-18 border-b border-b-gray-500 w-full text-center text-2xl text-[#eeeeee] font-bold p-5">
@@ -8,12 +14,21 @@ function ProfilePage() {
       </div>
       <div className="h-13 mx-auto w-full flex items-center gap-2 border-b border-b-gray-500">
         <div role="tablist" className="tabs tabs-border h-full m-auto">
-          <a role="tab" className="tab tab-active ">
+          <button
+            onClick={() => handleTabChange("tab 1")}
+            role="tab"
+            className={`tab ${activeTab === "tab 1" && "tab-active"}
+             `}
+          >
             Posts
-          </a>
-          <a role="tab" className="tab ">
+          </button>
+          <button
+            onClick={() => handleTabChange("tab 2")}
+            role="tab"
+            className={`tab ${activeTab === "tab 2" && "tab-active"}`}
+          >
             About
-          </a>
+          </button>
         </div>
       </div>
 
@@ -41,12 +56,31 @@ function ProfilePage() {
             Follow
           </button>
           <div className="divider"></div>
-          <div className="flex flex-col gap-4">
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-          </div>
+          {activeTab === "tab 1" && (
+            <div className="flex flex-col gap-4">
+              <Post />
+              <Post />
+              <Post />
+              <Post />
+            </div>
+          )}
+          {activeTab === "tab 2" && (
+            <div className="flex flex-col gap-5 w-90 md:w-145 mx-auto">
+              <div className="bg-[#202020] p-3 rounded-md text-sm">
+                Joined: March 2, 1015
+              </div>
+              <div className="flex justify-around bg-[#202020] p-3 rounded-md">
+                <div className="flex flex-col gap-2 items-center">
+                  <span>Total Likes</span>
+                  <span>80</span>
+                </div>
+                <div className="flex flex-col gap-2 items-center">
+                  <div>Total Bookmarks</div>
+                  <span>5</span>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
