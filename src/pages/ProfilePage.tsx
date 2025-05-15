@@ -67,7 +67,7 @@ function ProfilePage() {
           {activeTab === "tab 2" && (
             <div className="flex flex-col gap-5 w-90 md:w-145 mx-auto">
               <div className="bg-[#202020] p-3 rounded-md text-sm">
-                Joined: March 2, 1015
+                Joined: March 2, 2025
               </div>
               <div className="flex justify-around bg-[#202020] p-3 rounded-md">
                 <div className="flex flex-col gap-2 items-center">
