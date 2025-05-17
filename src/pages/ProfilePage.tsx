@@ -1,8 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Post from "../components/Post";
+import api from "../api/api";
+import { CurrentUser, Posts, PostsPages } from "../types/types";
+import { useParams } from "react-router-dom";
 
 function ProfilePage() {
+  const { userName } = useParams();
   const [activeTab, setActiveTab] = useState<string>("tab 1");
+  const [user, setUser] = useState<CurrentUser>();
+  const [postPages, setPostsPages] = useState<PostsPages>();
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
+  async function fetchUserInfo() {
+    try {
+      const { data } = await api.get(`/user/${userName}`);
+      setUser(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    async function fetchUserPosts() {
+      try {
+        const { data } = await api.get(`/posts/user/${user?.id}`);
+        setPostsPages(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchUserPosts();
+  }, [user]);
 
   function handleTabChange(tabId: string) {
     setActiveTab(tabId);
@@ -10,9 +43,9 @@ function ProfilePage() {
   return (
     <div className=" flex flex-col flex-1 w-fit h-screen mx-auto overflow-y-auto">
       <div className=" h-18 border-b border-b-gray-500 w-full text-center text-2xl text-[#eeeeee] font-bold p-5">
-        Yoshi Vennen
+        {user?.displayName}
       </div>
-      <div className="h-13 mx-auto w-full flex items-center gap-2 border-b border-b-gray-500">
+      <div className="h-13 mx-auto w-full flex items-center gap-2 border-b text-[#eeeeee] border-b-gray-500">
         <div role="tablist" className="tabs tabs-border h-full m-auto">
           <button
             onClick={() => handleTabChange("tab 1")}
@@ -36,32 +69,44 @@ function ProfilePage() {
         <div className="flex flex-col gap-5 h-100 w-92 sm:w-80 md:w-145 mx-auto mt-10 text-[#eeeeee]">
           <div className="flex gap-5 justify-between items-center">
             <div className="flex flex-col gap-3">
-              <div className="text-lg md:text-base">@yoshi35</div>
+              <div className="text-lg md:text-base">@{user?.userName}</div>
               <div className=" flex gap-2  text-[#a8a8a8]">
-                <span className="text-sm md:text-base">15 Followers</span>
+                <span className="text-sm md:text-base">
+                  {user?.followers.length} Followers
+                </span>
                 <span className="text-sm md:text-base">•</span>
-                <span className="text-smmd:text-base">3 Posts</span>
+                <span className="text-smmd:text-base">
+                  {user?.userPosts.length} Posts
+                </span>
               </div>
             </div>
             <img
               className="object-cover rounded-md h-22 w-22 "
-              src="https://www.catconworldwide.com/wp-content/uploads/2023/01/Luna.jpg"
+              src={user?.profilePic}
             />
           </div>
-          <div className="text-sm md:text-base">
-            Award winning author and illustrator of many silly picture books. I
-            have no idea what I am doing most of the time.
-          </div>
+          <div className="text-sm md:text-base">{user?.bio}</div>
           <button className="w-1/2 p-2 bg-[#8956FB] rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer">
             Follow
           </button>
           <div className="divider"></div>
           {activeTab === "tab 1" && (
             <div className="flex flex-col gap-4">
-              <Post />
-              <Post />
-              <Post />
-              <Post />
+              {postPages ? (
+                postPages?.content.map((p: Posts) => (
+                  <Post
+                    key={p.id}
+                    title={p.title}
+                    comments={p.comments}
+                    displayName={p.displayName}
+                    profilePic={p.profilePic}
+                    postImg={p.postImg}
+                    saves={p.saves}
+                  />
+                ))
+              ) : (
+                <div className="text-center">No posts yet.</div>
+              )}
             </div>
           )}
           {activeTab === "tab 2" && (

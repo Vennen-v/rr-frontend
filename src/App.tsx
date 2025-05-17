@@ -11,6 +11,7 @@ import PostPage from "./pages/PostPage";
 import SearchPage from "./pages/SearchPage";
 import SettingsPage from "./pages/SettingsPage";
 import CreatePostPage from "./pages/CreatePostPage";
+import Welcome from "./pages/Welcome";
 
 function App() {
   return (
@@ -20,11 +21,12 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="profile" element={<ProfilePage />} />
+          <Route path="profile/:userName" element={<ProfilePage />} />
           <Route path="posts" element={<PostPage />} />
           <Route path="search" element={<SearchPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="create" element={<CreatePostPage />} />
+          <Route path="welcome" element={<Welcome />} />
         </Routes>
       </div>
     </Router>

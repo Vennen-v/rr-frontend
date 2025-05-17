@@ -10,7 +10,7 @@ function SearchPage() {
     setActiveTab(tabId);
   }
   return (
-    <div className="h-screen overflow-y-auto w-full flex-1">
+    <div className="h-screen overflow-y-auto w-full flex-1 text-gray-200">
       <div className="flex flex-col container w-max mx-auto gap-4">
         <label className="input w-92 sm:w-80 md:w-150 mt-14 bg-[#202020] ">
           <svg
