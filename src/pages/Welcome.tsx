@@ -46,8 +46,8 @@ function Welcome() {
   }
 
   return (
-    <div className="text-[#eeeeee] flex flex-1 gap-20 w-fit h-screen mx-auto">
-      <div className="hidden md:flex w-40 md:w-80 h-screen border-r border-r-[#8956FB]">
+    <div className="text-[#eeeeee] flex flex-1 gap-20 w-full h-screen mx-auto bg-[#141414]">
+      <div className="hidden md:flex w-40 md:w-80 h-screen ml-auto border-r border-r-[#8956FB]">
         <div
           className="w-full my-auto mr-10 md:text-lg lg:text-7xl font-bold inline-block 
       bg-gradient-to-r from-[#bcb6c7] to-[#8956FB]

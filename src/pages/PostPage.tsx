@@ -1,15 +1,37 @@
 import { Bookmark, EllipsisVertical, Heart, MessageSquare } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import parse from "html-react-parser";
+import api from "../api/api";
+import { Posts } from "../types/types";
 
 function PostPage() {
+  const { id } = useParams();
+  const [post, setPost] = useState<Posts>();
+
+  useEffect(() => {
+    fetchPostInfo();
+  }, [location.pathname]);
+
+  async function fetchPostInfo() {
+    try {
+      const { data } = await api.get(`/posts/${id}`);
+      setPost(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
-    <div className=" flex flex-col flex-1 w-fit h-screen mx-auto overflow-y-auto">
+    <div className=" flex flex-col flex-1 w-fit h-screen mx-auto overflow-y-auto bg-[#141414]">
       <div className=" flex justify-between h-14 mb-8 border-b border-b-gray-500 w-full text-xl items-center text-[#eeeeee] font-semibold p-5">
         <div className="flex items-center gap-2">
           <img
             className="object-cover rounded-md h-10 w-10 "
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXgwGl5-0mC66avbg7_TzilB0lMAH4sP7iGA&s"
+            src={post?.profilePic}
           />
-          Emma S
+          {post?.displayName}
         </div>
         <button className="p-3 bg-[#8956FB] text-sm rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer">
           Follow
@@ -19,19 +41,20 @@ function PostPage() {
         <div className="flex flex-col gap-5 h-100 w-92 sm:w-80 md:w-183 mx-auto mb-10  text-[#eeeeee]">
           <img
             className="h-16 w-16 md:h-full md:w-full object-cover rounded-sm "
-            src="https://skooncatlitter.com/blog/wp-content/uploads/2022/03/blog-COVER-2000x1200px-0.jpg"
+            src={post?.postImg}
           />
-          <div className="text-4xl font-sans">
-            Cats: Are they getting a little telepathic?
-          </div>
+          <div className="text-4xl font-sans">{post?.title}</div>
           <div>
             <div className="flex items-center gap-3">
               <img
                 className="object-cover rounded-md h-8 w-8 "
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXgwGl5-0mC66avbg7_TzilB0lMAH4sP7iGA&s"
+                src={post?.profilePic}
               />
               <div className="flex flex-col">
-                <span className="text-xs">Emma S</span>
+                <span className="text-xs">{post?.displayName}</span>
+
+                {/* Still NEED DATES */}
+
                 <div className="text-xs text-[#a8a8a8]">May 9, 2025</div>
               </div>
             </div>
@@ -39,8 +62,12 @@ function PostPage() {
           <div className="divider mx-1 my-5"></div>
 
           {/* Below will be note content later but just to see the look */}
-          <div className="mx-2">
-            <p>
+          <div
+            className="mx-2"
+            dangerouslySetInnerHTML={{ __html: post?.content }}
+          >
+            {/* {parse(post.content)} */}
+            {/* <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
               tincidunt erat ut risus sollicitudin placerat. In hac habitasse
               platea dictumst. Duis iaculis tincidunt velit, in sagittis ipsum
@@ -76,7 +103,7 @@ function PostPage() {
               metus. Curabitur dictum lacus eget odio rhoncus, sit amet commodo
               quam ornare. Mauris vel ante sit amet magna aliquet finibus. Duis
               leo ante, tristique a ligula non, sagittis lobortis metus.
-            </p>
+            </p> */}
           </div>
           {/* Above will be note content later but just to see the look */}
 

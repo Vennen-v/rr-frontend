@@ -51,7 +51,7 @@ function Home() {
           stuffs.push(thing?.userPosts[0]);
         }
 
-        setFollowPosts(stuffs);
+        setFollowPosts(stuffs.reverse());
       } catch (error) {
         console.log(error);
       }
@@ -65,7 +65,7 @@ function Home() {
   console.log(followPosts);
 
   return (
-    <div className="h-screen overflow-y-auto w-full flex-1 text-[#eeeeee]">
+    <div className="h-screen overflow-y-auto w-full flex-1 text-[#eeeeee] bg-[#141414]">
       <div className="container mx-auto w-max mt-10 flex flex-col gap-5 ">
         <div role="tablist" className="tabs tabs-border mb-5">
           <button
@@ -92,8 +92,8 @@ function Home() {
             {postPages &&
               postPages.content.map((p: Posts) => (
                 <Post
-                  key={p.id}
-                  id={p.id}
+                  key={p.postId}
+                  postId={p.postId}
                   userName={p.userName}
                   title={p.title}
                   comments={p.comments}
@@ -109,11 +109,11 @@ function Home() {
         )}
         {activeTab === "tab 2" && (
           <div className="flex flex-col gap-7">
-            {followPosts &&
+            {followPosts && followPosts.length > 0 ? (
               followPosts?.map((p: Posts) => (
                 <Post
-                  key={p.id}
-                  id={p.id}
+                  key={p.postId}
+                  postId={p.postId}
                   userName={p.userName}
                   title={p.title}
                   comments={p.comments}
@@ -124,7 +124,10 @@ function Home() {
                   content={p.content}
                   likes={p.likes}
                 />
-              ))}
+              ))
+            ) : (
+              <div>No Posts Found</div>
+            )}
           </div>
         )}
       </div>

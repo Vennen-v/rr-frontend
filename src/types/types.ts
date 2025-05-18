@@ -19,7 +19,7 @@ export type User = {
 };
 
 export type Posts = {
-  id: number;
+  postId: number;
   title: string;
   content: string;
   userName: string;

@@ -46,7 +46,7 @@ function App() {
           }
         />
         <Route
-          path="posts"
+          path="posts/:id"
           element={
             <Layout>
               <PostPage />
@@ -69,14 +69,7 @@ function App() {
             </Layout>
           }
         />
-        <Route
-          path="create"
-          element={
-            <Layout>
-              <CreatePostPage />
-            </Layout>
-          }
-        />
+        <Route path="create" element={<CreatePostPage />} />
         <Route path="welcome" element={<Welcome />} />
       </Routes>
       {/* </div> */}

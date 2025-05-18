@@ -47,7 +47,7 @@ function SettingsPage() {
   }
 
   return (
-    <div className="h-screen overflow-y-auto w-full flex-1 text-gray-200">
+    <div className="h-screen overflow-y-auto w-full flex-1 text-gray-200 bg-[#141414]">
       <div className="flex flex-col mt-15 container w-max mx-auto gap-4">
         <div role="tablist" className="tabs tabs-border mb-10">
           <button

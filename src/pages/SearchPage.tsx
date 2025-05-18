@@ -47,7 +47,7 @@ function SearchPage() {
   };
 
   return (
-    <div className="h-screen overflow-y-auto w-full flex-1 text-gray-200">
+    <div className="h-screen overflow-y-auto w-full flex-1 text-gray-200 bg-[#141414]">
       <div className="flex flex-col container w-max mx-auto gap-4">
         <form
           onSubmit={handleSubmit}
@@ -109,8 +109,8 @@ function SearchPage() {
             {postPages && postPages.content.length > 0 ? (
               postPages.content.map((p: Posts) => (
                 <Post
-                  key={p.id}
-                  id={p.id}
+                  key={p.postId}
+                  postId={p.postId}
                   userName={p.userName}
                   title={p.title}
                   comments={p.comments}

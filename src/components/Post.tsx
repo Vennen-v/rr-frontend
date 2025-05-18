@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Posts } from "../types/types";
 
 function Post({
+  postId,
   title,
   displayName,
   likes,
@@ -17,7 +18,7 @@ function Post({
   return (
     <div className="flex flex-col mx-auto w-92 h-60 sm:w-80 md:w-135 md:h-60 text-[#eeeeee] bg-[#202020] rounded-lg duration-300 hover:bg-[#303030]">
       <Link
-        to={`/posts`}
+        to={`/posts/${postId}`}
         className=" flex flex-col justify-between mx-auto w-92 h-60 sm:w-80 md:w-135 md:h-60 mb-0 bg-[#202020] rounded-lg duration-300 hover:bg-[#303030] hover:cursor-pointer"
       >
         <div className="border-b border-b-gray-500 p-2 ">
