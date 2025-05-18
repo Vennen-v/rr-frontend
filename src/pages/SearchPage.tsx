@@ -1,18 +1,58 @@
 import { useState } from "react";
 import UserSearch from "../components/UserSearch";
-import { Link } from "react-router-dom";
 import Post from "../components/Post";
+import { Posts, PostsPages, User, UserPages } from "../types/types";
+import api from "../api/api";
+import { useLocation } from "react-router-dom";
 
 function SearchPage() {
   const [activeTab, setActiveTab] = useState<string>("tab 1");
+  const [postPages, setPostsPages] = useState<PostsPages>();
+  const [userPages, setUserPages] = useState<UserPages>();
+  const [keyword, setKeyword] = useState<string>("");
 
   function handleTabChange(tabId: string) {
     setActiveTab(tabId);
   }
+
+  const handleChange = (e: any) => {
+    setKeyword(e.target.value);
+    console.log(keyword);
+  };
+
+  async function searchPosts() {
+    try {
+      const { data } = await api.get(`/posts/search?keyword=${keyword}`);
+      setPostsPages(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function searchUsers() {
+    try {
+      const { data } = await api.get(`/users/search?keyword=${keyword}`);
+      setUserPages(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    searchPosts();
+    searchUsers();
+  };
+
   return (
     <div className="h-screen overflow-y-auto w-full flex-1 text-gray-200">
       <div className="flex flex-col container w-max mx-auto gap-4">
-        <label className="input w-92 sm:w-80 md:w-150 mt-14 bg-[#202020] ">
+        <form
+          onSubmit={handleSubmit}
+          className="input w-92 sm:w-80 md:w-150 mt-14 bg-[#202020] "
+        >
           <svg
             className="h-[1em] opacity-50"
             xmlns="http://www.w3.org/2000/svg"
@@ -29,8 +69,14 @@ function SearchPage() {
               <path d="m21 21-4.3-4.3"></path>
             </g>
           </svg>
-          <input type="search" required placeholder="Search" />
-        </label>
+          <input
+            value={keyword}
+            type="text"
+            required
+            placeholder="Search"
+            onChange={handleChange}
+          />
+        </form>
         <div role="tablist" className="tabs tabs-border mb-10">
           <button
             onClick={() => handleTabChange("tab 1")}
@@ -52,14 +98,46 @@ function SearchPage() {
           </button>
         </div>
         {activeTab === "tab 1" && (
-          <div className="flex flex-col gap-7">
-            <Post />
-            <Post />
+          <div className="flex flex-col gap-7 items-center">
+            {postPages && postPages.content.length > 0 ? (
+              postPages.content.map((p: Posts) => (
+                <Post
+                  key={p.id}
+                  id={p.id}
+                  userName={p.userName}
+                  title={p.title}
+                  comments={p.comments}
+                  displayName={p.displayName}
+                  profilePic={p.profilePic}
+                  postImg={p.postImg}
+                  saves={p.saves}
+                  content={p.content}
+                  likes={p.likes}
+                />
+              ))
+            ) : (
+              <div>No Posts Found</div>
+            )}
           </div>
         )}
         {activeTab === "tab 2" && (
-          <div className="flex flex-col gap-2">
-            <Link
+          <div className="flex flex-col gap-2 items-center">
+            {userPages && userPages.content.length > 0 ? (
+              userPages.content.map((u: User) => (
+                <UserSearch
+                  key={u.id}
+                  id={u.id}
+                  userName={u.userName}
+                  email={u.email}
+                  displayName={u.displayName}
+                  profilePic={u.profilePic}
+                  bio={u.bio}
+                />
+              ))
+            ) : (
+              <div>No Users Found</div>
+            )}
+            {/* <Link
               to={"/profile"}
               className="flex gap-5 p-5 border-b border-b-gray-500 duration-300 rounded-md hover:bg-[#383838] hover:cursor-pointer"
             >
@@ -73,7 +151,7 @@ function SearchPage() {
               </div>
             </Link>
             <UserSearch />
-            <UserSearch />
+            <UserSearch /> */}
           </div>
         )}
       </div>

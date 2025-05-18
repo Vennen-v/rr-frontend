@@ -1,5 +1,5 @@
 import { House, Search, Settings, Plus, EllipsisVertical } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import api from "../api/api";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../globalState/atoms";
@@ -7,6 +7,9 @@ import { currentUser } from "../globalState/atoms";
 function Sidebar() {
   const user = useAtomValue(currentUser);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location);
 
   async function signOut() {
     try {
@@ -30,37 +33,65 @@ function Sidebar() {
       <div className="w-full mx-2 ">
         <Link
           to={"/"}
-          className="flex gap-3 text-base text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer"
+          className={`flex gap-3 text-base text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
+            location.pathname === "/"
+              ? "font-semibold bg-[#383838] border-l-3 border-l-[#8956FB]"
+              : ""
+          } hover:border-l-3  hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer `}
         >
           <span>
-            <House size={24} />
+            <House
+              size={24}
+              strokeWidth={location.pathname === "/" ? 2.5 : 2}
+            />
           </span>
           Home
         </Link>
         <Link
           to={"/search"}
-          className="flex gap-3 text-base text-gray-200 w-full mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer"
+          className={`flex gap-3 text-base text-gray-200 w-58 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
+            location.pathname === "/search"
+              ? "font-semibold bg-[#383838] border-l-3 border-l-[#8956FB]"
+              : ""
+          } hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer`}
         >
           <span>
-            <Search size={24} />
+            <Search
+              size={24}
+              strokeWidth={location.pathname === "/search" ? 2.5 : 2}
+            />
           </span>
           Search
         </Link>
         <Link
           to={"/settings"}
-          className="flex gap-3 text-based text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer"
+          className={`flex gap-3 text-based text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
+            location.pathname === "/settings"
+              ? "font-semibold bg-[#383838] border-l-3 border-l-[#8956FB]"
+              : ""
+          } hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer`}
         >
           <span>
-            <Settings size={24} />
+            <Settings
+              size={24}
+              strokeWidth={location.pathname === "/settings" ? 2.5 : 2}
+            />
           </span>
           Settings
         </Link>
         <Link
           to={"/create"}
-          className="flex items-center gap-3 text-base text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer"
+          className={`flex items-center gap-3 text-base text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
+            location.pathname === "/create"
+              ? "font-semibold bg-[#383838] border-l-3 border-l-[#8956FB]"
+              : ""
+          } hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer`}
         >
           <span className="bg-[#8956FB] rounded-md p-1">
-            <Plus size={18} />
+            <Plus
+              size={18}
+              strokeWidth={location.pathname === "/create" ? 2.5 : 2}
+            />
           </span>
           Create
         </Link>
@@ -70,10 +101,13 @@ function Sidebar() {
         <div className=" mt-auto">
           <div className="flex gap-3 items-center mx-2 mb-3 text-gray-200 p-3 duration-300 ease-in-out  border-t border-t-gray-500 ">
             <Link
-              to={`/profile/${user.userName}`}
+              to={`/${user.userName}`}
               className="flex gap-3 rounded-lg p-1 hover:bg-[#383838] hover:cursor-pointer"
             >
-              <img className="rounded-2xl h-10 w-10 " src={user?.profilePic} />
+              <img
+                className="rounded-2xl h-10 w-10 object-cover"
+                src={user?.profilePic}
+              />
               <div className="flex flex-col">
                 <span className="text-sm">{user.displayName}</span>
                 <span className="text-sm">@{user.userName}</span>

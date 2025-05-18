@@ -9,6 +9,15 @@ export type CurrentUser = {
   followers: CurrentUser[];
 };
 
+export type User = {
+  id: number;
+  userName: string;
+  displayName: string;
+  email: string;
+  profilePic: string;
+  bio: string;
+};
+
 export type Posts = {
   id: number;
   title: string;
@@ -24,6 +33,15 @@ export type Posts = {
 
 export type PostsPages = {
   content: Posts[];
+  lastPage: boolean;
+  pageNumber: number;
+  pageSize: number;
+  totalElements: number;
+  totalPages: number;
+};
+
+export type UserPages = {
+  content: User[];
   lastPage: boolean;
   pageNumber: number;
   pageSize: number;

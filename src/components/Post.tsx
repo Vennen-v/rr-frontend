@@ -10,6 +10,7 @@ function Post({
   saves,
   profilePic,
   postImg,
+  userName,
 }: Posts) {
   return (
     <div className="flex flex-col mx-auto w-92 h-60 sm:w-80 md:w-140 md:h-70 text-[#eeeeee] bg-[#202020] rounded-md duration-300 hover:bg-[#303030]">
@@ -17,14 +18,19 @@ function Post({
         to={`/posts`}
         className=" flex flex-col mx-auto w-92 h-60 sm:w-80 md:w-140 md:h-70 mb-0 bg-[#202020] rounded-md rounded-b-none duration-300 hover:bg-[#303030]"
       >
-        <div className="border-b border-b-gray-500 p-3 flex gap-2 items-center">
-          <img className="rounded-xl h-7 w-7 " src={profilePic} />
+        <div className="border-b border-b-gray-500 p-3 ">
+          <Link
+            to={`/${userName}`}
+            className="flex gap-3 items-center hover:underline w-fit"
+          >
+            <img className="rounded-xl h-9 w-9 object-cover" src={profilePic} />
 
-          <span className="text-sm">{displayName}</span>
+            <span className="text-sm font-semibold">{displayName}</span>
+          </Link>
         </div>
         <div className="flex items-center p-5 justify-between ">
           <div className="flex flex-col gap-4 flex-1">
-            <div className="text-md font-semibold md:text-xl">{title}</div>
+            <div className="text-base font-extralight md:text-lg">{title}</div>
             <div className="text-sm text-[#a8a8a8]">5 days ago</div>
           </div>
           <div className="h-16 md:h-30 rounded-md ">

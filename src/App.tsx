@@ -13,22 +13,73 @@ import SettingsPage from "./pages/SettingsPage";
 import CreatePostPage from "./pages/CreatePostPage";
 import Welcome from "./pages/Welcome";
 
+function Layout({ children }: any) {
+  return (
+    <div className="flex h-full w-full relative overflow-hidden">
+      <Sidebar />
+      {children}
+    </div>
+  );
+}
+
 function App() {
   return (
     <Router>
-      <div className="flex h-full w-full relative overflow-hidden">
-        <Sidebar />
+      {/* <div className="flex h-full w-full relative overflow-hidden">
+        <Sidebar /> */}
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="profile/:userName" element={<ProfilePage />} />
-          <Route path="posts" element={<PostPage />} />
-          <Route path="search" element={<SearchPage />} />
-          <Route path="settings" element={<SettingsPage />} />
-          <Route path="create" element={<CreatePostPage />} />
-          <Route path="welcome" element={<Welcome />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <Home />
+            </Layout>
+          }
+        />
+        <Route
+          path=":userName"
+          element={
+            <Layout>
+              <ProfilePage />
+            </Layout>
+          }
+        />
+        <Route
+          path="posts"
+          element={
+            <Layout>
+              <PostPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="search"
+          element={
+            <Layout>
+              <SearchPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="settings"
+          element={
+            <Layout>
+              <SettingsPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="create"
+          element={
+            <Layout>
+              <CreatePostPage />
+            </Layout>
+          }
+        />
+        <Route path="welcome" element={<Welcome />} />
+      </Routes>
+      {/* </div> */}
     </Router>
   );
 }

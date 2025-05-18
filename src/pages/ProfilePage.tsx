@@ -2,17 +2,21 @@ import { useEffect, useState } from "react";
 import Post from "../components/Post";
 import api from "../api/api";
 import { CurrentUser, Posts, PostsPages } from "../types/types";
-import { useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { useAtomValue } from "jotai";
+import { currentUser } from "../globalState/atoms";
 
 function ProfilePage() {
+  const currUser = useAtomValue(currentUser);
   const { userName } = useParams();
   const [activeTab, setActiveTab] = useState<string>("tab 1");
   const [user, setUser] = useState<CurrentUser>();
   const [postPages, setPostsPages] = useState<PostsPages>();
+  const location = useLocation();
 
   useEffect(() => {
     fetchUserInfo();
-  }, []);
+  }, [location.pathname]);
 
   async function fetchUserInfo() {
     try {
@@ -86,9 +90,18 @@ function ProfilePage() {
             />
           </div>
           <div className="text-sm md:text-base">{user?.bio}</div>
-          <button className="w-1/2 p-2 bg-[#8956FB] rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer">
-            Follow
-          </button>
+          {currUser?.userName !== userName ? (
+            <button className="w-1/4 p-2 bg-[#8956FB] rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer">
+              Follow
+            </button>
+          ) : (
+            <Link
+              to={"/settings"}
+              className="w-1/5 p-1 ml-auto rounded-full border border-gray-500 duration-300 ease-in-out hover:bg-[#383838] hover:cursor-pointer text-sm text-center"
+            >
+              Edit Profile
+            </Link>
+          )}
           <div className="divider"></div>
           {activeTab === "tab 1" && (
             <div className="flex flex-col gap-4">
@@ -96,12 +109,16 @@ function ProfilePage() {
                 postPages?.content.map((p: Posts) => (
                   <Post
                     key={p.id}
+                    id={p.id}
+                    userName={p.userName}
                     title={p.title}
                     comments={p.comments}
                     displayName={p.displayName}
                     profilePic={p.profilePic}
                     postImg={p.postImg}
                     saves={p.saves}
+                    content={p.content}
+                    likes={p.likes}
                   />
                 ))
               ) : (

@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import Post from "../components/Post";
 import api from "../api/api";
 import { currentUser } from "../globalState/atoms";
-import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 import { CurrentUser, Posts, PostsPages } from "../types/types";
+import { useLocation } from "react-router-dom";
 
 function Home() {
   const [activeTab, setActiveTab] = useState<string>("tab 1");
@@ -85,12 +86,16 @@ function Home() {
               postPages.content.map((p: Posts) => (
                 <Post
                   key={p.id}
+                  id={p.id}
+                  userName={p.userName}
                   title={p.title}
                   comments={p.comments}
                   displayName={p.displayName}
                   profilePic={p.profilePic}
                   postImg={p.postImg}
                   saves={p.saves}
+                  content={p.content}
+                  likes={p.likes}
                 />
               ))}
           </div>
@@ -101,12 +106,16 @@ function Home() {
               followPosts?.userPosts?.map((p: Posts) => (
                 <Post
                   key={p.id}
+                  id={p.id}
+                  userName={p.userName}
                   title={p.title}
                   comments={p.comments}
                   displayName={p.displayName}
                   profilePic={p.profilePic}
                   postImg={p.postImg}
                   saves={p.saves}
+                  content={p.content}
+                  likes={p.likes}
                 />
               ))}
           </div>

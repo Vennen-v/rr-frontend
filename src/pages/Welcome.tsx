@@ -3,7 +3,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api from "../api/api";
 
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
+import { useAtomValue } from "jotai";
+import { currentUser } from "../globalState/atoms";
+import { AtSignIcon, LockKeyhole } from "lucide-react";
 
 const schema = z.object({
   username: z.string(),
@@ -13,6 +16,7 @@ const schema = z.object({
 type FormFields = z.infer<typeof schema>;
 
 function Welcome() {
+  const user = useAtomValue(currentUser);
   const navigate = useNavigate();
 
   const {
@@ -37,8 +41,21 @@ function Welcome() {
     }
   };
 
+  if (user && user.id) {
+    navigate("/");
+  }
+
   return (
-    <div className="text-[#eeeeee] flex flex-1 w-fit h-screen mx-auto">
+    <div className="text-[#eeeeee] flex flex-1 gap-20 w-fit h-screen mx-auto">
+      <div className="hidden md:flex w-40 md:w-80 h-screen border-r border-r-[#8956FB]">
+        <div
+          className="w-full my-auto mr-10 md:text-lg lg:text-7xl font-bold inline-block 
+      bg-gradient-to-r from-[#bcb6c7] to-[#8956FB]
+      bg-clip-text text-transparent p-3"
+        >
+          Sign in
+        </div>
+      </div>
       <div className="flex w-150 m-auto rounded-lg h-100 bg-[#202020]/60 backdrop-blur-2xl">
         <div className="m-auto w-4/5 flex flex-col gap-4 items-center">
           <div className="flex flex-col gap-2 items-center mb-10 text-2xl font-extralight">
@@ -55,23 +72,25 @@ function Welcome() {
             onSubmit={handleSubmit(onSubmit)}
             className="w-full flex flex-col gap-4"
           >
-            <div className="w-full border border-gray-500 rounded-lg">
+            <div className="w-full flex items-center border border-gray-500 rounded-lg">
+              <AtSignIcon size={21} className="m-2 text-[#686868]" />
               <input
                 {...register("username")}
                 type="text"
                 placeholder="Username"
-                className="w-full m-0 p-3 rounded-lg"
-              />
+                className="w-full m-0 p-3 rounded-lg focus:outline-1 focus:outline-white"
+              ></input>
             </div>
             {errors.username && (
               <div className="text-red-500">{errors.username.message}</div>
             )}
-            <div className="w-full border border-gray-500 rounded-lg">
+            <div className="w-full flex items-center border border-gray-500 rounded-lg">
+              <LockKeyhole size={21} className="m-2 text-[#686868]" />
               <input
                 {...register("password")}
                 type="password"
                 placeholder="Password"
-                className="w-full m-0 p-3 rounded-lg"
+                className="w-full m-0 p-3 rounded-lg focus:outline-1 focus:outline-white"
               />
             </div>
             {errors.password && (
