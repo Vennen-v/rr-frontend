@@ -51,7 +51,7 @@ function SearchPage() {
       <div className="flex flex-col container w-max mx-auto gap-4">
         <form
           onSubmit={handleSubmit}
-          className="input w-92 sm:w-80 md:w-150 mt-14 bg-[#202020] "
+          className="input w-92 sm:w-80 md:w-150 mt-14 bg-[#202020] pr-0"
         >
           <svg
             className="h-[1em] opacity-50"
@@ -75,7 +75,14 @@ function SearchPage() {
             required
             placeholder="Search"
             onChange={handleChange}
+            className="mx-3 "
           />
+          <button
+            type="submit"
+            className="border-l border-l-gray-500 h-full text-center hidden md:block md:w-1/8 hover:cursor-pointer hover:bg-[#383838]"
+          >
+            Search
+          </button>
         </form>
         <div role="tablist" className="tabs tabs-border mb-10">
           <button

@@ -71,37 +71,39 @@ function ProfilePage() {
 
       <div className="container w-max mx-auto rounded-md flex flex-col h-full">
         <div className="flex flex-col gap-5 h-100 w-92 sm:w-80 md:w-145 mx-auto mt-10 text-[#eeeeee]">
-          <div className="flex gap-5 justify-between items-center">
-            <div className="flex flex-col gap-3">
-              <div className="text-lg md:text-base">@{user?.userName}</div>
-              <div className=" flex gap-2  text-[#a8a8a8]">
-                <span className="text-sm md:text-base">
-                  {user?.followers.length} Followers
-                </span>
-                <span className="text-sm md:text-base">•</span>
-                <span className="text-smmd:text-base">
-                  {user?.userPosts.length} Posts
-                </span>
+          <div className="flex flex-col gap-4 justify-between md:mx-5">
+            <div className="flex gap-3 justify-between items-center w-full">
+              <div>
+                <div className="text-lg md:text-base">@{user?.userName}</div>
+                <div className=" flex gap-2  text-[#a8a8a8]">
+                  <span className="text-sm md:text-base">
+                    {user?.followers.length} Followers
+                  </span>
+                  <span className="text-sm md:text-base">•</span>
+                  <span className="text-smmd:text-base">
+                    {user?.userPosts.length} Posts
+                  </span>
+                </div>
               </div>
+              <img
+                className="object-cover rounded-md h-22 w-22 "
+                src={user?.profilePic}
+              />
             </div>
-            <img
-              className="object-cover rounded-md h-22 w-22 "
-              src={user?.profilePic}
-            />
+            <div className="text-sm md:text-base">{user?.bio}</div>
+            {currUser?.userName !== userName ? (
+              <button className="w-1/4 p-2 bg-[#8956FB] rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer">
+                Follow
+              </button>
+            ) : (
+              <Link
+                to={"/settings"}
+                className="w-1/3 md:w-1/5 p-1 ml-auto rounded-full border border-gray-500 duration-300 ease-in-out hover:bg-[#383838] hover:cursor-pointer text-sm text-center"
+              >
+                Edit Profile
+              </Link>
+            )}
           </div>
-          <div className="text-sm md:text-base">{user?.bio}</div>
-          {currUser?.userName !== userName ? (
-            <button className="w-1/4 p-2 bg-[#8956FB] rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer">
-              Follow
-            </button>
-          ) : (
-            <Link
-              to={"/settings"}
-              className="w-1/5 p-1 ml-auto rounded-full border border-gray-500 duration-300 ease-in-out hover:bg-[#383838] hover:cursor-pointer text-sm text-center"
-            >
-              Edit Profile
-            </Link>
-          )}
           <div className="divider"></div>
           {activeTab === "tab 1" && (
             <div className="flex flex-col gap-4">
@@ -127,7 +129,7 @@ function ProfilePage() {
             </div>
           )}
           {activeTab === "tab 2" && (
-            <div className="flex flex-col gap-5 w-90 md:w-145 mx-auto">
+            <div className="flex flex-col gap-5 w-90 md:w-140 mx-auto">
               <div className="bg-[#202020] p-3 rounded-md text-sm">
                 Joined: March 2, 2025
               </div>

@@ -10,7 +10,7 @@ function Home() {
   const [activeTab, setActiveTab] = useState<string>("tab 1");
   const [cuurUser, setCurrentUser] = useAtom(currentUser);
   const [postPages, setPostsPages] = useState<PostsPages>();
-  const [followPosts, setFollowPosts] = useState<CurrentUser>();
+  const [followPosts, setFollowPosts] = useState<Posts[]>();
 
   useEffect(() => {
     async function getCurrentUserInfo() {
@@ -43,8 +43,15 @@ function Home() {
     async function getFollowing() {
       try {
         const { data } = await api.get(`/user/following`);
-        setFollowPosts(data);
         console.log(data);
+
+        const stuffs = [];
+
+        for (const thing of data) {
+          stuffs.push(thing?.userPosts[0]);
+        }
+
+        setFollowPosts(stuffs);
       } catch (error) {
         console.log(error);
       }
@@ -55,16 +62,16 @@ function Home() {
   function handleTabChange(tabId: string) {
     setActiveTab(tabId);
   }
-  console.log(followPosts?.userPosts);
+  console.log(followPosts);
 
   return (
     <div className="h-screen overflow-y-auto w-full flex-1 text-[#eeeeee]">
-      <div className="container mx-auto w-max mt-14 flex flex-col gap-5 ">
-        <div role="tablist" className="tabs tabs-border mb-14">
+      <div className="container mx-auto w-max mt-10 flex flex-col gap-5 ">
+        <div role="tablist" className="tabs tabs-border mb-5">
           <button
             onClick={() => handleTabChange("tab 1")}
             role="tab"
-            className={`tab text-lg duration-300 ${
+            className={`tab text-base duration-300 ${
               activeTab === "tab 1" && "tab-active"
             } `}
           >
@@ -73,7 +80,7 @@ function Home() {
           <button
             onClick={() => handleTabChange("tab 2")}
             role="tab"
-            className={`tab text-lg duration-300 ${
+            className={`tab text-base duration-300 ${
               activeTab === "tab 2" && "tab-active"
             }`}
           >
@@ -103,7 +110,7 @@ function Home() {
         {activeTab === "tab 2" && (
           <div className="flex flex-col gap-7">
             {followPosts &&
-              followPosts?.userPosts?.map((p: Posts) => (
+              followPosts?.map((p: Posts) => (
                 <Post
                   key={p.id}
                   id={p.id}

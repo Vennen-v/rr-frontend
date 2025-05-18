@@ -1,5 +1,5 @@
 import { Heart, MessageSquare, Bookmark } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Posts } from "../types/types";
 
 function Post({
@@ -12,13 +12,15 @@ function Post({
   postImg,
   userName,
 }: Posts) {
+  const navigate = useNavigate();
+
   return (
-    <div className="flex flex-col mx-auto w-92 h-60 sm:w-80 md:w-140 md:h-70 text-[#eeeeee] bg-[#202020] rounded-md duration-300 hover:bg-[#303030]">
+    <div className="flex flex-col mx-auto w-92 h-60 sm:w-80 md:w-135 md:h-60 text-[#eeeeee] bg-[#202020] rounded-lg duration-300 hover:bg-[#303030]">
       <Link
         to={`/posts`}
-        className=" flex flex-col mx-auto w-92 h-60 sm:w-80 md:w-140 md:h-70 mb-0 bg-[#202020] rounded-md rounded-b-none duration-300 hover:bg-[#303030]"
+        className=" flex flex-col justify-between mx-auto w-92 h-60 sm:w-80 md:w-135 md:h-60 mb-0 bg-[#202020] rounded-lg duration-300 hover:bg-[#303030] hover:cursor-pointer"
       >
-        <div className="border-b border-b-gray-500 p-3 ">
+        <div className="border-b border-b-gray-500 p-2 ">
           <Link
             to={`/${userName}`}
             className="flex gap-3 items-center hover:underline w-fit"
@@ -28,7 +30,7 @@ function Post({
             <span className="text-sm font-semibold">{displayName}</span>
           </Link>
         </div>
-        <div className="flex items-center p-5 justify-between ">
+        <div className="flex items-center text-start px-5 pb-0 justify-between ">
           <div className="flex flex-col gap-4 flex-1">
             <div className="text-base font-extralight md:text-lg">{title}</div>
             <div className="text-sm text-[#a8a8a8]">5 days ago</div>
@@ -40,21 +42,21 @@ function Post({
             />
           </div>
         </div>
+        <div className="flex gap-3 pl-4 mb-2 z-9 ">
+          <button className="flex gap-1 items-center text-[#a8a8a8] p-1 rounded-lg hover:cursor-pointer hover:bg-[#202020]">
+            <Heart size={18} />{" "}
+            <span className="text-sm md:text-base">{likes?.length}</span>
+          </button>
+          <button className="flex gap-1 items-center text-[#a8a8a8] p-1 rounded-lg hover:cursor-pointer hover:bg-[#202020]">
+            <MessageSquare size={18} />{" "}
+            <span className="text-sm md:text-base">{comments?.length}</span>
+          </button>
+          <button className="flex gap-1 items-center text-[#a8a8a8] p-1 rounded-lg hover:cursor-pointer hover:bg-[#202020]">
+            <Bookmark size={18} />{" "}
+            <span className="text-sm md:text-base">{saves}</span>
+          </button>
+        </div>
       </Link>
-      <div className="flex gap-4 p-4 z-99">
-        <button className="flex gap-1 items-center text-[#a8a8a8] p-1 rounded-lg hover:cursor-pointer hover:bg-[#202020]">
-          <Heart size={18} />{" "}
-          <span className="text-sm md:text-base">{likes?.length}</span>
-        </button>
-        <button className="flex gap-1 items-center text-[#a8a8a8] p-1 rounded-lg hover:cursor-pointer hover:bg-[#202020]">
-          <MessageSquare size={18} />{" "}
-          <span className="text-sm md:text-base">{comments?.length}</span>
-        </button>
-        <button className="flex gap-1 items-center text-[#a8a8a8] p-1 rounded-lg hover:cursor-pointer hover:bg-[#202020]">
-          <Bookmark size={18} />{" "}
-          <span className="text-sm md:text-base">{saves}</span>
-        </button>
-      </div>
     </div>
   );
 }
