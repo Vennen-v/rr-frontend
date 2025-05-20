@@ -3,8 +3,7 @@ import Post from "../components/Post";
 import api from "../api/api";
 import { currentUser } from "../globalState/atoms";
 import { useAtom } from "jotai";
-import { CurrentUser, Posts, PostsPages } from "../types/types";
-import { useLocation } from "react-router-dom";
+import { Posts, PostsPages } from "../types/types";
 
 function Home() {
   const [activeTab, setActiveTab] = useState<string>("tab 1");

@@ -1,13 +1,100 @@
 import { Bookmark, EllipsisVertical, Heart, MessageSquare } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import parse from "html-react-parser";
+import { ChangeEvent, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import DOMPurify from "dompurify";
 import api from "../api/api";
-import { Posts } from "../types/types";
+import { Comments, Posts } from "../types/types";
+import { currentUser } from "../globalState/atoms";
+import { useAtomValue } from "jotai";
+import Comment from "../components/comment";
 
 function PostPage() {
   const { id } = useParams();
+  const cuurUser = useAtomValue(currentUser);
   const [post, setPost] = useState<Posts>();
+  const [isLiked, setIsLiked] = useState<boolean | undefined>();
+  const [likeCount, setLikeCount] = useState<number | undefined>(post?.likes);
+  const [isSaved, setIsSaved] = useState<boolean | undefined>();
+  const [saveCount, setSaveCount] = useState<number | undefined>(post?.saves);
+  const [content, setContent] = useState<string>("");
+
+  const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value);
+  };
+
+  async function LikePost(e: any) {
+    e.preventDefault();
+    if (isLiked == true) {
+      setIsLiked(false);
+      setLikeCount(post?.likes - 1);
+      try {
+        await api.delete(`/delete/like/${post?.postId}`);
+        console.log("Unliked Post");
+        return;
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setIsLiked(true);
+      setLikeCount(post?.likes + 1);
+      try {
+        await api.post(`/posts/like/${post?.postId}`);
+        console.log("Liked Post");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+  useEffect(() => {
+    async function isPostLiked() {
+      try {
+        const { data } = await api.get(`/isLiked/${post.postId}`);
+        setIsLiked(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    isPostLiked();
+  }, [[location.pathname]]);
+
+  useEffect(() => {
+    async function isPostSaved() {
+      try {
+        const { data } = await api.get(`/isSaved/${post.postId}`);
+        setIsSaved(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    isPostSaved();
+  }, []);
+
+  async function SavePost(e: any) {
+    e.preventDefault();
+    if (isSaved == true) {
+      setIsSaved(false);
+      setSaveCount(post?.saves - 1);
+      try {
+        await api.delete(`/delete/save/${post.postId}`);
+        console.log("Removed Saved Post");
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setIsSaved(true);
+      setSaveCount(post?.saves + 1);
+      try {
+        await api.put(`/posts/save/${post?.postId}`);
+        console.log("Saved Post");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    // }
+  }
 
   useEffect(() => {
     fetchPostInfo();
@@ -22,6 +109,20 @@ function PostPage() {
       console.log(error);
     }
   }
+
+  async function handleCommentUpload(e: any) {
+    e.preventDefault();
+    if (!content) return;
+
+    try {
+      await api.post(`/comments/posts/${id}`, { content: content });
+      console.log("i tried it");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const clean = DOMPurify.sanitize(`${post?.content}`);
 
   return (
     <div className=" flex flex-col flex-1 w-fit h-screen mx-auto overflow-y-auto bg-[#141414]">
@@ -38,20 +139,22 @@ function PostPage() {
         </button>
       </div>
       <div className="container w-max mx-auto rounded-md flex flex-col h-full">
-        <div className="flex flex-col gap-5 h-100 w-92 sm:w-80 md:w-183 mx-auto mb-10  text-[#eeeeee]">
+        <div className="flex flex-col gap-2 md:gap-5 h-100 w-92 sm:w-80 md:w-183 mx-auto mb-10 text-[#eeeeee]">
           <img
-            className="h-16 w-16 md:h-full md:w-full object-cover rounded-sm "
+            className="h-full w-full md:h-full md:w-full mb-5 md:mb-auto object-cover rounded-sm "
             src={post?.postImg}
           />
-          <div className="text-4xl font-sans">{post?.title}</div>
+          <div className="text-2xl md:text-4xl font-serif">{post?.title}</div>
           <div>
             <div className="flex items-center gap-3">
               <img
-                className="object-cover rounded-md h-8 w-8 "
+                className="hidden object-cover rounded-md h-8 w-8 md:block"
                 src={post?.profilePic}
               />
               <div className="flex flex-col">
-                <span className="text-xs">{post?.displayName}</span>
+                <span className="hidden text-xs md:block">
+                  {post?.displayName}
+                </span>
 
                 {/* Still NEED DATES */}
 
@@ -63,8 +166,9 @@ function PostPage() {
 
           {/* Below will be note content later but just to see the look */}
           <div
-            className="mx-2"
-            dangerouslySetInnerHTML={{ __html: post?.content }}
+            id="postContent"
+            className="mx-2 text-base/snug md:text-lg/normal"
+            dangerouslySetInnerHTML={{ __html: clean }}
           >
             {/* {parse(post.content)} */}
             {/* <p>
@@ -108,18 +212,30 @@ function PostPage() {
           {/* Above will be note content later but just to see the look */}
 
           <div className=" flex justify-between mt-10 p-2">
-            <div className="flex gap-7 ">
-              <button className="flex gap-1 items-center text-[#a8a8a8] hover:cursor-pointer">
-                <Heart size={25} />{" "}
-                <span className="text-sm md:text-base">16</span>
+            <div className="flex gap-4 md:gap-5 ">
+              <button
+                onClick={(e) => LikePost(e)}
+                className="flex gap-1 items-center text-[#a8a8a8] hover:cursor-pointer p-1 rounded-md hover:bg-[#383838]"
+              >
+                <Heart size={25} fill={isLiked ? "#CC3D5C" : "none"} />{" "}
+                <span className="text-sm md:text-base">
+                  {likeCount || post?.likes}
+                </span>
               </button>
-              <button className="flex gap-1 items-center text-[#a8a8a8] hover:cursor-pointer">
+              <button className="flex gap-1 items-center text-[#a8a8a8] hover:cursor-pointer p-1 rounded-md hover:bg-[#383838]">
                 <MessageSquare size={25} />{" "}
-                <span className="text-sm md:text-base">5</span>
+                <span className="text-sm md:text-base">
+                  {post?.comments.length}
+                </span>
               </button>
-              <button className="flex gap-1 items-center text-[#a8a8a8] hover:cursor-pointer">
-                <Bookmark size={25} />{" "}
-                <span className="text-sm md:text-base">2</span>
+              <button
+                onClick={(e) => SavePost(e)}
+                className="flex gap-1 items-center text-[#a8a8a8] hover:cursor-pointer p-1 rounded-md hover:bg-[#383838]"
+              >
+                <Bookmark size={25} fill={isSaved ? "#a8a8a8" : "none"} />{" "}
+                <span className="text-sm md:text-base">
+                  {saveCount || post?.saves}
+                </span>
               </button>
             </div>
             <div className="dropdown dropdown-top dropdown-end">
@@ -140,8 +256,50 @@ function PostPage() {
               </ul>
             </div>
           </div>
-          <div className="divider mx-1 mt-2 mb-8"></div>
-          <div className="mb-10">Comments</div>
+          <div className="divider mx-1 mt-2 mb-2"></div>
+          <div className="mb-10">
+            <div className="flex flex-col">
+              <form onSubmit={handleCommentUpload} className="flex gap-4 my-4">
+                <img
+                  className="rounded-md h-10 w-10 object-cover hover:cursor-pointer"
+                  src={cuurUser?.profilePic}
+                />
+                <div className="flex flex-col flex-1 gap-2">
+                  <textarea
+                    onChange={handleContentChange}
+                    className="border rounded-lg border-gray-500 p-3  duration-500 ease-in-out focus:h-40 focus:outline-1 focus:outline-white"
+                    placeholder="Leave a reply..."
+                  ></textarea>
+                  {content && (
+                    <button
+                      onClick={handleCommentUpload}
+                      type="submit"
+                      className="w-20 h-10 p-1 text-sm bg-[#8956FB] rounded-lg duration-300 ease-in-out ml-auto hover:bg-[#674b9b] hover:cursor-pointer"
+                    >
+                      Post
+                    </button>
+                  )}
+                </div>
+              </form>
+              {post?.comments &&
+                post.comments.map((c: Comments) => (
+                  <Comment
+                    key={c.commentId}
+                    commentId={c.commentId}
+                    content={c.content}
+                    userName={c.userName}
+                    displayName={c.displayName}
+                    profilePic={c.profilePic}
+                    replies={c.replies}
+                    likes={c.likes}
+                  />
+                ))}
+
+              <div className="text-center my-5 font-extralight">
+                End of Comments
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

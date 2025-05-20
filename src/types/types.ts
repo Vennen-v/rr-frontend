@@ -24,8 +24,8 @@ export type Posts = {
   content: string;
   userName: string;
   saves: number;
-  comments: [];
-  likes: [];
+  comments: Comment;
+  likes: number;
   profilePic: string;
   postImg: string;
   displayName: string;
@@ -47,4 +47,22 @@ export type UserPages = {
   pageSize: number;
   totalElements: number;
   totalPages: number;
+};
+
+export type Like = {
+  id: number;
+  postId: number | null;
+  comment: number | null;
+  userName: string;
+  displayName: string;
+};
+
+export type Comments = {
+  commentId: number;
+  content: string;
+  userName: string;
+  displayName: string;
+  profilePic: string;
+  replies: Comment[];
+  likes: number;
 };

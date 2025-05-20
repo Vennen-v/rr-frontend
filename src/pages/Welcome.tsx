@@ -3,7 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api from "../api/api";
 
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../globalState/atoms";
 import { AtSignIcon, LockKeyhole } from "lucide-react";

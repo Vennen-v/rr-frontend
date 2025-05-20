@@ -29,6 +29,40 @@
   min-width: 100%;
 }
 
+#postContent a {
+  color: aqua;
+  text-decoration: underline;
+}
+#postContent strong {
+  font-weight: bold;
+}
+
+#postContent i {
+  font-style: italic;
+}
+
+#postContent * {
+  font-family: var(--font-serif);
+  line-height: 1.5;
+  color: #eeeeee;
+}
+
+#postContent h1 {
+  font-size: 2.5rem;
+}
+
+#postContent h2 {
+  font-size: 2rem;
+}
+
+#postContent h3 {
+  font-size: 1.75rem;
+}
+
+#postContent h4 {
+  font-size: 1.5rem;
+}
+
 :root {
   /* line-height: 1.5;
   font-weight: 400;  */

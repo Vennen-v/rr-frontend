@@ -1,6 +1,9 @@
 import { Heart, MessageSquare, Bookmark } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Posts } from "../types/types";
+import api from "../api/api";
+import { useEffect, useState } from "react";
+import { useAtomValue } from "jotai";
 
 function Post({
   postId,
@@ -14,6 +17,85 @@ function Post({
   userName,
 }: Posts) {
   const navigate = useNavigate();
+
+  const [isLiked, setIsLiked] = useState<boolean>();
+  const [likeCount, setLikeCount] = useState<number>(likes);
+  const [isSaved, setIsSaved] = useState<boolean>();
+  const [saveCount, setSaveCount] = useState<number>(saves);
+
+  async function LikePost(e: any) {
+    e.preventDefault();
+    if (isLiked == true) {
+      setIsLiked(false);
+      setLikeCount(likeCount - 1);
+      try {
+        await api.delete(`/delete/like/${postId}`);
+        console.log("Unliked Post");
+        return;
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setIsLiked(true);
+      setLikeCount(likeCount + 1);
+      try {
+        await api.post(`/posts/like/${postId}`);
+        console.log("Liked Post");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+  useEffect(() => {
+    async function isPostLiked() {
+      try {
+        const { data } = await api.get(`/isLiked/${postId}`);
+        setIsLiked(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    isPostLiked();
+  }, []);
+
+  useEffect(() => {
+    async function isPostSaved() {
+      try {
+        const { data } = await api.get(`/isSaved/${postId}`);
+        setIsSaved(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    isPostSaved();
+  }, []);
+
+  async function SavePost(e: any) {
+    e.preventDefault();
+    if (isSaved == true) {
+      setIsSaved(false);
+      setSaveCount(saveCount - 1);
+      try {
+        await api.delete(`/delete/save/${postId}`);
+        console.log("Removed Saved Post");
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setIsSaved(true);
+      setSaveCount(saveCount + 1);
+      try {
+        await api.put(`/posts/save/${postId}`);
+        console.log("Saved Post");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    // }
+  }
 
   return (
     <div className="flex flex-col mx-auto w-92 h-60 sm:w-80 md:w-135 md:h-60 text-[#eeeeee] bg-[#202020] rounded-lg duration-300 hover:bg-[#303030]">
@@ -44,17 +126,23 @@ function Post({
           </div>
         </div>
         <div className="flex gap-3 pl-4 mb-2 z-9 ">
-          <button className="flex gap-1 items-center text-[#a8a8a8] p-1 rounded-lg hover:cursor-pointer hover:bg-[#202020]">
-            <Heart size={18} />{" "}
-            <span className="text-sm md:text-base">{likes?.length}</span>
+          <button
+            onClick={(e) => LikePost(e)}
+            className="flex gap-1 items-center text-[#a8a8a8] p-1 rounded-lg hover:cursor-pointer hover:bg-[#202020]"
+          >
+            <Heart size={18} fill={isLiked ? "#CC3D5C" : "currentColor"} />{" "}
+            <span className="text-sm md:text-base">{likeCount}</span>
           </button>
           <button className="flex gap-1 items-center text-[#a8a8a8] p-1 rounded-lg hover:cursor-pointer hover:bg-[#202020]">
             <MessageSquare size={18} />{" "}
             <span className="text-sm md:text-base">{comments?.length}</span>
           </button>
-          <button className="flex gap-1 items-center text-[#a8a8a8] p-1 rounded-lg hover:cursor-pointer hover:bg-[#202020]">
-            <Bookmark size={18} />{" "}
-            <span className="text-sm md:text-base">{saves}</span>
+          <button
+            onClick={(e) => SavePost(e)}
+            className="flex gap-1 items-center text-[#a8a8a8] p-1 rounded-lg hover:cursor-pointer hover:bg-[#202020]"
+          >
+            <Bookmark size={18} fill={isSaved ? "#a8a8a8" : "none"} />{" "}
+            <span className="text-sm md:text-base">{saveCount}</span>
           </button>
         </div>
       </Link>

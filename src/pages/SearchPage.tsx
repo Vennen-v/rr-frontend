@@ -3,7 +3,6 @@ import UserSearch from "../components/UserSearch";
 import Post from "../components/Post";
 import { Posts, PostsPages, User, UserPages } from "../types/types";
 import api from "../api/api";
-import { useLocation } from "react-router-dom";
 
 function SearchPage() {
   const [activeTab, setActiveTab] = useState<string>("tab 1");

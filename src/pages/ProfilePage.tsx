@@ -10,8 +10,9 @@ function ProfilePage() {
   const currUser = useAtomValue(currentUser);
   const { userName } = useParams();
   const [activeTab, setActiveTab] = useState<string>("tab 1");
-  const [user, setUser] = useState<CurrentUser>();
+  const [user, setUser] = useState<CurrentUser | undefined>();
   const [postPages, setPostsPages] = useState<PostsPages>();
+  const [isFollowing, setIsFollowing] = useState<boolean>();
   const location = useLocation();
 
   useEffect(() => {
@@ -27,6 +28,18 @@ function ProfilePage() {
       console.log(error);
     }
   }
+  useEffect(() => {
+    async function isFollowingUser() {
+      try {
+        const { data } = await api.get(`/isfollowing/${userName}`);
+        setIsFollowing(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    isFollowingUser();
+  }, []);
 
   useEffect(() => {
     async function fetchUserPosts() {
@@ -91,14 +104,21 @@ function ProfilePage() {
               />
             </div>
             <div className="text-sm md:text-base">{user?.bio}</div>
-            {currUser?.userName !== userName ? (
+            {currUser?.userName !== userName && !isFollowing && (
               <button className="w-1/4 p-2 bg-[#8956FB] rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer">
                 Follow
               </button>
-            ) : (
+            )}
+
+            {currUser?.userName !== userName && isFollowing && (
+              <button className="w-1/4 p-2  rounded-lg border border-gray-500 duration-300 ease-in-out hover:bg-[#383838] hover:cursor-pointer">
+                Following
+              </button>
+            )}
+            {currUser?.userName == userName && (
               <Link
                 to={"/settings"}
-                className="w-1/3 md:w-1/5 p-1 ml-auto rounded-full border border-gray-500 duration-300 ease-in-out hover:bg-[#383838] hover:cursor-pointer text-sm text-center"
+                className="w-1/3 md:w-1/5 p-1 ml-auto rounded-full border border-gray-500 duration-300 ease-in-out  hover:cursor-pointer text-sm text-center"
               >
                 Edit Profile
               </Link>
