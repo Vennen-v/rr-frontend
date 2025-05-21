@@ -9,6 +9,7 @@ function SearchPage() {
   const [postPages, setPostsPages] = useState<PostsPages>();
   const [userPages, setUserPages] = useState<UserPages>();
   const [keyword, setKeyword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function handleTabChange(tabId: string) {
     setActiveTab(tabId);
@@ -20,22 +21,28 @@ function SearchPage() {
   };
 
   async function searchPosts() {
+    setIsLoading(true);
     try {
       const { data } = await api.get(`/posts/search?keyword=${keyword}`);
       setPostsPages(data);
       console.log(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   async function searchUsers() {
+    setIsLoading(true);
     try {
       const { data } = await api.get(`/users/search?keyword=${keyword}`);
       setUserPages(data);
       console.log(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -119,8 +126,11 @@ function SearchPage() {
                   saves={p.saves}
                   content={p.content}
                   likes={p.likes}
+                  createdAt={p.createdAt}
                 />
               ))
+            ) : isLoading ? (
+              <div>Searching...</div>
             ) : (
               <div>No Posts Found</div>
             )}
@@ -140,6 +150,8 @@ function SearchPage() {
                   bio={u.bio}
                 />
               ))
+            ) : isLoading ? (
+              <div>Searching...</div>
             ) : (
               <div>No Users Found</div>
             )}

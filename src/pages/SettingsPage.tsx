@@ -3,6 +3,7 @@ import { currentUser } from "../globalState/atoms";
 import { ChangeEvent, useState } from "react";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
 
@@ -12,6 +13,10 @@ function SettingsPage() {
   const [status, setStatus] = useState<UploadStatus>("idle");
   const user = useAtomValue(currentUser);
   const navigate = useNavigate();
+
+  if (!user) {
+    navigate("/");
+  }
 
   function handleTabChange(tabId: string) {
     setActiveTab(tabId);
@@ -41,7 +46,10 @@ function SettingsPage() {
         },
       });
       setStatus("success");
-    } catch {
+      navigate("/");
+      toast.success("Profile Pic Changed Successfully");
+    } catch (e) {
+      toast.error(`${e}`);
       setStatus("error");
     }
   }

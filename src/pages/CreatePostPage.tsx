@@ -4,10 +4,14 @@ import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useAtomValue } from "jotai";
+import { currentUser } from "../globalState/atoms";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
 
 function CreatePostPage() {
+  const user = useAtomValue(currentUser);
   const navigate = useNavigate();
   const [content, setContent] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
@@ -28,6 +32,10 @@ function CreatePostPage() {
     console.log(file?.name);
   }
 
+  if (!user) {
+    navigate("/");
+  }
+
   async function handlePostUpload(e: any) {
     if (!file || !title || !content) return;
 
@@ -42,7 +50,9 @@ function CreatePostPage() {
           "Content-Type": "multipart/form-data",
         },
       });
+
       console.log("i tried it");
+      toast.success("Your post has been published!");
       navigate("/");
       setStatus("success");
     } catch {

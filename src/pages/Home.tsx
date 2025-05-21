@@ -9,7 +9,7 @@ function Home() {
   const [activeTab, setActiveTab] = useState<string>("tab 1");
   const [cuurUser, setCurrentUser] = useAtom(currentUser);
   const [postPages, setPostsPages] = useState<PostsPages>();
-  const [followPosts, setFollowPosts] = useState<Posts[]>();
+  const [followPosts, setFollowPosts] = useState<Posts[] | undefined>();
 
   useEffect(() => {
     async function getCurrentUserInfo() {
@@ -76,15 +76,17 @@ function Home() {
           >
             Discover
           </button>
-          <button
-            onClick={() => handleTabChange("tab 2")}
-            role="tab"
-            className={`tab text-base duration-300 ${
-              activeTab === "tab 2" && "tab-active"
-            }`}
-          >
-            Following
-          </button>
+          {cuurUser && cuurUser.id && (
+            <button
+              onClick={() => handleTabChange("tab 2")}
+              role="tab"
+              className={`tab text-base duration-300 ${
+                activeTab === "tab 2" && "tab-active"
+              }`}
+            >
+              Following
+            </button>
+          )}
         </div>
         {activeTab === "tab 1" && (
           <div className="flex flex-col gap-7">
@@ -102,30 +104,36 @@ function Home() {
                   saves={p.saves}
                   content={p.content}
                   likes={p.likes}
+                  createdAt={p.createdAt}
                 />
               ))}
           </div>
         )}
         {activeTab === "tab 2" && (
           <div className="flex flex-col gap-7">
-            {followPosts && followPosts.length > 0 ? (
+            {followPosts &&
+            followPosts.length >= 0 &&
+            followPosts[0] != undefined ? (
               followPosts?.map((p: Posts) => (
                 <Post
-                  key={p.postId}
-                  postId={p.postId}
-                  userName={p.userName}
-                  title={p.title}
-                  comments={p.comments}
-                  displayName={p.displayName}
-                  profilePic={p.profilePic}
-                  postImg={p.postImg}
-                  saves={p.saves}
-                  content={p.content}
-                  likes={p.likes}
+                  key={p?.postId}
+                  postId={p?.postId}
+                  userName={p?.userName}
+                  title={p?.title}
+                  comments={p?.comments}
+                  displayName={p?.displayName}
+                  profilePic={p?.profilePic}
+                  postImg={p?.postImg}
+                  saves={p?.saves}
+                  content={p?.content}
+                  likes={p?.likes}
+                  createdAt={p?.createdAt}
                 />
               ))
             ) : (
-              <div>No Posts Found</div>
+              <div className="mx-auto w-92 h-60 sm:w-80 md:w-135 md:h-60 text-center mt-30">
+                No Posts Found
+              </div>
             )}
           </div>
         )}

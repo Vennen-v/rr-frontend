@@ -3,7 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Posts } from "../types/types";
 import api from "../api/api";
 import { useEffect, useState } from "react";
+import { formatDistance, parse, parseISO } from "date-fns";
+import toast from "react-hot-toast";
 import { useAtomValue } from "jotai";
+import { currentUser } from "../globalState/atoms";
 
 function Post({
   postId,
@@ -15,16 +18,23 @@ function Post({
   profilePic,
   postImg,
   userName,
+  createdAt,
 }: Posts) {
+  const cuurUser = useAtomValue(currentUser);
   const navigate = useNavigate();
-
   const [isLiked, setIsLiked] = useState<boolean>();
   const [likeCount, setLikeCount] = useState<number>(likes);
   const [isSaved, setIsSaved] = useState<boolean>();
   const [saveCount, setSaveCount] = useState<number>(saves);
 
+  console.log(parseISO(createdAt));
+
   async function LikePost(e: any) {
     e.preventDefault();
+    if (!cuurUser) {
+      navigate("/welcome");
+      return;
+    }
     if (isLiked == true) {
       setIsLiked(false);
       setLikeCount(likeCount - 1);
@@ -75,6 +85,10 @@ function Post({
 
   async function SavePost(e: any) {
     e.preventDefault();
+    if (!cuurUser) {
+      navigate("/welcome");
+      return;
+    }
     if (isSaved == true) {
       setIsSaved(false);
       setSaveCount(saveCount - 1);
@@ -116,7 +130,11 @@ function Post({
         <div className="flex items-center text-start px-5 pb-0 justify-between ">
           <div className="flex flex-col gap-4 flex-1">
             <div className="text-base font-extralight md:text-lg">{title}</div>
-            <div className="text-sm text-[#a8a8a8]">5 days ago</div>
+            <div className="text-sm text-[#a8a8a8]">
+              {formatDistance(createdAt, new Date(), {
+                addSuffix: true,
+              })}
+            </div>
           </div>
           <div className="h-16 md:h-30 rounded-md ">
             <img

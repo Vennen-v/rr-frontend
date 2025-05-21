@@ -1,22 +1,26 @@
 import { Bookmark, EllipsisVertical, Heart, MessageSquare } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
 import api from "../api/api";
 import { Comments, Posts } from "../types/types";
 import { currentUser } from "../globalState/atoms";
 import { useAtomValue } from "jotai";
 import Comment from "../components/comment";
+import { parse, parseISO } from "date-fns";
+import toast from "react-hot-toast";
 
 function PostPage() {
   const { id } = useParams();
   const cuurUser = useAtomValue(currentUser);
+  const naviagate = useNavigate();
   const [post, setPost] = useState<Posts>();
   const [isLiked, setIsLiked] = useState<boolean | undefined>();
   const [likeCount, setLikeCount] = useState<number | undefined>(post?.likes);
   const [isSaved, setIsSaved] = useState<boolean | undefined>();
   const [saveCount, setSaveCount] = useState<number | undefined>(post?.saves);
   const [content, setContent] = useState<string>("");
+  const [postDate, setPostDate] = useState<any>();
 
   const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
@@ -24,6 +28,10 @@ function PostPage() {
 
   async function LikePost(e: any) {
     e.preventDefault();
+    if (!cuurUser) {
+      naviagate("/welcome");
+      return;
+    }
     if (isLiked == true) {
       setIsLiked(false);
       setLikeCount(post?.likes - 1);
@@ -74,6 +82,10 @@ function PostPage() {
 
   async function SavePost(e: any) {
     e.preventDefault();
+    if (!cuurUser) {
+      naviagate("/welcome");
+      return;
+    }
     if (isSaved == true) {
       setIsSaved(false);
       setSaveCount(post?.saves - 1);
@@ -114,10 +126,19 @@ function PostPage() {
     e.preventDefault();
     if (!content) return;
 
+    if (!cuurUser) {
+      naviagate("/welcome");
+      return;
+    }
+
     try {
       await api.post(`/comments/posts/${id}`, { content: content });
       console.log("i tried it");
+      window.location.reload();
+      toast.success("Comment pubished successfully");
+      window.scrollTo(0, document.body.scrollHeight);
     } catch (error) {
+      toast.error(`${error}`);
       console.log(error);
     }
   }
@@ -127,16 +148,21 @@ function PostPage() {
   return (
     <div className=" flex flex-col flex-1 w-fit h-screen mx-auto overflow-y-auto bg-[#141414]">
       <div className=" flex justify-between h-14 mb-8 border-b border-b-gray-500 w-full text-xl items-center text-[#eeeeee] font-semibold p-5">
-        <div className="flex items-center gap-2">
+        <Link
+          to={`/${post?.userName}`}
+          className="flex items-center gap-2 hover:underline"
+        >
           <img
             className="object-cover rounded-md h-10 w-10 "
             src={post?.profilePic}
           />
           {post?.displayName}
-        </div>
-        <button className="p-3 bg-[#8956FB] text-sm rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer">
-          Follow
-        </button>
+        </Link>
+        {cuurUser && (
+          <button className="p-3 bg-[#8956FB] text-sm rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer">
+            Follow
+          </button>
+        )}
       </div>
       <div className="container w-max mx-auto rounded-md flex flex-col h-full">
         <div className="flex flex-col gap-2 md:gap-5 h-100 w-92 sm:w-80 md:w-183 mx-auto mb-10 text-[#eeeeee]">
@@ -158,7 +184,9 @@ function PostPage() {
 
                 {/* Still NEED DATES */}
 
-                <div className="text-xs text-[#a8a8a8]">May 9, 2025</div>
+                <div className="text-xs text-[#a8a8a8]">
+                  {post?.createdAt.slice(0, 10)}
+                </div>
               </div>
             </div>
           </div>
@@ -259,16 +287,18 @@ function PostPage() {
           <div className="divider mx-1 mt-2 mb-2"></div>
           <div className="mb-10">
             <div className="flex flex-col">
-              <form onSubmit={handleCommentUpload} className="flex gap-4 my-4">
-                <img
-                  className="rounded-md h-10 w-10 object-cover hover:cursor-pointer"
-                  src={cuurUser?.profilePic}
-                />
+              <form onSubmit={handleCommentUpload} className="flex gap-4 my-4 ">
+                {cuurUser && (
+                  <img
+                    className="rounded-md md:block hidden h-10 w-10 object-cover hover:cursor-pointer"
+                    src={cuurUser?.profilePic}
+                  />
+                )}
                 <div className="flex flex-col flex-1 gap-2">
                   <textarea
                     onChange={handleContentChange}
                     className="border rounded-lg border-gray-500 p-3  duration-500 ease-in-out focus:h-40 focus:outline-1 focus:outline-white"
-                    placeholder="Leave a reply..."
+                    placeholder="Leave a comment..."
                   ></textarea>
                   {content && (
                     <button

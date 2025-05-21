@@ -12,6 +12,9 @@ function ProfilePage() {
   const [activeTab, setActiveTab] = useState<string>("tab 1");
   const [user, setUser] = useState<CurrentUser | undefined>();
   const [postPages, setPostsPages] = useState<PostsPages>();
+  const [followCount, setFollowCount] = useState<number | undefined>(
+    user?.followers.length
+  );
   const [isFollowing, setIsFollowing] = useState<boolean>();
   const location = useLocation();
 
@@ -54,6 +57,30 @@ function ProfilePage() {
     fetchUserPosts();
   }, [user]);
 
+  async function FollowUser(e: any) {
+    e.preventDefault();
+    if (isFollowing == true) {
+      setIsFollowing(false);
+      setFollowCount(user?.followers.length - 1);
+      try {
+        await api.post(`/user/unfollow/${user?.id}`);
+        console.log("Unliked Post");
+        return;
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setIsFollowing(true);
+      setFollowCount(user?.followers.length + 1);
+      try {
+        await api.post(`/user/follow/${user?.id}`);
+        console.log("Liked Post");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
   function handleTabChange(tabId: string) {
     setActiveTab(tabId);
   }
@@ -90,7 +117,7 @@ function ProfilePage() {
                 <div className="text-lg md:text-base">@{user?.userName}</div>
                 <div className=" flex gap-2  text-[#a8a8a8]">
                   <span className="text-sm md:text-base">
-                    {user?.followers.length} Followers
+                    {followCount || user?.followers.length} Followers
                   </span>
                   <span className="text-sm md:text-base">•</span>
                   <span className="text-smmd:text-base">
@@ -104,21 +131,28 @@ function ProfilePage() {
               />
             </div>
             <div className="text-sm md:text-base">{user?.bio}</div>
-            {currUser?.userName !== userName && !isFollowing && (
-              <button className="w-1/4 p-2 bg-[#8956FB] rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer">
+
+            {currUser?.userName !== userName && !isFollowing && currUser && (
+              <button
+                onClick={(e) => FollowUser(e)}
+                className="w-1/4 p-2 bg-[#8956FB] rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer"
+              >
                 Follow
               </button>
             )}
 
-            {currUser?.userName !== userName && isFollowing && (
-              <button className="w-1/4 p-2  rounded-lg border border-gray-500 duration-300 ease-in-out hover:bg-[#383838] hover:cursor-pointer">
+            {currUser?.userName !== userName && isFollowing && currUser && (
+              <button
+                onClick={(e) => FollowUser(e)}
+                className="w-1/4 p-2  rounded-lg border border-gray-500 duration-300 ease-in-out hover:bg-[#383838] hover:cursor-pointer"
+              >
                 Following
               </button>
             )}
             {currUser?.userName == userName && (
               <Link
                 to={"/settings"}
-                className="w-1/3 md:w-1/5 p-1 ml-auto rounded-full border border-gray-500 duration-300 ease-in-out  hover:cursor-pointer text-sm text-center"
+                className="w-1/3 md:w-1/5 p-1 ml-auto rounded-full border border-gray-500 duration-300 ease-in-out hover:bg-[#383838]  hover:cursor-pointer text-sm text-center"
               >
                 Edit Profile
               </Link>
@@ -141,6 +175,7 @@ function ProfilePage() {
                     saves={p.saves}
                     content={p.content}
                     likes={p.likes}
+                    createdAt={p.createdAt}
                   />
                 ))
               ) : (

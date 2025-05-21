@@ -14,6 +14,7 @@
   background: #121212;
   font-size: large;
   height: 100vh;
+  color: #eeeeee;
 }
 
 /* Snow Theme */
@@ -22,11 +23,13 @@
   background: #a8a8a8;
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
+  color: #eeeeee;
 }
 
 #root .ql-editor {
   height: 100vh;
   min-width: 100%;
+  color: #eeeeee;
 }
 
 #postContent a {

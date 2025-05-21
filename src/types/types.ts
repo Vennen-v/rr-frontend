@@ -29,6 +29,7 @@ export type Posts = {
   profilePic: string;
   postImg: string;
   displayName: string;
+  createdAt: string;
 };
 
 export type PostsPages = {
