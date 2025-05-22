@@ -7,6 +7,7 @@ export type CurrentUser = {
   userPosts: Posts[];
   bio: string;
   followers: CurrentUser[];
+  createdAt: string;
 };
 
 export type User = {

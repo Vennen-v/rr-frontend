@@ -109,15 +109,17 @@ function Sidebar() {
           <div className="flex gap-3 items-center lg:mx-2 lg:mb-3 text-gray-200 lg:p-3 duration-300 ease-in-out  border-t border-t-gray-500 ">
             <Link
               to={`/${user.userName}`}
-              className="flex gap-3 rounded-lg mx-auto my-4 lg:my-0 lg:p-1 lg:mx-0 hover:bg-[#383838] hover:cursor-pointer"
+              className="flex items-center gap-3 rounded-lg mx-auto my-4 lg:my-0 lg:p-1 lg:mx-0 hover:underline hover:cursor-pointer"
             >
               <img
                 className="rounded-2xl h-10 w-10 object-cover "
                 src={user?.profilePic}
               />
               <div className="lg:flex flex-col hidden">
-                <span className="text-sm">{user.displayName}</span>
-                <span className="text-sm">@{user.userName}</span>
+                <span className="text-xs font-semibold">
+                  {user.displayName}
+                </span>
+                <span className="text-xs text-[#a8a8a8">@{user.userName}</span>
               </div>
             </Link>
             <div className="dropdown dropdown-right dropdown-end">

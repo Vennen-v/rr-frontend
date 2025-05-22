@@ -20,7 +20,7 @@ function ProfilePage() {
 
   useEffect(() => {
     fetchUserInfo();
-  }, [location.pathname]);
+  }, [location.pathname, isFollowing?.valueOf]);
 
   async function fetchUserInfo() {
     try {
@@ -61,7 +61,9 @@ function ProfilePage() {
     e.preventDefault();
     if (isFollowing == true) {
       setIsFollowing(false);
-      setFollowCount(user?.followers.length - 1);
+      setFollowCount(
+        user?.followers.length == 0 ? 0 : user?.followers.length - 1
+      );
       try {
         await api.post(`/user/unfollow/${user?.id}`);
         console.log("Unliked Post");
@@ -161,7 +163,7 @@ function ProfilePage() {
           <div className="divider"></div>
           {activeTab === "tab 1" && (
             <div className="flex flex-col gap-4">
-              {postPages ? (
+              {postPages && postPages.content.length > 0 ? (
                 postPages?.content.map((p: Posts) => (
                   <Post
                     key={p.postId}
@@ -179,14 +181,14 @@ function ProfilePage() {
                   />
                 ))
               ) : (
-                <div className="text-center">No posts yet.</div>
+                <div className="text-center">No posts yet</div>
               )}
             </div>
           )}
           {activeTab === "tab 2" && (
             <div className="flex flex-col gap-5 w-90 md:w-140 mx-auto">
               <div className="bg-[#202020] p-3 rounded-md text-sm">
-                Joined: March 2, 2025
+                Joined: {user?.createdAt.slice(0, 10)}
               </div>
               <div className="flex justify-around bg-[#202020] p-3 rounded-md">
                 <div className="flex flex-col gap-2 items-center">

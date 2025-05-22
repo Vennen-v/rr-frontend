@@ -20,7 +20,7 @@ function Comment({
         </Link>
         <div className="flex flex-col gap-2 flex-1">
           <div className="flex flex-col ">
-            <Link to={`${userName}`}>
+            <Link to={`/${userName}`}>
               <span className="text-base font-semibold duration-300 hover:cursor-pointer hover:underline">
                 {displayName}
               </span>

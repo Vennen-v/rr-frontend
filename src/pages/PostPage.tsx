@@ -122,6 +122,16 @@ function PostPage() {
     }
   }
 
+  async function DeletePost() {
+    try {
+      await api.delete(`/posts/user/current/${id}`);
+      naviagate("/");
+      toast.success("Post deleted successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function handleCommentUpload(e: any) {
     e.preventDefault();
     if (!content) return;
@@ -158,11 +168,11 @@ function PostPage() {
           />
           {post?.displayName}
         </Link>
-        {cuurUser && (
+        {/* {cuurUser && (
           <button className="p-3 bg-[#8956FB] text-sm rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer">
             Follow
           </button>
-        )}
+        )} */}
       </div>
       <div className="container w-max mx-auto rounded-md flex flex-col h-full">
         <div className="flex flex-col gap-2 md:gap-5 h-100 w-92 sm:w-80 md:w-183 mx-auto mb-10 text-[#eeeeee]">
@@ -246,9 +256,7 @@ function PostPage() {
                 className="flex gap-1 items-center text-[#a8a8a8] hover:cursor-pointer p-1 rounded-md hover:bg-[#383838]"
               >
                 <Heart size={25} fill={isLiked ? "#CC3D5C" : "none"} />{" "}
-                <span className="text-sm md:text-base">
-                  {likeCount || post?.likes}
-                </span>
+                <span className="text-sm md:text-base">{post?.likes}</span>
               </button>
               <button className="flex gap-1 items-center text-[#a8a8a8] hover:cursor-pointer p-1 rounded-md hover:bg-[#383838]">
                 <MessageSquare size={25} />{" "}
@@ -261,9 +269,7 @@ function PostPage() {
                 className="flex gap-1 items-center text-[#a8a8a8] hover:cursor-pointer p-1 rounded-md hover:bg-[#383838]"
               >
                 <Bookmark size={25} fill={isSaved ? "#a8a8a8" : "none"} />{" "}
-                <span className="text-sm md:text-base">
-                  {saveCount || post?.saves}
-                </span>
+                <span className="text-sm md:text-base">{post?.saves}</span>
               </button>
             </div>
             <div className="dropdown dropdown-top dropdown-end">
@@ -279,7 +285,19 @@ function PostPage() {
                 className="dropdown-content menu bg-[#202020] border border-gray-500 rounded-box z-1 w-52 p-2 shadow-sm"
               >
                 <li>
-                  <a>Copy Post Link</a>
+                  <a
+                    onClick={() => {
+                      navigator.clipboard.writeText(window.location.href);
+                      toast.success("Link Copied");
+                    }}
+                  >
+                    Copy Post Link
+                  </a>
+                  {cuurUser?.userName === post?.userName && (
+                    <a onClick={DeletePost} className="text-red-400">
+                      Delete Post
+                    </a>
+                  )}
                 </li>
               </ul>
             </div>

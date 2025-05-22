@@ -1,4 +1,10 @@
-import { Heart, MessageSquare, Bookmark } from "lucide-react";
+import {
+  Heart,
+  MessageSquare,
+  Bookmark,
+  EllipsisVertical,
+  Trash,
+} from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Posts } from "../types/types";
 import api from "../api/api";
@@ -37,7 +43,7 @@ function Post({
     }
     if (isLiked == true) {
       setIsLiked(false);
-      setLikeCount(likeCount - 1);
+      setLikeCount(likeCount == 0 ? 0 : likeCount - 1);
       try {
         await api.delete(`/delete/like/${postId}`);
         console.log("Unliked Post");
@@ -91,7 +97,7 @@ function Post({
     }
     if (isSaved == true) {
       setIsSaved(false);
-      setSaveCount(saveCount - 1);
+      setSaveCount(saveCount == 0 ? 0 : saveCount - 1);
       try {
         await api.delete(`/delete/save/${postId}`);
         console.log("Removed Saved Post");
@@ -109,6 +115,16 @@ function Post({
       }
     }
     // }
+  }
+
+  async function DeletePost() {
+    try {
+      await api.delete(`/posts/user/current/${postId}`);
+      navigate("/");
+      toast.success("Post deleted successfully");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -148,7 +164,7 @@ function Post({
             onClick={(e) => LikePost(e)}
             className="flex gap-1 items-center text-[#a8a8a8] p-1 rounded-lg hover:cursor-pointer hover:bg-[#202020]"
           >
-            <Heart size={18} fill={isLiked ? "#CC3D5C" : "currentColor"} />{" "}
+            <Heart size={18} fill={isLiked ? "#CC3D5C" : "none"} />{" "}
             <span className="text-sm md:text-base">{likeCount}</span>
           </button>
           <button className="flex gap-1 items-center text-[#a8a8a8] p-1 rounded-lg hover:cursor-pointer hover:bg-[#202020]">
@@ -162,6 +178,30 @@ function Post({
             <Bookmark size={18} fill={isSaved ? "#a8a8a8" : "none"} />{" "}
             <span className="text-sm md:text-base">{saveCount}</span>
           </button>
+          {cuurUser?.userName === userName && (
+            <div
+              onClick={(e) => e.preventDefault()}
+              className="dropdown dropdown-right dropdown-end ml-auto mr-4"
+            >
+              <div
+                className="p-2 duration-300 ease-in-out rounded-full hover:bg-[#8956FB] hover:cursor-pointer focus:bg-[#8956FB]"
+                tabIndex={0}
+                role="button"
+              >
+                <EllipsisVertical size={18} />
+              </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu bg-[#202020] border border-gray-500 rounded-box z-1 w-52 p-2 shadow-sm"
+              >
+                <li>
+                  <a onClick={DeletePost} className="text-red-400">
+                    Delete Post
+                  </a>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </Link>
     </div>

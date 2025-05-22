@@ -12,6 +12,19 @@ function Home() {
   const [followPosts, setFollowPosts] = useState<Posts[] | undefined>();
 
   useEffect(() => {
+    async function getC() {
+      try {
+        const { data } = await api.get(`/check-cookie`);
+
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getC();
+  }, []);
+
+  useEffect(() => {
     async function getCurrentUserInfo() {
       try {
         const { data } = await api.get(`/user`);

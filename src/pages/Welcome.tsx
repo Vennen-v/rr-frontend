@@ -42,6 +42,7 @@ function Welcome() {
         password: password,
       });
       window.location.reload();
+      toast.success("Welcome to the Rogue Road! Sign in to your new account.");
       console.log("i tried it");
     } catch (e) {
       console.log(e);
@@ -140,9 +141,9 @@ function Welcome() {
                   className="w-full m-0 p-3 rounded-lg focus:outline-1 focus:outline-white"
                 ></input>
               </div>
-              {errors.username && (
+              {/* {errors.username && (
                 <div className="text-red-500">{errors.username.message}</div>
-              )}
+              )} */}
               <div className="w-full flex items-center border border-gray-500 rounded-lg">
                 <LockKeyhole size={21} className="m-2 text-[#686868]" />
                 <input
@@ -152,9 +153,9 @@ function Welcome() {
                   className="w-full m-0 p-3 rounded-lg focus:outline-1 focus:outline-white"
                 />
               </div>
-              {errors.password && (
+              {/* {errors.password && (
                 <div className="text-red-500">{errors.password.message}</div>
-              )}
+              )} */}
               <button
                 disabled={isSubmitting}
                 className="flex gap-3 rounded-lg h-10 w-full bg-[#8956FB] duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer "
@@ -195,9 +196,9 @@ function Welcome() {
                   className="w-full m-0 p-3 rounded-lg focus:outline-1 focus:outline-white"
                 ></input>
               </div>
-              {errors.username && (
+              {/* {errors.username && (
                 <div className="text-red-500">{errors.username.message}</div>
-              )}
+              )} */}
               <div className="w-full flex items-center border border-gray-500 rounded-lg">
                 <User size={21} className="m-2 text-[#686868]" />
                 <input
@@ -208,9 +209,9 @@ function Welcome() {
                   className="w-full m-0 p-3 rounded-lg focus:outline-1 focus:outline-white"
                 ></input>
               </div>
-              {errors.username && (
+              {/* {errors.username && (
                 <div className="text-red-500">{errors.username.message}</div>
-              )}
+              )} */}
               <div className="w-full flex items-center border border-gray-500 rounded-lg">
                 <Mail size={21} className="m-2 text-[#686868]" />
                 <input
@@ -221,9 +222,9 @@ function Welcome() {
                   className="w-full m-0 p-3 rounded-lg focus:outline-1 focus:outline-white"
                 ></input>
               </div>
-              {errors.username && (
+              {/* {errors.username && (
                 <div className="text-red-500">{errors.username.message}</div>
-              )}
+              )} */}
               <div className="w-full flex items-center border border-gray-500 rounded-lg">
                 <LockKeyhole size={21} className="m-2 text-[#686868]" />
                 <input
@@ -234,9 +235,9 @@ function Welcome() {
                   className="w-full m-0 p-3 rounded-lg focus:outline-1 focus:outline-white"
                 />
               </div>
-              {errors.password && (
+              {/* {errors.password && (
                 <div className="text-red-500">{errors.password.message}</div>
-              )}
+              )} */}
               <button
                 disabled={isSubmitting}
                 className="flex gap-3 rounded-lg h-10 w-full bg-[#8956FB] duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer "
