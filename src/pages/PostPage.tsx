@@ -146,7 +146,6 @@ function PostPage() {
       console.log("i tried it");
       window.location.reload();
       toast.success("Comment pubished successfully");
-      window.scrollTo(0, document.body.scrollHeight);
     } catch (error) {
       toast.error(`${error}`);
       console.log(error);
@@ -303,7 +302,7 @@ function PostPage() {
             </div>
           </div>
           <div className="divider mx-1 mt-2 mb-2"></div>
-          <div className="mb-10">
+          <div id="comments" className="mb-10">
             <div className="flex flex-col">
               <form onSubmit={handleCommentUpload} className="flex gap-4 my-4 ">
                 {cuurUser && (
@@ -320,7 +319,9 @@ function PostPage() {
                   ></textarea>
                   {content && (
                     <button
-                      onClick={handleCommentUpload}
+                      onClick={() => {
+                        cuurUser ? handleCommentUpload : naviagate("/");
+                      }}
                       type="submit"
                       className="w-20 h-10 p-1 text-sm bg-[#8956FB] rounded-lg duration-300 ease-in-out ml-auto hover:bg-[#674b9b] hover:cursor-pointer"
                     >

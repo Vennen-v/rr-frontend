@@ -3,7 +3,7 @@ import Post from "../components/Post";
 import api from "../api/api";
 import { currentUser } from "../globalState/atoms";
 import { useAtom } from "jotai";
-import { Posts, PostsPages } from "../types/types";
+import { CurrentUser, Posts, PostsPages } from "../types/types";
 
 function Home() {
   const [activeTab, setActiveTab] = useState<string>("tab 1");
@@ -58,12 +58,25 @@ function Home() {
         console.log(data);
 
         const stuffs = [];
+        const newStuffs: Posts[] = [];
 
         for (const thing of data) {
-          stuffs.push(thing?.userPosts[0]);
+          stuffs.push(thing?.userPosts);
         }
+        console.log(stuffs);
 
-        setFollowPosts(stuffs.reverse());
+        stuffs.forEach((e) => {
+          for (let i = 0; i < e.length; i++) {
+            newStuffs.push(e[i]);
+          }
+        });
+
+        console.log(newStuffs);
+        const sortedStuffs = [...newStuffs].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        console.log(sortedStuffs);
+        setFollowPosts(sortedStuffs);
       } catch (error) {
         console.log(error);
       }

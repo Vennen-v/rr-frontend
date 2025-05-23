@@ -280,7 +280,7 @@ function SettingsPage() {
                       Bio:
                     </label>
                     <div className="w-full border border-gray-500 rounded-lg">
-                      <input
+                      <textarea
                         id={field.name}
                         value={field.state.value}
                         onBlur={field.handleBlur}

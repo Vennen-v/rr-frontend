@@ -31,6 +31,7 @@ function ProfilePage() {
       console.log(error);
     }
   }
+
   useEffect(() => {
     async function isFollowingUser() {
       try {

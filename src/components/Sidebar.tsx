@@ -4,9 +4,12 @@ import api from "../api/api";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../globalState/atoms";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+import { User } from "../types/types";
 
 function Sidebar() {
   const user = useAtomValue(currentUser);
+  const [followList, setFollowList] = useState<User[]>();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -23,6 +26,18 @@ function Sidebar() {
       console.log(error);
     }
   }
+
+  useEffect(() => {
+    async function getFollowing() {
+      try {
+        const { data } = await api.get(`/user/following`);
+        setFollowList(data.reverse());
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getFollowing();
+  }, [location.pathname]);
 
   return (
     <div className="hidden flex-initial w-17 lg:w-62 h-screen border-r border-r-gray-500 mx-0 md:flex flex-col bg-[#202020] sticky top-0">
@@ -87,7 +102,7 @@ function Sidebar() {
         {user && user.id && (
           <Link
             to={"/create"}
-            className={`flex items-center gap-3 text-base text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
+            className={`flex items-center gap-3 text-base text-gray-200 mr-4 p-3 duration-100 rounded-r-lg ${
               location.pathname === "/create"
                 ? "font-semibold bg-[#383838] border-l-3 border-l-[#8956FB]"
                 : ""
@@ -104,6 +119,24 @@ function Sidebar() {
         )}
       </div>
 
+      <div>
+        <div className="mx-5 my-5 text-sm text-[#d6d5d5]">Following</div>
+        <div className="mx-2 flex flex-col gap-2 h-full overflow-y-hidden">
+          {followList?.map((f: User) => (
+            <Link
+              to={`/${f.userName}`}
+              className="flex gap-3 items-center rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer p-2"
+            >
+              <img
+                className="rounded-lg h-7 w-7 object-cover"
+                src={f.profilePic}
+              />
+              <div className="text-sm text-[#d6d5d5]">{f.displayName}</div>
+            </Link>
+          ))}
+        </div>
+      </div>
+
       {user && user?.id ? (
         <div className=" mt-auto">
           <div className="flex gap-3 items-center lg:mx-2 lg:mb-3 text-gray-200 lg:p-3 duration-300 ease-in-out  border-t border-t-gray-500 ">
@@ -112,14 +145,14 @@ function Sidebar() {
               className="flex items-center gap-3 rounded-lg mx-auto my-4 lg:my-0 lg:p-1 lg:mx-0 hover:underline hover:cursor-pointer"
             >
               <img
-                className="rounded-2xl h-10 w-10 object-cover "
+                className="rounded-lg h-10 w-10 object-cover "
                 src={user?.profilePic}
               />
               <div className="lg:flex flex-col hidden">
                 <span className="text-xs font-semibold">
                   {user.displayName}
                 </span>
-                <span className="text-xs text-[#a8a8a8">@{user.userName}</span>
+                <span className="text-xs text-[#a8a8a8]">@{user.userName}</span>
               </div>
             </Link>
             <div className="dropdown dropdown-right dropdown-end">

@@ -41,8 +41,19 @@ function Welcome() {
         email: email,
         password: password,
       });
-      window.location.reload();
-      toast.success("Welcome to the Rogue Road! Sign in to your new account.");
+      toast.success("Welcome to the Rogue Road!");
+      try {
+        const { data } = await api.post(`/auth/signin`, {
+          username: userName,
+          password: password,
+        });
+        console.log(data);
+
+        navigate("/");
+      } catch (error) {
+        setError("username", { message: "error of some kind" });
+        toast.error(`${error}`);
+      }
       console.log("i tried it");
     } catch (e) {
       console.log(e);
@@ -103,13 +114,13 @@ function Welcome() {
 
   return (
     <div className="text-[#eeeeee] flex flex-1 gap-20 w-full h-screen mx-auto bg-[#141414]">
-      <div className="hidden md:flex w-40 md:w-80 h-screen ml-auto border-r border-r-[#8956FB]">
+      <div className="hidden md:flex w-40 md:w-85 h-screen ml-auto border-r border-r-[#8956FB]">
         <div
           className="w-full my-auto mr-10 md:text-lg lg:text-7xl font-bold inline-block 
        bg-gradient-to-r from-[#bcb6c7] to-[#8956FB]
        bg-clip-text text-transparent p-3"
         >
-          Sign in
+          {activeTab == "tab 1" ? "Sign in" : "Sign Up"}
         </div>
       </div>
       <div className="flex w-150 m-auto rounded-lg h-112 bg-[#202020]/60 backdrop-blur-2xl">
