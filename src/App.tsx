@@ -13,13 +13,17 @@ import SearchPage from "./pages/SearchPage";
 import SettingsPage from "./pages/SettingsPage";
 import CreatePostPage from "./pages/CreatePostPage";
 import Welcome from "./pages/Welcome";
+import { WebSocketContextProvider } from "./ws/Ws";
+import NotificationsPage from "./pages/NotificationsPage";
 
 function Layout({ children }: any) {
   return (
-    <div className="flex h-full w-full relative overflow-hidden">
-      <Sidebar />
-      {children}
-    </div>
+    <WebSocketContextProvider>
+      <div className="flex h-full w-full relative overflow-hidden">
+        <Sidebar />
+        {children}
+      </div>
+    </WebSocketContextProvider>
   );
 }
 
@@ -79,6 +83,14 @@ function App() {
             element={
               <Layout>
                 <SearchPage />
+              </Layout>
+            }
+          />
+          <Route
+            path="notifications"
+            element={
+              <Layout>
+                <NotificationsPage />
               </Layout>
             }
           />

@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { formatDistance, parse, parseISO } from "date-fns";
 import toast from "react-hot-toast";
 import { useAtomValue } from "jotai";
-import { currentUser } from "../globalState/atoms";
+import { currentUser } from "../store/atoms";
 
 function Post({
   postId,
@@ -134,14 +134,17 @@ function Post({
         className=" flex flex-col justify-between mx-auto w-92 h-60 sm:w-80 md:w-135 md:h-60 mb-0 bg-[#202020] rounded-lg duration-300 hover:bg-[#303030] hover:cursor-pointer"
       >
         <div className="border-b border-b-gray-500 p-2 ">
-          <Link
-            to={`/${userName}`}
-            className="flex gap-3 items-center hover:underline w-fit"
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(`/${userName}`);
+            }}
+            className="flex gap-3 items-center hover:cursor-pointer hover:underline w-fit"
           >
             <img className="rounded-xl h-9 w-9 object-cover" src={profilePic} />
 
             <span className="text-sm font-semibold">{displayName}</span>
-          </Link>
+          </button>
         </div>
         <div className="flex items-center text-start px-5 pb-0 justify-between ">
           <div className="flex flex-col gap-4 flex-1">
@@ -195,9 +198,9 @@ function Post({
                 className="dropdown-content menu bg-[#202020] border border-gray-500 rounded-box z-1 w-52 p-2 shadow-sm"
               >
                 <li>
-                  <a onClick={DeletePost} className="text-red-400">
+                  <button onClick={DeletePost} className="text-red-400">
                     Delete Post
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>

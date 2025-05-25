@@ -1,15 +1,25 @@
-import { House, Search, Settings, Plus, EllipsisVertical } from "lucide-react";
+import {
+  House,
+  Search,
+  Settings,
+  Plus,
+  EllipsisVertical,
+  Bell,
+} from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import api from "../api/api";
 import { useAtomValue } from "jotai";
-import { currentUser } from "../globalState/atoms";
+import { currentUser } from "../store/atoms";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
-import { User } from "../types/types";
+import { Notification, User } from "../types/types";
+import { useWebSocket } from "../ws/Ws";
 
 function Sidebar() {
   const user = useAtomValue(currentUser);
+  const webSocketClient = useWebSocket();
   const [followList, setFollowList] = useState<User[]>();
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,17 +37,54 @@ function Sidebar() {
     }
   }
 
+  const nonReadNotifs = notifications.filter((notif) => !notif.read).length;
+
+  useEffect(() => {
+    async function getNotifs() {
+      try {
+        const { data } = await api.get(`/user/notifs`);
+        setNotifications(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getNotifs();
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const subscription = webSocketClient?.subscribe(
+      `/topic/users/${user?.id}/notifications`,
+      (message) => {
+        const notification = JSON.parse(message.body);
+        setNotifications((prev) => {
+          const index = prev.findIndex(
+            (n) => n.notificationId === notification.id
+          );
+          if (index === -1) {
+            return [notification, ...prev];
+          }
+          return prev.map((n) =>
+            n.notificationId === notification.id ? notification : n
+          );
+        });
+      }
+    );
+    return () => subscription?.unsubscribe();
+  }, [user?.id, webSocketClient]);
+
   useEffect(() => {
     async function getFollowing() {
       try {
         const { data } = await api.get(`/user/following`);
         setFollowList(data.reverse());
+        console.log(data.reverse());
       } catch (error) {
         console.log(error);
       }
     }
     getFollowing();
-  }, [location.pathname]);
+  }, []);
 
   return (
     <div className="hidden flex-initial w-17 lg:w-62 h-screen border-r border-r-gray-500 mx-0 md:flex flex-col bg-[#202020] sticky top-0">
@@ -82,8 +129,31 @@ function Sidebar() {
         </Link>
         {user && user.id && (
           <Link
+            to={"/notifications"}
+            className={`flex gap-3 indicator text-base w-58 text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
+              location.pathname === "/notifications"
+                ? "font-semibold bg-[#383838] border-l-3 border-l-[#8956FB]"
+                : ""
+            } hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer`}
+          >
+            {nonReadNotifs > 0 && (
+              <span className="ml-2 indicator-item indicator-start badge badge-primary">
+                {nonReadNotifs}
+              </span>
+            )}
+            <span>
+              <Bell
+                size={24}
+                strokeWidth={location.pathname === "/notifications" ? 2.5 : 2}
+              />
+            </span>
+            <span className=" hidden lg:block">Notifications</span>
+          </Link>
+        )}
+        {user && user.id && (
+          <Link
             to={"/settings"}
-            className={`flex gap-3 text-based text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
+            className={`flex gap-3 text-base text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
               location.pathname === "/settings"
                 ? "font-semibold bg-[#383838] border-l-3 border-l-[#8956FB]"
                 : ""
@@ -124,6 +194,7 @@ function Sidebar() {
         <div className="mx-2 flex flex-col gap-2 h-full overflow-y-hidden">
           {followList?.map((f: User) => (
             <Link
+              key={f.id}
               to={`/${f.userName}`}
               className="flex gap-3 items-center rounded-r-lg hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer p-2"
             >

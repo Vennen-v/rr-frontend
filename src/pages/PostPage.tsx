@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
 import api from "../api/api";
 import { Comments, Posts } from "../types/types";
-import { currentUser } from "../globalState/atoms";
+import { currentUser } from "../store/atoms";
 import { useAtomValue } from "jotai";
 import Comment from "../components/comment";
 import { parse, parseISO } from "date-fns";

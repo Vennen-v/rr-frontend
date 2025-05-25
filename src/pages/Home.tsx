@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Post from "../components/Post";
 import api from "../api/api";
-import { currentUser } from "../globalState/atoms";
+import { currentUser } from "../store/atoms";
 import { useAtom } from "jotai";
 import { CurrentUser, Posts, PostsPages } from "../types/types";
 

@@ -4,7 +4,7 @@ import api from "../api/api";
 import { CurrentUser, Posts, PostsPages } from "../types/types";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useAtomValue } from "jotai";
-import { currentUser } from "../globalState/atoms";
+import { currentUser } from "../store/atoms";
 
 function ProfilePage() {
   const currUser = useAtomValue(currentUser);

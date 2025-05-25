@@ -1,5 +1,5 @@
 import { useAtomValue } from "jotai";
-import { currentUser } from "../globalState/atoms";
+import { currentUser } from "../store/atoms";
 import { ChangeEvent, useState } from "react";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";

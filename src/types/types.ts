@@ -68,3 +68,18 @@ export type Comments = {
   replies: Comment[];
   likes: number;
 };
+
+export enum NotificationType {
+  LIKE = "LIKE",
+  COMMENT = "COMMENT",
+}
+
+export type Notification = {
+  notificationId: number;
+  recipient: number;
+  actor: string;
+  read: boolean;
+  type: NotificationType;
+  resourceId: number;
+  createdAt: string;
+};

@@ -5,7 +5,7 @@ import api from "../api/api";
 
 import { useNavigate } from "react-router-dom";
 import { useAtomValue } from "jotai";
-import { currentUser } from "../globalState/atoms";
+import { currentUser } from "../store/atoms";
 import { AtSignIcon, LockKeyhole, Mail, User } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
