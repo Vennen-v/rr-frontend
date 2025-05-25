@@ -5,6 +5,7 @@ import {
   Plus,
   EllipsisVertical,
   Bell,
+  MessageSquare,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import api from "../api/api";
@@ -127,6 +128,29 @@ function Sidebar() {
           </span>
           <span className=" hidden lg:block">Search</span>
         </Link>
+        {user && user.id && (
+          <Link
+            to={"/messages"}
+            className={`flex gap-3 indicator text-base w-58 text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
+              location.pathname === "/messages"
+                ? "font-semibold bg-[#383838] border-l-3 border-l-[#8956FB]"
+                : ""
+            } hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer`}
+          >
+            {/* {nonReadNotifs > 0 && (
+              <span className="ml-2 indicator-item indicator-start badge badge-primary">
+                {nonReadNotifs}
+              </span>
+            )} */}
+            <span>
+              <MessageSquare
+                size={24}
+                strokeWidth={location.pathname === "/messages" ? 2.5 : 2}
+              />
+            </span>
+            <span className=" hidden lg:block">Messages</span>
+          </Link>
+        )}
         {user && user.id && (
           <Link
             to={"/notifications"}

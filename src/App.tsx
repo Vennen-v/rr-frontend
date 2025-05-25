@@ -15,6 +15,7 @@ import CreatePostPage from "./pages/CreatePostPage";
 import Welcome from "./pages/Welcome";
 import { WebSocketContextProvider } from "./ws/Ws";
 import NotificationsPage from "./pages/NotificationsPage";
+import MessagesPage from "./pages/MessagesPage";
 
 function Layout({ children }: any) {
   return (
@@ -83,6 +84,14 @@ function App() {
             element={
               <Layout>
                 <SearchPage />
+              </Layout>
+            }
+          />
+          <Route
+            path="messages"
+            element={
+              <Layout>
+                <MessagesPage />
               </Layout>
             }
           />
