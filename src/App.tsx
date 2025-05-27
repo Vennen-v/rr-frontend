@@ -16,6 +16,7 @@ import Welcome from "./pages/Welcome";
 import { WebSocketContextProvider } from "./ws/Ws";
 import NotificationsPage from "./pages/NotificationsPage";
 import MessagesPage from "./pages/MessagesPage";
+import Conversation from "./pages/ConversationPage";
 
 function Layout({ children }: any) {
   return (
@@ -94,7 +95,9 @@ function App() {
                 <MessagesPage />
               </Layout>
             }
-          />
+          >
+            <Route path="conversations/:id" element={<Conversation />} />
+          </Route>
           <Route
             path="notifications"
             element={

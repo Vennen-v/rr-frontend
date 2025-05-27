@@ -25,6 +25,15 @@ function Sidebar() {
   const location = useLocation();
 
   console.log(location);
+  console.log(location.pathname.slice(0, 23));
+
+  function removeAfterChar(str: string, char: any) {
+    if (str === null || str === undefined) {
+      return "";
+    }
+    const index = str.indexOf(char);
+    return index === -1 ? str : str.substring(0, index);
+  }
 
   async function signOut() {
     try {
@@ -88,17 +97,34 @@ function Sidebar() {
   }, []);
 
   return (
-    <div className="hidden flex-initial w-17 lg:w-62 h-screen border-r border-r-gray-500 mx-0 md:flex flex-col bg-[#202020] sticky top-0">
+    <div
+      className={`hidden flex-initial w-17 ${
+        location.pathname === "/messages" ||
+        location.pathname.slice(0, 23) === "/messages/conversations"
+          ? "w-17"
+          : "lg:w-62"
+      } h-screen border-r border-r-gray-500 mx-0 md:flex flex-col bg-[#202020] sticky top-0`}
+    >
       <Link
         to={"/"}
-        className=" hidden lg:block text-gray-200 text-xl font-extralight mt-10 mb-12 ml-7 duration-100 hover:cursor-pointer hover:text-[#828282]"
+        className={` hidden ${
+          location.pathname === "/messages" ||
+          location.pathname.slice(0, 23) === "/messages/conversations"
+            ? ""
+            : "lg:block"
+        } text-gray-200 text-xl font-extralight mt-10 mb-12 ml-7 duration-100 hover:cursor-pointer hover:text-[#828282]`}
       >
         The Rogue Road
       </Link>
       <div className="w-full mx-2 ">
         <Link
           to={"/"}
-          className={`flex gap-3 text-base text-gray-200 md:mt-12 lg:mt-auto mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
+          className={`flex gap-3 text-base text-gray-200 md:mt-12 ${
+            location.pathname === "/messages" ||
+            location.pathname.slice(0, 23) === "/messages/conversations"
+              ? ""
+              : "lg:mt-auto"
+          } mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
             location.pathname === "/"
               ? "font-semibold bg-[#383838] border-l-3 border-l-[#8956FB]"
               : ""
@@ -110,11 +136,25 @@ function Sidebar() {
               strokeWidth={location.pathname === "/" ? 2.5 : 2}
             />
           </span>
-          <span className=" hidden lg:block">Home</span>
+          <span
+            className={` hidden ${
+              location.pathname === "/messages" ||
+              location.pathname.slice(0, 23) === "/messages/conversations"
+                ? ""
+                : "lg:block"
+            }`}
+          >
+            Home
+          </span>
         </Link>
         <Link
           to={"/search"}
-          className={`flex gap-3 text-base text-gray-200 w-58 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
+          className={`flex gap-3 text-base text-gray-200 ${
+            location.pathname === "/messages" ||
+            location.pathname.slice(0, 23) === "/messages/conversations"
+              ? ""
+              : " w-58"
+          } mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
             location.pathname === "/search"
               ? "font-semibold bg-[#383838] border-l-3 border-l-[#8956FB]"
               : ""
@@ -126,13 +166,28 @@ function Sidebar() {
               strokeWidth={location.pathname === "/search" ? 2.5 : 2}
             />
           </span>
-          <span className=" hidden lg:block">Search</span>
+          <span
+            className={` hidden ${
+              location.pathname === "/messages" ||
+              location.pathname.slice(0, 23) === "/messages/conversations"
+                ? ""
+                : "lg:block"
+            }`}
+          >
+            Search
+          </span>
         </Link>
         {user && user.id && (
           <Link
             to={"/messages"}
-            className={`flex gap-3 indicator text-base w-58 text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
-              location.pathname === "/messages"
+            className={`flex gap-3 indicator text-base ${
+              location.pathname === "/messages" ||
+              location.pathname.slice(0, 23) === "/messages/conversations"
+                ? ""
+                : " w-58"
+            } text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
+              location.pathname === "/messages" ||
+              location.pathname.slice(0, 23) === "/messages/conversations"
                 ? "font-semibold bg-[#383838] border-l-3 border-l-[#8956FB]"
                 : ""
             } hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer`}
@@ -145,16 +200,35 @@ function Sidebar() {
             <span>
               <MessageSquare
                 size={24}
-                strokeWidth={location.pathname === "/messages" ? 2.5 : 2}
+                strokeWidth={
+                  location.pathname === "/messages" ||
+                  location.pathname.slice(0, 23) === "/messages/conversations"
+                    ? 2.5
+                    : 2
+                }
               />
             </span>
-            <span className=" hidden lg:block">Messages</span>
+            <span
+              className={` hidden ${
+                location.pathname === "/messages" ||
+                location.pathname.slice(0, 23) === "/messages/conversations"
+                  ? ""
+                  : "lg:block"
+              }`}
+            >
+              Messages
+            </span>
           </Link>
         )}
         {user && user.id && (
           <Link
             to={"/notifications"}
-            className={`flex gap-3 indicator text-base w-58 text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
+            className={`flex gap-3 indicator text-base ${
+              location.pathname === "/messages" ||
+              location.pathname.slice(0, 23) === "/messages/conversations"
+                ? ""
+                : " w-58"
+            } text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
               location.pathname === "/notifications"
                 ? "font-semibold bg-[#383838] border-l-3 border-l-[#8956FB]"
                 : ""
@@ -171,7 +245,16 @@ function Sidebar() {
                 strokeWidth={location.pathname === "/notifications" ? 2.5 : 2}
               />
             </span>
-            <span className=" hidden lg:block">Notifications</span>
+            <span
+              className={` hidden ${
+                location.pathname === "/messages" ||
+                location.pathname.slice(0, 23) === "/messages/conversations"
+                  ? ""
+                  : "lg:block"
+              }`}
+            >
+              Notifications
+            </span>
           </Link>
         )}
         {user && user.id && (
@@ -189,7 +272,16 @@ function Sidebar() {
                 strokeWidth={location.pathname === "/settings" ? 2.5 : 2}
               />
             </span>
-            <span className=" hidden lg:block">Settings</span>
+            <span
+              className={` hidden ${
+                location.pathname === "/messages" ||
+                location.pathname.slice(0, 23) === "/messages/conversations"
+                  ? ""
+                  : "lg:block"
+              }`}
+            >
+              Settings
+            </span>
           </Link>
         )}
 
@@ -208,13 +300,39 @@ function Sidebar() {
                 strokeWidth={location.pathname === "/create" ? 2.5 : 2}
               />
             </span>
-            <span className=" hidden lg:block">Create</span>
+            <span
+              className={` hidden ${
+                location.pathname === "/messages" ||
+                location.pathname.slice(0, 23) === "/messages/conversations"
+                  ? ""
+                  : "lg:block"
+              }`}
+            >
+              Create
+            </span>
           </Link>
         )}
       </div>
 
       <div>
-        <div className="mx-5 my-5 text-sm text-[#d6d5d5]">Following</div>
+        <div
+          className={`divider  ${
+            location.pathname === "/messages" ||
+            location.pathname.slice(0, 23) === "/messages/conversations"
+              ? ""
+              : "lg:hidden"
+          } `}
+        ></div>
+        <div
+          className={` hidden mx-5 my-5 text-sm text-[#d6d5d5] ${
+            location.pathname === "/messages" ||
+            location.pathname.slice(0, 23) === "/messages/conversations"
+              ? ""
+              : "lg:block"
+          }`}
+        >
+          Following
+        </div>
         <div className="mx-2 flex flex-col gap-2 h-full overflow-y-hidden">
           {followList?.map((f: User) => (
             <Link
@@ -226,7 +344,16 @@ function Sidebar() {
                 className="rounded-lg h-7 w-7 object-cover"
                 src={f.profilePic}
               />
-              <div className="text-sm text-[#d6d5d5]">{f.displayName}</div>
+              <div
+                className={`text-sm text-[#d6d5d5]  hidden ${
+                  location.pathname === "/messages" ||
+                  location.pathname.slice(0, 23) === "/messages/conversations"
+                    ? ""
+                    : "lg:block"
+                }`}
+              >
+                {f.displayName}
+              </div>
             </Link>
           ))}
         </div>
@@ -234,16 +361,35 @@ function Sidebar() {
 
       {user && user?.id ? (
         <div className=" mt-auto">
-          <div className="flex gap-3 items-center lg:mx-2 lg:mb-3 text-gray-200 lg:p-3 duration-300 ease-in-out  border-t border-t-gray-500 ">
+          <div
+            className={`flex gap-3 items-center ${
+              location.pathname === "/messages" ||
+              location.pathname.slice(0, 23) === "/messages/conversations"
+                ? " "
+                : "lg:mx-2 lg:mb-3 lg:p-3"
+            } text-gray-200  duration-300 ease-in-out  border-t border-t-gray-500 `}
+          >
             <Link
               to={`/${user.userName}`}
-              className="flex items-center gap-3 rounded-lg mx-auto my-4 lg:my-0 lg:p-1 lg:mx-0 hover:underline hover:cursor-pointer"
+              className={`flex items-center gap-3 rounded-lg mx-auto my-4 ${
+                location.pathname === "/messages" ||
+                location.pathname.slice(0, 23) === "/messages/conversations"
+                  ? " "
+                  : "lg:my-0 lg:p-1 lg:mx-0"
+              }  hover:underline hover:cursor-pointer`}
             >
               <img
                 className="rounded-lg h-10 w-10 object-cover "
                 src={user?.profilePic}
               />
-              <div className="lg:flex flex-col hidden">
+              <div
+                className={`${
+                  location.pathname === "/messages" ||
+                  location.pathname.slice(0, 23) === "/messages/conversations"
+                    ? " "
+                    : "lg:flex"
+                } flex-col hidden`}
+              >
                 <span className="text-xs font-semibold">
                   {user.displayName}
                 </span>
@@ -252,7 +398,12 @@ function Sidebar() {
             </Link>
             <div className="dropdown dropdown-right dropdown-end">
               <div
-                className=" hidden lg:block ml-auto p-2 duration-300 ease-in-out rounded-full hover:bg-[#8956FB] hover:cursor-pointer focus:bg-[#8956FB]"
+                className={` hidden  ${
+                  location.pathname === "/messages" ||
+                  location.pathname.slice(0, 23) === "/messages/conversations"
+                    ? ""
+                    : "lg:block"
+                } ml-auto p-2 duration-300 ease-in-out rounded-full hover:bg-[#8956FB] hover:cursor-pointer focus:bg-[#8956FB]`}
                 tabIndex={0}
                 role="button"
               >
