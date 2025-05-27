@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useForm } from "@tanstack/react-form";
 import { z } from "zod/v4";
+import useSiteTitle from "../utils/title";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
 
@@ -15,6 +16,8 @@ function SettingsPage() {
   const [status, setStatus] = useState<UploadStatus>("idle");
   const user = useAtomValue(currentUser);
   const navigate = useNavigate();
+
+  useSiteTitle("Settings | The Rogue Road");
 
   if (!user) {
     navigate("/");

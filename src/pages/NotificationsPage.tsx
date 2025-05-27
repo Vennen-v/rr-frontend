@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
-import Notif from "../components/notif";
+import Notif from "../components/Notif";
 import { useEffect, useState } from "react";
 import { Notification } from "../types/types";
 import api from "../api/api";
+import useSiteTitle from "../utils/title";
 
 function NotificationsPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
+
+  useSiteTitle("Notifications | The Rogue Road");
 
   useEffect(() => {
     async function getNotifs() {

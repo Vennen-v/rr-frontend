@@ -1,15 +1,9 @@
-import {
-  Heart,
-  MessageSquare,
-  Bookmark,
-  EllipsisVertical,
-  Trash,
-} from "lucide-react";
+import { Heart, MessageSquare, Bookmark, EllipsisVertical } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Posts } from "../types/types";
 import api from "../api/api";
 import { useEffect, useState } from "react";
-import { formatDistance, parse, parseISO } from "date-fns";
+import { formatDistance, parseISO } from "date-fns";
 import toast from "react-hot-toast";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";

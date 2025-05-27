@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
+import useSiteTitle from "../utils/title";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
 
@@ -17,6 +18,8 @@ function CreatePostPage() {
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState<string>("");
   const [status, setStatus] = useState<UploadStatus>("idle");
+
+  useSiteTitle("Create New Post | The Rogue Road");
 
   const handleTitleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value);

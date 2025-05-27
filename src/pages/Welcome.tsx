@@ -9,6 +9,7 @@ import { currentUser } from "../store/atoms";
 import { AtSignIcon, LockKeyhole, Mail, User } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import useSiteTitle from "../utils/title";
 
 const schema = z.object({
   username: z.string(),
@@ -25,6 +26,8 @@ function Welcome() {
   const [email, setEmail] = useState<string>("");
   const user = useAtomValue(currentUser);
   const navigate = useNavigate();
+
+  useSiteTitle("Welcome to The Rogue Road");
 
   function handleTabChange(tabId: string) {
     setActiveTab(tabId);

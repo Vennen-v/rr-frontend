@@ -4,12 +4,15 @@ import api from "../api/api";
 import { currentUser } from "../store/atoms";
 import { useAtom } from "jotai";
 import { CurrentUser, Posts, PostsPages } from "../types/types";
+import useSiteTitle from "../utils/title";
 
 function Home() {
   const [activeTab, setActiveTab] = useState<string>("tab 1");
   const [cuurUser, setCurrentUser] = useAtom(currentUser);
   const [postPages, setPostsPages] = useState<PostsPages>();
   const [followPosts, setFollowPosts] = useState<Posts[] | undefined>();
+
+  useSiteTitle("Home | The Rogue Road");
 
   useEffect(() => {
     async function getC() {

@@ -1,9 +1,12 @@
-import { Plus, SquarePen } from "lucide-react";
+import { SquarePen } from "lucide-react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import useSiteTitle from "../utils/title";
 
 function MessagesPage() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  useSiteTitle("Messaging | The Rogue Road");
 
   return (
     <div className=" flex flex-col flex-1 w-fit h-screen mx-auto overflow-y-auto bg-[#141414]">

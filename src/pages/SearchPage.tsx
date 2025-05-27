@@ -3,6 +3,7 @@ import UserSearch from "../components/UserSearch";
 import Post from "../components/Post";
 import { Posts, PostsPages, User, UserPages } from "../types/types";
 import api from "../api/api";
+import useSiteTitle from "../utils/title";
 
 function SearchPage() {
   const [activeTab, setActiveTab] = useState<string>("tab 1");
@@ -10,6 +11,8 @@ function SearchPage() {
   const [userPages, setUserPages] = useState<UserPages>();
   const [keyword, setKeyword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useSiteTitle("Search | The Rogue Road");
 
   function handleTabChange(tabId: string) {
     setActiveTab(tabId);

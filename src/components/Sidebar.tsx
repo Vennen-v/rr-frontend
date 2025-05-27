@@ -27,14 +27,6 @@ function Sidebar() {
   console.log(location);
   console.log(location.pathname.slice(0, 23));
 
-  function removeAfterChar(str: string, char: any) {
-    if (str === null || str === undefined) {
-      return "";
-    }
-    const index = str.indexOf(char);
-    return index === -1 ? str : str.substring(0, index);
-  }
-
   async function signOut() {
     try {
       const { data } = await api.post(`/auth/signout`);

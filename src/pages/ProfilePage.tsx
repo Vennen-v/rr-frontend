@@ -5,6 +5,7 @@ import { CurrentUser, Posts, PostsPages } from "../types/types";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
+import useSiteTitle from "../utils/title";
 
 function ProfilePage() {
   const currUser = useAtomValue(currentUser);
@@ -17,6 +18,8 @@ function ProfilePage() {
   );
   const [isFollowing, setIsFollowing] = useState<boolean>();
   const location = useLocation();
+
+  useSiteTitle(`${userName} | The Rogue Road`);
 
   useEffect(() => {
     fetchUserInfo();
