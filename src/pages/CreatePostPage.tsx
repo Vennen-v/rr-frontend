@@ -1,5 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import api from "../api/api";
@@ -35,12 +35,31 @@ function CreatePostPage() {
     console.log(file?.name);
   }
 
-  if (!user) {
-    navigate("/");
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  }, []);
 
   async function handlePostUpload(e: any) {
-    if (!file || !title || !content) return;
+    // if (!file || !title || !content) {
+    //   toast.error("All fields are required");
+    //   return;
+    // }
+
+    if (!title || title == "") {
+      toast.error("A title is required");
+      return;
+    }
+
+    if (!file) {
+      toast.error("A feature photo is requied");
+      return;
+    }
+    if (!content || content == "<p><br></p>") {
+      toast.error("You cannot publish an empty post");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("file", file);
@@ -58,7 +77,7 @@ function CreatePostPage() {
       toast.success("Your post has been published!");
       navigate("/");
       setStatus("success");
-    } catch {
+    } catch (error) {
       setStatus("error");
     }
   }
@@ -86,7 +105,7 @@ function CreatePostPage() {
     "strike",
     "blockquote",
     "list",
-    "bullet",
+
     "indent",
     "link",
     "image",
@@ -116,7 +135,6 @@ function CreatePostPage() {
             formats={formats}
             value={content}
             onChange={setContent}
-            placeholder="Start writing..."
             className="w-200 mx-auto"
           />
         </div>

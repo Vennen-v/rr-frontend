@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Comments } from "../types/types";
+import { useRef } from "react";
 function Comment({
   commentId,
   content,
@@ -9,8 +10,13 @@ function Comment({
   replies,
   likes,
 }: Comments) {
+  const commentRef = useRef<HTMLDivElement>(null);
+
   return (
-    <div className="flex flex-col gap-5 py-8 px-4 border-b w-full border-b-gray-500 duration-300 text-[#eeeeee]">
+    <div
+      ref={commentRef}
+      className="flex flex-col gap-5 py-8 px-4 border-b w-full border-b-gray-500 duration-300 text-[#eeeeee]"
+    >
       <div className="flex gap-3">
         <Link to={`/${userName}`}>
           <img

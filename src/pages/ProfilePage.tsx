@@ -70,7 +70,7 @@ function ProfilePage() {
       );
       try {
         await api.post(`/user/unfollow/${user?.id}`);
-        console.log("Unliked Post");
+        console.log("Unfollowed User");
         return;
       } catch (error) {
         console.log(error);
@@ -80,7 +80,7 @@ function ProfilePage() {
       setFollowCount(user?.followers.length + 1);
       try {
         await api.post(`/user/follow/${user?.id}`);
-        console.log("Liked Post");
+        console.log("Followed User");
       } catch (error) {
         console.log(error);
       }

@@ -13,7 +13,7 @@ import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
-import { Notification, User } from "../types/types";
+import { ConversationType, Notification, User } from "../types/types";
 import { useWebSocket } from "../ws/Ws";
 
 function Sidebar() {
@@ -21,6 +21,7 @@ function Sidebar() {
   const webSocketClient = useWebSocket();
   const [followList, setFollowList] = useState<User[]>();
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [conversations, setConversations] = useState<ConversationType[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -41,6 +42,14 @@ function Sidebar() {
 
   const nonReadNotifs = notifications.filter((notif) => !notif.read).length;
 
+  const nonReadMessages = conversations.reduce(
+    (acc: number, conversation) =>
+      acc +
+      conversation.messages.filter(
+        (m) => m.sender.id.toString() != user?.id && !m.read
+      ).length,
+    0
+  );
   useEffect(() => {
     async function getNotifs() {
       try {
@@ -53,6 +62,21 @@ function Sidebar() {
     }
     getNotifs();
   }, [location.pathname]);
+
+  useEffect(() => {
+    async function getConversations() {
+      try {
+        const { data } = await api.get(`/conversations`);
+        setConversations(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getConversations();
+  }, []);
+
+  // useEffect(() => {}, []);
 
   useEffect(() => {
     const subscription = webSocketClient?.subscribe(
@@ -74,6 +98,27 @@ function Sidebar() {
     );
     return () => subscription?.unsubscribe();
   }, [user?.id, webSocketClient]);
+
+  useEffect(() => {
+    const subscription = webSocketClient?.subscribe(
+      `/topic/users/${user?.id}/conversations`,
+      (message) => {
+        const conversation = JSON.parse(message.body);
+        setConversations((prev) => {
+          const index = prev.findIndex(
+            (c) => c.conversationId === conversation.conversationId
+          );
+          if (index === -1) {
+            return [conversation, ...prev];
+          }
+          return prev.map((c) =>
+            c.conversationId === conversation.conversationId ? conversation : c
+          );
+        });
+      }
+    );
+    return () => subscription?.unsubscribe();
+  }, [user?.id, webSocketClient, location.pathname]);
 
   useEffect(() => {
     async function getFollowing() {
@@ -184,11 +229,11 @@ function Sidebar() {
                 : ""
             } hover:border-l-3 hover:border-l-[#8956FB] hover:bg-[#383838] hover:font-semibold hover:cursor-pointer`}
           >
-            {/* {nonReadNotifs > 0 && (
+            {nonReadMessages > 0 && location.pathname !== "/messages" && (
               <span className="ml-2 indicator-item indicator-start badge badge-primary">
-                {nonReadNotifs}
+                {nonReadMessages}
               </span>
-            )} */}
+            )}
             <span>
               <MessageSquare
                 size={24}

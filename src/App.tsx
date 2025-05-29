@@ -21,7 +21,7 @@ import Conversation from "./pages/ConversationPage";
 function Layout({ children }: any) {
   return (
     <WebSocketContextProvider>
-      <div className="flex h-full w-full relative overflow-hidden">
+      <div className="flex h-screen w-full ">
         <Sidebar />
         {children}
       </div>

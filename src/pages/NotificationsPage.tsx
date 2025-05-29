@@ -36,6 +36,7 @@ function NotificationsPage() {
                 actor={n.actor}
                 read={n.read}
                 resourceId={n.resourceId}
+                resourceString={n.resourceString}
                 type={n.type}
                 createdAt={n.createdAt}
               />

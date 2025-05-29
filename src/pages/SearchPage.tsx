@@ -18,11 +18,6 @@ function SearchPage() {
     setActiveTab(tabId);
   }
 
-  const handleChange = (e: any) => {
-    setKeyword(e.target.value);
-    console.log(keyword);
-  };
-
   async function searchPosts() {
     setIsLoading(true);
     try {
@@ -51,7 +46,6 @@ function SearchPage() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    searchPosts();
     searchUsers();
   };
 
@@ -83,7 +77,7 @@ function SearchPage() {
             type="text"
             required
             placeholder="Search"
-            onChange={handleChange}
+            onChange={(e) => setKeyword(e.target.value)}
             className="mx-3 "
           />
           <button
@@ -140,7 +134,7 @@ function SearchPage() {
           </div>
         )}
         {activeTab === "tab 2" && (
-          <div className="flex flex-col gap-2 items-center">
+          <div className="flex flex-col gap-2 items-center overflow-y-hidden">
             {userPages && userPages.content.length > 0 ? (
               userPages.content.map((u: User) => (
                 <UserSearch

@@ -81,5 +81,28 @@ export type Notification = {
   read: boolean;
   type: NotificationType;
   resourceId: number;
+  resourceString: string;
   createdAt: string;
+};
+
+export type ConversationType = {
+  conversationId: number;
+  author: User;
+  recipient: User;
+  messages: ConvoMessage[];
+};
+
+export type ConvoMessage = {
+  messageId: number;
+  sender: User;
+  receiver: User;
+  content: string;
+  read: boolean;
+  createdAt: string;
+};
+
+export type ConvoMessages = {
+  messages: ConvoMessage[];
+  user: User | null;
+  conversationId: number;
 };

@@ -3,10 +3,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api from "../api/api";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
-import { AtSignIcon, LockKeyhole, Mail, User } from "lucide-react";
+import { ArrowLeft, AtSignIcon, LockKeyhole, Mail, User } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useSiteTitle from "../utils/title";
@@ -123,7 +123,11 @@ function Welcome() {
        bg-gradient-to-r from-[#bcb6c7] to-[#8956FB]
        bg-clip-text text-transparent p-3"
         >
-          {activeTab == "tab 1" ? "Sign in" : "Sign Up"}
+          {activeTab == "tab 1"
+            ? "Sign in"
+            : activeTab == "tab 2"
+            ? "Sign Up"
+            : activeTab == "tab 3" && "Reset"}
         </div>
       </div>
       <div className="flex w-150 m-auto rounded-lg h-112 bg-[#202020]/60 backdrop-blur-2xl">
@@ -179,6 +183,12 @@ function Welcome() {
                 </span>
               </button>
             </form>
+            <button
+              onClick={() => handleTabChange("tab 3")}
+              className="hover:underline text-start text-sm w-full font-extralight"
+            >
+              Forgot Password?
+            </button>
           </div>
         )}
         {activeTab == "tab 2" && (
@@ -261,6 +271,17 @@ function Welcome() {
                 </span>
               </button>
             </form>
+          </div>
+        )}
+        {activeTab == "tab 3" && (
+          <div>
+            <button
+              onClick={() => handleTabChange("tab 1")}
+              className="hover:cursor-pointer"
+            >
+              <ArrowLeft />
+            </button>
+            forgot
           </div>
         )}
       </div>

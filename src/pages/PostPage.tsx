@@ -1,5 +1,5 @@
 import { Bookmark, EllipsisVertical, Heart, MessageSquare } from "lucide-react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
 import api from "../api/api";
@@ -7,7 +7,6 @@ import { Comments, Posts } from "../types/types";
 import { currentUser } from "../store/atoms";
 import { useAtomValue } from "jotai";
 import Comment from "../components/comment";
-import { parse, parseISO } from "date-fns";
 import toast from "react-hot-toast";
 
 function PostPage() {
@@ -20,7 +19,6 @@ function PostPage() {
   const [isSaved, setIsSaved] = useState<boolean | undefined>();
   const [saveCount, setSaveCount] = useState<number | undefined>(post?.saves);
   const [content, setContent] = useState<string>("");
-  const [postDate, setPostDate] = useState<any>();
 
   const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
@@ -144,7 +142,7 @@ function PostPage() {
     try {
       await api.post(`/comments/posts/${id}`, { content: content });
       console.log("i tried it");
-      window.location.reload();
+      // window.location.reload();
       toast.success("Comment pubished successfully");
     } catch (error) {
       toast.error(`${error}`);

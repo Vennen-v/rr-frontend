@@ -11,6 +11,7 @@ function Notif({
   createdAt,
   type,
   resourceId,
+  resourceString,
   read,
 }: Notification) {
   const [user, setUser] = useState<User | undefined>();
@@ -42,7 +43,11 @@ function Notif({
     <button
       onClick={() => {
         markNotifAsRead(notificationId);
-        navigate(`/posts/${resourceId}`);
+        if (type === "LIKE" || type === "COMMENT") {
+          navigate(`/posts/${resourceId}`);
+        } else {
+          navigate(`/${resourceString}`);
+        }
       }}
       className="flex gap-5 items-center p-5 border-b h-25 w-150 border-b-gray-500 duration-300 rounded-t-md hover:bg-[#383838] hover:cursor-pointer"
     >
@@ -56,8 +61,10 @@ function Notif({
           <span className="text-base font-semibold">{user?.displayName}</span>
           {type === "LIKE" ? (
             <span className="text-sm">Liked your post</span>
-          ) : (
+          ) : type === "COMMENT" ? (
             <span className="text-sm">Commented on your post</span>
+          ) : (
+            <span className="text-sm">Followed you</span>
           )}
         </div>
         <div className="text-start text-xs text-[#a8a8a8]">
