@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
 import { ArrowLeft, AtSignIcon, LockKeyhole, Mail, User } from "lucide-react";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import useSiteTitle from "../utils/title";
 
@@ -24,6 +24,7 @@ function Welcome() {
   const [displayName, setDisplayname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [forgottonEmail, setForgottonEmail] = useState<string>("");
   const user = useAtomValue(currentUser);
   const navigate = useNavigate();
 
@@ -101,6 +102,21 @@ function Welcome() {
     }
   };
 
+  async function handleForgotPassword(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!forgottonEmail) {
+      toast.error("Email is required");
+    }
+
+    try {
+      await api.post(`/forgot-password?email=${forgottonEmail}`);
+      setActiveTab("tab 1");
+      toast.success("Password reset email sent");
+    } catch (e) {
+      toast.error("Something went wrong");
+    }
+  }
+
   // const onSignUpSubmit: SubmitHandler<FormFieldz> = async (formData) => {
   //   try {
   //     const { data } = await api.post(`/auth/signup`, formData);
@@ -151,7 +167,7 @@ function Welcome() {
               className="w-full flex flex-col gap-4"
             >
               <div className="w-full flex items-center border border-gray-500 rounded-lg">
-                <AtSignIcon size={21} className="m-2 text-[#686868]" />
+                <User size={21} className="m-2 text-[#686868]" />
                 <input
                   {...register("username")}
                   type="text"
@@ -185,7 +201,7 @@ function Welcome() {
             </form>
             <button
               onClick={() => handleTabChange("tab 3")}
-              className="hover:underline text-start text-sm w-full font-extralight"
+              className="hover:underline hover:cursor-pointer text-start text-sm w-full font-extralight"
             >
               Forgot Password?
             </button>
@@ -274,15 +290,48 @@ function Welcome() {
           </div>
         )}
         {activeTab == "tab 3" && (
-          <div>
-            <button
-              onClick={() => handleTabChange("tab 1")}
-              className="hover:cursor-pointer"
-            >
-              <ArrowLeft />
-            </button>
-            forgot
-          </div>
+          <>
+            <div className="h-full w-full  m-auto rounded-2xl flex flex-col gap-2 p-5">
+              <button
+                onClick={() => handleTabChange("tab 1")}
+                className="hover:cursor-pointer"
+              >
+                <ArrowLeft />
+              </button>
+              <div className="text-center text-2xl mt-10 font-extralight">
+                Forgot Your Password?
+              </div>
+              <div className="text-center text-base font-extralight">
+                Enter your email and a Password Reset Email will be sent
+              </div>
+              <div className="divider my-2 mx-10"></div>
+              <div className="flex flex-col gap-4 w-9/10 mx-auto">
+                <form
+                  onSubmit={handleForgotPassword}
+                  className=" flex flex-col gap-4"
+                >
+                  <div className="input w-4/5 mx-auto bg-[#202020]">
+                    <input
+                      value={forgottonEmail}
+                      type="text"
+                      required
+                      placeholder="Email"
+                      onChange={(e) => {
+                        setForgottonEmail(e.target.value);
+                      }}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className=" w-4/5 h-10 p-1 mx-auto text-sm bg-[#8956FB] rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer"
+                  >
+                    Send
+                  </button>
+                </form>
+              </div>
+            </div>
+          </>
         )}
       </div>
     </div>

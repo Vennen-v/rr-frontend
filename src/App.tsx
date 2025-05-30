@@ -17,6 +17,7 @@ import { WebSocketContextProvider } from "./ws/Ws";
 import NotificationsPage from "./pages/NotificationsPage";
 import MessagesPage from "./pages/MessagesPage";
 import Conversation from "./pages/ConversationPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 function Layout({ children }: any) {
   return (
@@ -114,6 +115,7 @@ function App() {
               </Layout>
             }
           />
+          <Route path="reset-password" element={<ResetPasswordPage />} />
           <Route path="create" element={<CreatePostPage />} />
           <Route path="welcome" element={<Welcome />} />
         </Routes>

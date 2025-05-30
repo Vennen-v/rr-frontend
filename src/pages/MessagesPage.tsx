@@ -142,7 +142,6 @@ function MessagesPage() {
             </div>
             <button
               onClick={() => {
-                // document.getElementById("my_modal_3").showModal();
                 setActiveTab("tab 2");
               }}
               className="w-9 rounded-md p-1 mr-5 mb-1 hover:cursor-pointer hover:bg-[#383838]"
@@ -165,49 +164,6 @@ function MessagesPage() {
                   conversationc={c}
                 />
               ))}
-            {/* <Conversation /> */}
-            {/* <button
-              onClick={() => {
-                navigate(`/messages/conversations/2`);
-              }}
-              className={`flex gap-5 items-center p-5 h-20 w-full  duration-300 hover:bg-[#383838] hover:cursor-pointer ${
-                location.pathname === `/messages/conversations/2` &&
-                "bg-[#383838]"
-              }`}
-            >
-              <img
-                className="rounded-lg h-10 w-10 object-cover"
-                src="https://media.tenor.com/akJHc9Lw_JIAAAAe/harima-kenji-school-rumble.png"
-              />
-
-              <div className="flex flex-col gap-2  ">
-                <div className="flex gap-3 items-center">
-                  <span className="text-base font-semibold">Harima K.</span>
-                </div>
-                <div className="text-start text-xs text-[#a8a8a8]">6h</div>
-              </div>
-            </button>
-            <button
-              onClick={() => {
-                navigate(`/messages/conversations/3`);
-              }}
-              className={`flex gap-5 items-center p-5 h-20 w-full  duration-300 hover:bg-[#383838] hover:cursor-pointer ${
-                location.pathname === `/messages/conversations/3` &&
-                "bg-[#383838]"
-              }`}
-            >
-              <img
-                className="rounded-lg h-10 w-10 object-cover"
-                src="https://m.media-amazon.com/images/M/MV5BOTEwYWFjYmItZWJmNi00MGExLWI1MjktYzRiYjJkNzhiMWIxXkEyXkFqcGdeQXNuZXNodQ@@._V1_.jpg"
-              />
-
-              <div className="flex flex-col gap-2  ">
-                <div className="flex gap-3 items-center">
-                  <span className="text-base font-semibold">Dunnneeee</span>
-                </div>
-                <div className="text-start text-xs text-[#a8a8a8]">6h</div>
-              </div>
-            </button> */}
           </div>
           <div className="divider mt-auto"></div>
         </div>
