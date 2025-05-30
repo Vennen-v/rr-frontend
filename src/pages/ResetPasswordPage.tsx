@@ -3,7 +3,6 @@ import { Eye } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { currentUser } from "../store/atoms";
-import { ca } from "zod/v4/locales";
 import { error } from "zod/v4/locales/ar.js";
 import api from "../api/api";
 import toast from "react-hot-toast";

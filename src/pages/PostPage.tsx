@@ -20,6 +20,8 @@ function PostPage() {
   const [saveCount, setSaveCount] = useState<number | undefined>(post?.saves);
   const [content, setContent] = useState<string>("");
 
+  const commentRef = useRef<HTMLDivElement>(null);
+
   const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
@@ -142,7 +144,8 @@ function PostPage() {
     try {
       await api.post(`/comments/posts/${id}`, { content: content });
       console.log("i tried it");
-      // window.location.reload();
+      window.location.reload();
+      // commentRef.current?.scrollIntoView();
       toast.success("Comment pubished successfully");
     } catch (error) {
       toast.error(`${error}`);
@@ -328,21 +331,26 @@ function PostPage() {
                   )}
                 </div>
               </form>
-              {post?.comments &&
-                post.comments.map((c: Comments) => (
-                  <Comment
-                    key={c.commentId}
-                    commentId={c.commentId}
-                    content={c.content}
-                    userName={c.userName}
-                    displayName={c.displayName}
-                    profilePic={c.profilePic}
-                    replies={c.replies}
-                    likes={c.likes}
-                  />
-                ))}
+              <div>
+                {post?.comments &&
+                  post.comments.map((c: Comments) => (
+                    <Comment
+                      key={c.commentId}
+                      commentId={c.commentId}
+                      content={c.content}
+                      userName={c.userName}
+                      displayName={c.displayName}
+                      profilePic={c.profilePic}
+                      replies={c.replies}
+                      likes={c.likes}
+                    />
+                  ))}
+              </div>
 
-              <div className="text-center my-5 font-extralight">
+              <div
+                ref={commentRef}
+                className="text-center my-5 font-extralight"
+              >
                 End of Comments
               </div>
             </div>
