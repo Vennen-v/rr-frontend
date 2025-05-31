@@ -1,20 +1,16 @@
-import { useAtomValue } from "jotai";
 import { Eye } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { currentUser } from "../store/atoms";
 import { error } from "zod/v4/locales/ar.js";
 import api from "../api/api";
 import toast from "react-hot-toast";
 
 function ResetPasswordPage() {
-  const currUser = useAtomValue(currentUser);
-  const [token, setToken] = useState<string>();
   const [password, setPassword] = useState<string>("");
   const [confirm, setConfirm] = useState<string>("");
   const [type1, setType1] = useState<string>("password");
   const [type2, setType2] = useState<string>("password");
-  const [mistake, setMistake] = useState<boolean>(false);
+  // const [mistake, setMistake] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -86,9 +82,9 @@ function ResetPasswordPage() {
                 onMouseUp={() => setType2("password")}
               />
             </div>
-            {mistake && (
+            {/* {mistake && (
               <div className="text-red-400">Your password does not match</div>
-            )}
+            )} */}
             <button
               type="submit"
               className="p-1 text-sm bg-[#8956FB] rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer"

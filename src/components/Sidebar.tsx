@@ -385,7 +385,7 @@ function Sidebar() {
         >
           Following
         </div>
-        <div className="mx-2 flex flex-col gap-2 h-full overflow-y-hidden">
+        <div className="mx-2 flex flex-col gap-2 h-full overflow-y-auto">
           {followList?.map((f: User) => (
             <Link
               key={f.id}

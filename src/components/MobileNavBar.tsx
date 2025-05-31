@@ -1,11 +1,4 @@
-import {
-  Bell,
-  House,
-  MessageSquare,
-  Plus,
-  Search,
-  Settings,
-} from "lucide-react";
+import { Bell, House, MessageSquare, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import api from "../api/api";
@@ -13,12 +6,11 @@ import toast from "react-hot-toast";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
 import { useWebSocket } from "../ws/Ws";
-import { ConversationType, Notification, User } from "../types/types";
+import { ConversationType, Notification } from "../types/types";
 
 function MobileNavBar() {
   const user = useAtomValue(currentUser);
   const webSocketClient = useWebSocket();
-  const [followList, setFollowList] = useState<User[]>();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [conversations, setConversations] = useState<ConversationType[]>([]);
   const navigate = useNavigate();
@@ -118,19 +110,6 @@ function MobileNavBar() {
     );
     return () => subscription?.unsubscribe();
   }, [user?.id, webSocketClient, location.pathname]);
-
-  useEffect(() => {
-    async function getFollowing() {
-      try {
-        const { data } = await api.get(`/user/following`);
-        setFollowList(data.reverse());
-        console.log(data.reverse());
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getFollowing();
-  }, []);
 
   return (
     <ul className="flex-1 max-h-15 menu menu-horizontal w-full md:hidden lg:hidden bg-[#141414] border-t border-t-[#2f3336]">

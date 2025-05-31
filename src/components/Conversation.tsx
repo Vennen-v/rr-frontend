@@ -65,7 +65,7 @@ function Conversation({
       onClick={() => {
         navigate(`/messages/conversations/${conversationId}`);
       }}
-      className={`flex gap-5 items-center p-5 h-20 w-100 indicator duration-300 hover:bg-[#383838] hover:cursor-pointer ${
+      className={`flex gap-5 items-center p-5 h-20 max-w-full min-w-100 indicator duration-300 hover:bg-[#383838] hover:cursor-pointer ${
         location.pathname === `/messages/conversations/${conversationId}` &&
         "bg-[#383838]"
       }`}

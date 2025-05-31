@@ -3,7 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api from "../api/api";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
 import { ArrowLeft, AtSignIcon, LockKeyhole, Mail, User } from "lucide-react";
@@ -24,7 +24,6 @@ function Welcome() {
   const [displayName, setDisplayname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [err, setErr] = useState<string>("");
   const [forgottonEmail, setForgottonEmail] = useState<string>("");
   const user = useAtomValue(currentUser);
   const navigate = useNavigate();
@@ -88,7 +87,7 @@ function Welcome() {
     register,
     handleSubmit,
     setError,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
   });
