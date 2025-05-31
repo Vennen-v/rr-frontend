@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../api/api";
 import toast from "react-hot-toast";
 import { Check } from "lucide-react";
@@ -7,11 +7,16 @@ import { Check } from "lucide-react";
 function EmailVerificationPage() {
   const [verified, setVerified] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
     async function handleEmailVerification() {
       const token = searchParams.get("link");
+      if (token == null) {
+        navigate("*");
+        return;
+      }
       setIsLoading(true);
       try {
         await api.post(`/verify-email?token=${token}`);

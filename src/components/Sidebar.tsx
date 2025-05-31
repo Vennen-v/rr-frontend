@@ -40,6 +40,21 @@ function Sidebar() {
     }
   }
 
+  useEffect(() => {
+    async function getC() {
+      try {
+        const { data } = await api.get(`/check-cookie`);
+
+        if (data == "HttpOnly cookie not found") signOut();
+
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getC();
+  }, []);
+
   const nonReadNotifs = notifications.filter((notif) => !notif.read).length;
 
   const nonReadMessages = conversations.reduce(

@@ -32,6 +32,12 @@ function PostPage() {
       naviagate("/welcome");
       return;
     }
+
+    if (!cuurUser.emailVerified) {
+      toast.error("Your email must be verified to like a post");
+      return;
+    }
+
     if (isLiked == true) {
       setIsLiked(false);
       setLikeCount(post?.likes - 1);
@@ -86,6 +92,10 @@ function PostPage() {
       naviagate("/welcome");
       return;
     }
+    if (!cuurUser.emailVerified) {
+      toast.error("Your email must be verified to save a post");
+      return;
+    }
     if (isSaved == true) {
       setIsSaved(false);
       setSaveCount(post?.saves - 1);
@@ -119,6 +129,7 @@ function PostPage() {
       console.log(data);
     } catch (error) {
       console.log(error);
+      naviagate("*");
     }
   }
 
@@ -138,6 +149,11 @@ function PostPage() {
 
     if (!cuurUser) {
       naviagate("/welcome");
+      return;
+    }
+
+    if (!cuurUser.emailVerified) {
+      toast.error("Your email must be verified to comment on a post");
       return;
     }
 
@@ -333,7 +349,7 @@ function PostPage() {
               </form>
               <div>
                 {post?.comments &&
-                  post.comments.map((c: Comments) => (
+                  post?.comments.map((c: Comments) => (
                     <Comment
                       key={c.commentId}
                       commentId={c.commentId}

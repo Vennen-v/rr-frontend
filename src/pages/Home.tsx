@@ -3,7 +3,7 @@ import Post from "../components/Post";
 import api from "../api/api";
 import { currentUser } from "../store/atoms";
 import { useAtom } from "jotai";
-import { CurrentUser, Posts, PostsPages } from "../types/types";
+import { Posts, PostsPages } from "../types/types";
 import useSiteTitle from "../utils/title";
 import { Link } from "react-router-dom";
 import { Plus } from "lucide-react";
@@ -15,19 +15,6 @@ function Home() {
   const [followPosts, setFollowPosts] = useState<Posts[] | undefined>();
 
   useSiteTitle("Home | The Rogue Road");
-
-  useEffect(() => {
-    async function getC() {
-      try {
-        const { data } = await api.get(`/check-cookie`);
-
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getC();
-  }, []);
 
   useEffect(() => {
     async function getCurrentUserInfo() {
@@ -77,6 +64,7 @@ function Home() {
         });
 
         console.log(newStuffs);
+
         const sortedStuffs = [...newStuffs].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );

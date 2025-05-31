@@ -24,6 +24,7 @@ function Welcome() {
   const [displayName, setDisplayname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [err, setErr] = useState<string>("");
   const [forgottonEmail, setForgottonEmail] = useState<string>("");
   const user = useAtomValue(currentUser);
   const navigate = useNavigate();
@@ -39,13 +40,15 @@ function Welcome() {
     if (!userName || !displayName || !password || !email) return;
 
     try {
-      await api.post(`/auth/signup`, {
+      const { statusText } = await api.post(`/auth/signup`, {
         username: userName,
         displayName: displayName,
         email: email,
         password: password,
       });
       toast.success("Welcome to the Rogue Road!");
+
+      console.log(statusText);
       try {
         const { data } = await api.post(`/auth/signin`, {
           username: userName,

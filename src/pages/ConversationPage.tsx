@@ -8,6 +8,7 @@ import { currentUser } from "../store/atoms";
 import { useWebSocket } from "../ws/Ws";
 import Messages from "../components/Messages";
 import { ArrowLeft } from "lucide-react";
+import toast from "react-hot-toast";
 
 function ConversationPage() {
   const ws = useWebSocket();
@@ -127,6 +128,12 @@ function ConversationPage() {
     if (!content) {
       return;
     }
+
+    if (!currUser?.emailVerified) {
+      toast.error("Your email must be verified to send any message");
+      return;
+    }
+
     if (conversation) {
       await sendMessage(e);
     } else {

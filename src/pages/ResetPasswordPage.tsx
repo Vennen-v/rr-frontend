@@ -20,6 +20,10 @@ function ResetPasswordPage() {
 
   useEffect(() => {
     const t = searchParams?.get("token");
+    if (t == null) {
+      navigate("*");
+      return;
+    }
     console.log(t);
   }, []);
 

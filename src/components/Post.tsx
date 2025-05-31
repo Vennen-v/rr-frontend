@@ -35,6 +35,11 @@ function Post({
       navigate("/welcome");
       return;
     }
+
+    if (!cuurUser.emailVerified) {
+      toast.error("Your email must be verified to like a post");
+      return;
+    }
     if (isLiked == true) {
       setIsLiked(false);
       setLikeCount(likeCount == 0 ? 0 : likeCount - 1);
@@ -87,6 +92,10 @@ function Post({
     e.preventDefault();
     if (!cuurUser) {
       navigate("/welcome");
+      return;
+    }
+    if (!cuurUser.emailVerified) {
+      toast.error("Your email must be verified to save a post");
       return;
     }
     if (isSaved == true) {

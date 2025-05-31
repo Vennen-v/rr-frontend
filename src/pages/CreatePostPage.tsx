@@ -61,6 +61,11 @@ function CreatePostPage() {
       return;
     }
 
+    if (!user?.emailVerified) {
+      toast.error("Your email must be verified to publish a new post");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", file);
     formData.append("title", title);

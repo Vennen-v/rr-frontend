@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Post from "../components/Post";
 import api from "../api/api";
 import { CurrentUser, Posts, PostsPages } from "../types/types";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
 import useSiteTitle from "../utils/title";
@@ -17,6 +17,7 @@ function ProfilePage() {
     user?.followers.length
   );
   const [isFollowing, setIsFollowing] = useState<boolean>();
+  const navigate = useNavigate();
   const location = useLocation();
 
   useSiteTitle(`${userName} | The Rogue Road`);
@@ -32,6 +33,7 @@ function ProfilePage() {
       console.log(data);
     } catch (error) {
       console.log(error);
+      navigate("*");
     }
   }
 
@@ -90,6 +92,7 @@ function ProfilePage() {
   function handleTabChange(tabId: string) {
     setActiveTab(tabId);
   }
+
   return (
     <div className=" flex flex-col flex-1 w-full md:w-fit h-screen mx-auto overflow-y-auto bg-[#141414]">
       <div className=" h-18 border-b border-b-gray-500 w-full text-center text-2xl text-[#eeeeee] font-bold p-5">
@@ -101,7 +104,7 @@ function ProfilePage() {
             onClick={() => handleTabChange("tab 1")}
             role="tab"
             className={`tab ${activeTab === "tab 1" && "tab-active"}
-             `}
+              `}
           >
             Posts
           </button>
@@ -190,20 +193,20 @@ function ProfilePage() {
             </div>
           )}
           {activeTab === "tab 2" && (
-            <div className="flex flex-col gap-5 w-90 md:w-140 mx-auto">
-              <div className="bg-[#202020] p-3 rounded-md text-sm">
+            <div className="flex flex-col gap-5 items-center w-90 md:w-140 mx-auto">
+              <div className="bg-[#202020] p-3 rounded-md text-sm w-full">
                 Joined: {user?.createdAt.slice(0, 10)}
               </div>
-              <div className="flex justify-around bg-[#202020] p-3 rounded-md">
+              {/* <div className="flex justify-around bg-[#202020] p-3 rounded-md">
                 <div className="flex flex-col gap-2 items-center">
                   <span>Total Likes</span>
-                  <span>80</span>
+                  <span></span>
                 </div>
                 <div className="flex flex-col gap-2 items-center">
                   <div>Total Bookmarks</div>
                   <span>5</span>
                 </div>
-              </div>
+              </div> */}
             </div>
           )}
         </div>

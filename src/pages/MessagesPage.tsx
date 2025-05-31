@@ -8,6 +8,7 @@ import api from "../api/api";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { useWebSocket } from "../ws/Ws";
 import { currentUser } from "../store/atoms";
+import toast from "react-hot-toast";
 
 export const newConvoUser = atom<string | null>(null);
 
@@ -148,6 +149,12 @@ function MessagesPage() {
             </div>
             <button
               onClick={() => {
+                if (!currUser?.emailVerified) {
+                  toast.error(
+                    "Your email must be verified to send any message"
+                  );
+                  return;
+                }
                 setActiveTab("tab 2");
               }}
               className="w-9 rounded-md p-1 mr-5 mb-1 hover:cursor-pointer hover:bg-[#383838]"

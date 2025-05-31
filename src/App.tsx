@@ -20,6 +20,7 @@ import Conversation from "./pages/ConversationPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
 import MobileNavBar from "./components/MobileNavBar";
+import NotFound from "./pages/NotFound";
 
 function Layout({ children }: any) {
   return (
@@ -118,6 +119,7 @@ function App() {
               </Layout>
             }
           />
+          <Route path="*" element={<NotFound />} />
           <Route path="reset-password" element={<ResetPasswordPage />} />
           <Route
             path="email-verification"

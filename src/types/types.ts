@@ -8,6 +8,7 @@ export type CurrentUser = {
   bio: string;
   followers: CurrentUser[];
   createdAt: string;
+  emailVerified: boolean;
 };
 
 export type User = {
@@ -65,7 +66,7 @@ export type Comments = {
   userName: string;
   displayName: string;
   profilePic: string;
-  replies: Comment[];
+  replies: Comments[];
   likes: number;
 };
 

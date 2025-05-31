@@ -61,6 +61,10 @@ function SettingsPage() {
     //   onChange: updateSchema,
     // },
     onSubmit: async ({ value }) => {
+      if (!user?.emailVerified) {
+        toast.error("Your email must be verified to edit your profile");
+        return;
+      }
       try {
         await api.put(`/user/update`, {
           bio: value.bio,
@@ -88,6 +92,14 @@ function SettingsPage() {
       console.log(error);
     }
   }
+  async function deactivate() {
+    try {
+      await api.delete(`/user/delete-self`);
+      toast.success("We're sad to see you go");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
     // const target = e.target as HTMLInputElement & {
@@ -102,6 +114,11 @@ function SettingsPage() {
   async function handleFileUpload(e: any) {
     if (!file) {
       toast.error("A picture is required to update");
+      return;
+    }
+
+    if (!user?.emailVerified) {
+      toast.error("Your email must be verified to edit your profile");
       return;
     }
     setStatus("uploading");
@@ -124,6 +141,15 @@ function SettingsPage() {
     }
   }
 
+  async function sendVerifEmail() {
+    try {
+      await api.post(`email-verification?email=${user?.email}`);
+      toast.success("You will recieve a verification email shortly");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="h-screen overflow-y-auto w-full flex-1 text-gray-200 bg-[#141414]">
       <div className="flex flex-col mt-10 md:mt-15 container w-max mx-auto gap-4">
@@ -140,11 +166,31 @@ function SettingsPage() {
           <button
             onClick={() => handleTabChange("tab 2")}
             role="tab"
-            className={`tab duration-300  ${
+            className={`tab duration-300 lg:text-base text-sm ${
               activeTab === "tab 2" && "tab-active"
             }`}
           >
             Profile Picture
+          </button>
+          {!user?.emailVerified && (
+            <button
+              onClick={() => handleTabChange("tab 3")}
+              role="tab"
+              className={`tab duration-300  ${
+                activeTab === "tab 3" && "tab-active"
+              }`}
+            >
+              Email Verification
+            </button>
+          )}
+          <button
+            onClick={() => handleTabChange("tab 4")}
+            role="tab"
+            className={`tab duration-300 ${
+              activeTab === "tab 4" && "tab-active"
+            }`}
+          >
+            Deactivate
           </button>
         </div>
         {activeTab === "tab 1" && (
@@ -335,6 +381,43 @@ function SettingsPage() {
                   <span className="text-center m-auto">Save</span>
                 </button>
               )}
+            </div>
+          </div>
+        )}
+        {activeTab === "tab 3" && (
+          <div className="flex flex-col gap-3 items-center h-100 w-82 md:w-160 bg-[#202020] rounded-lg">
+            <div className="flex flex-col items-center gap-5 m-auto">
+              <div className="text-red-400 text-3xl text-center">
+                Your email is not verified!
+              </div>
+              <div className="text-base font-extralight text-center">
+                The button below will send you a new verification email.
+              </div>
+              <button
+                onClick={sendVerifEmail}
+                className="rounded-full p-3 bg-[#8956FB]  duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer text-sm"
+              >
+                Send a new email verification token
+              </button>
+            </div>
+          </div>
+        )}
+        {activeTab === "tab 4" && (
+          <div className="flex flex-col gap-3 items-center h-100 w-82 md:w-160 bg-[#202020] rounded-lg">
+            <div className="flex flex-col items-center gap-10 m-auto">
+              <div className="text-xl text-center">
+                The button below will remove your account entirely.
+              </div>
+
+              <button
+                onClick={() => {
+                  deactivate();
+                  signOut();
+                }}
+                className="rounded-full p-3 bg-red-500  duration-300 ease-in-out hover:bg-red-700 hover:cursor-pointer text-sm"
+              >
+                Delete account
+              </button>
             </div>
           </div>
         )}
