@@ -190,7 +190,7 @@ function Sidebar() {
             location.pathname === "/messages" ||
             location.pathname.slice(0, 23) === "/messages/conversations"
               ? ""
-              : " w-58"
+              : " lg:w-58"
           } mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
             location.pathname === "/search"
               ? "font-semibold bg-[#383838] border-l-3 border-l-[#8956FB]"
@@ -264,7 +264,7 @@ function Sidebar() {
               location.pathname === "/messages" ||
               location.pathname.slice(0, 23) === "/messages/conversations"
                 ? ""
-                : " w-58"
+                : " lg:w-58"
             } text-gray-200 mb-3 mr-4 p-3 duration-100 rounded-r-lg ${
               location.pathname === "/notifications"
                 ? "font-semibold bg-[#383838] border-l-3 border-l-[#8956FB]"
@@ -433,7 +433,7 @@ function Sidebar() {
                 <span className="text-xs text-[#a8a8a8]">@{user.userName}</span>
               </div>
             </Link>
-            <div className="dropdown dropdown-right dropdown-end">
+            <div className="dropdown dropdown-top">
               <div
                 className={` hidden  ${
                   location.pathname === "/messages" ||
@@ -451,8 +451,11 @@ function Sidebar() {
                 className="dropdown-content menu bg-[#202020] border border-gray-500 rounded-box z-1 w-52 p-2 shadow-sm"
               >
                 <li>
-                  <button onClick={signOut} className="hover:bg-[#383838]">
-                    Logout
+                  <button
+                    onClick={signOut}
+                    className="hover:bg-[#383838] text-red-400"
+                  >
+                    Sign out
                   </button>
                 </li>
               </ul>

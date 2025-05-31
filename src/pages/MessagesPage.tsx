@@ -30,6 +30,12 @@ function MessagesPage() {
   console.log(location.pathname);
 
   useEffect(() => {
+    if (!currUser) {
+      navigate("/");
+    }
+  }, []);
+
+  useEffect(() => {
     async function searchUsers() {
       setIsLoading(true);
       try {
@@ -98,7 +104,7 @@ function MessagesPage() {
   }, [currUser?.id, ws]);
 
   return (
-    <div className=" flex flex-col flex-1 w-fit h-screen mx-auto bg-[#141414]">
+    <div className=" flex flex-col md:flex-1 w-full md:w-fit max-h-full min-h-50 md:h-screen mx-auto bg-[#141414]">
       <div className="hidden lg:block h-18 border-b border-b-gray-500 w-full text-center text-2xl text-[#eeeeee] font-bold p-5 ">
         Messages
       </div>
@@ -106,7 +112,7 @@ function MessagesPage() {
         <div
           className={` ${
             location.pathname === "/messages" ? "flex" : "lg:flex hidden"
-          }  flex-col border-r border-r-gray-500 w-full lg:w-100 h-full`}
+          }  flex-col border-r border-r-gray-500 w-full lg:w-100 max-h-full min-h-50`}
         >
           <div className="flex w-full items-end justify-around my-5 ">
             <div className="flex flex-1 flex-col w-full mx-auto gap-4">
@@ -152,7 +158,9 @@ function MessagesPage() {
               />
             </button>
           </div>
-          <div className="flex flex-col w-full border-t h-full border-t-gray-500 ">
+          <div
+            className={` flex flex-col w-full border-t max-h-full min-h-50 border-t-gray-500 `}
+          >
             {conversations &&
               conversations.map((c) => (
                 <Conversation
@@ -165,7 +173,6 @@ function MessagesPage() {
                 />
               ))}
           </div>
-          <div className="divider mt-auto"></div>
         </div>
 
         {activeTab == "tab 1" && <Outlet />}
@@ -182,7 +189,11 @@ function MessagesPage() {
         )}
 
         {activeTab == "tab 2" && (
-          <div className=" flex flex-col flex-1 w-full h-full mx-auto bg-[#141414] relative">
+          <div
+            className={`${
+              activeTab == "tab 2" && "hidden lg:flex"
+            } flex flex-col flex-1 w-full h-full mx-auto bg-[#141414] relative`}
+          >
             <div className="flex gap-2 items-center h-15 border-b border-b-gray-500 w-full text-xl text-[#eeeeee] font-bold p-5 ">
               <div className="text-base">To: </div>
               <input

@@ -19,13 +19,15 @@ import MessagesPage from "./pages/MessagesPage";
 import Conversation from "./pages/ConversationPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
+import MobileNavBar from "./components/MobileNavBar";
 
 function Layout({ children }: any) {
   return (
     <WebSocketContextProvider>
-      <div className="flex h-screen w-full ">
+      <div className="flex flex-col md:flex-row lg:flex-row h-screen w-full ">
         <Sidebar />
         {children}
+        <MobileNavBar />
       </div>
     </WebSocketContextProvider>
   );

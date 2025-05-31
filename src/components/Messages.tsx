@@ -42,7 +42,7 @@ function Messages({
         ref={messageRef}
         className={`chat ${
           sender.id.toString() == currUser?.id ? "chat-end" : "chat-start"
-        } mt-auto`}
+        } mt-auto mb-5`}
       >
         <div className="chat-image avatar">
           <div className="w-10 rounded-full">

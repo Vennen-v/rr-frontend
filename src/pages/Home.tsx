@@ -5,6 +5,8 @@ import { currentUser } from "../store/atoms";
 import { useAtom } from "jotai";
 import { CurrentUser, Posts, PostsPages } from "../types/types";
 import useSiteTitle from "../utils/title";
+import { Link } from "react-router-dom";
+import { Plus } from "lucide-react";
 
 function Home() {
   const [activeTab, setActiveTab] = useState<string>("tab 1");
@@ -93,9 +95,9 @@ function Home() {
   console.log(followPosts);
 
   return (
-    <div className="h-screen overflow-y-auto w-full flex-1 text-[#eeeeee] bg-[#141414]">
-      <div className="container mx-auto w-max mt-10 flex flex-col gap-5 ">
-        <div role="tablist" className="tabs tabs-border mb-5">
+    <div className="h-screen overflow-y-auto w-full flex-1 text-[#eeeeee] bg-[#141414] relative">
+      <div className="container mx-auto w-max mt-7 md:mt-10 flex flex-col gap-5">
+        <div role="tablist" className="tabs tabs-border mb-2 md:mb-5">
           <button
             onClick={() => handleTabChange("tab 1")}
             role="tab"
@@ -167,6 +169,19 @@ function Home() {
           </div>
         )}
       </div>
+      {cuurUser && cuurUser.id && (
+        <Link
+          to={"/create"}
+          className="md:hidden fixed bottom-0 right-0 ml-auto mr-5 mb-20 z-98 rounded-full shadow-white shadow-[0_0px_4px]"
+        >
+          <div className="bg-[#8956FB] rounded-full p-1 ">
+            <Plus
+              size={45}
+              strokeWidth={location.pathname === "/create" ? 2.5 : 2}
+            />
+          </div>
+        </Link>
+      )}
     </div>
   );
 }

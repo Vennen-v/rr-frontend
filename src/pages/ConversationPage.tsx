@@ -7,6 +7,7 @@ import api from "../api/api";
 import { currentUser } from "../store/atoms";
 import { useWebSocket } from "../ws/Ws";
 import Messages from "../components/Messages";
+import { ArrowLeft } from "lucide-react";
 
 function ConversationPage() {
   const ws = useWebSocket();
@@ -140,25 +141,30 @@ function ConversationPage() {
 
   return (
     <div
-      className={` flex flex-col flex-1 w-full mx-auto bg-[#141414] relative`}
+      className={` flex flex-col flex-1 w-full max-h-full min-h-50 mx-auto bg-[#141414] relative overflow-y-clip`}
     >
-      <div className=" h-15 border-b border-b-gray-500 w-full text-xl text-[#eeeeee] font-bold p-5 ">
+      <div className="flex gap-5 lg:block h-15 border-b  border-b-gray-500 w-full text-xl text-[#eeeeee] font-bold p-5 ">
+        <button onClick={() => navigate("/messages")}>
+          <ArrowLeft />
+        </button>
         {id == "new" && newConversationUser?.displayName}
         {id !== "new" && conversation && conversationUserToDisplay?.displayName}
       </div>
-      <div className="flex flex-col h-full mx-10 mt-5 mb-5 ">
-        <div className="mt-auto h-175 flex flex-col gap-3 overflow-y-scroll">
-          {conversation?.messages.map((m: ConvoMessage) => (
-            <Messages
-              key={m.messageId}
-              messageId={m.messageId}
-              sender={m.sender}
-              receiver={m.receiver}
-              content={m.content}
-              read={m.read}
-              createdAt={m.createdAt}
-            />
-          ))}
+      <div className="flex flex-col h-full mx-5 md:mx-10 mt-5 mb-5 ">
+        <div className="mt-auto h-full flex flex-col gap-3 overflow-y-scroll">
+          <div className="mt-auto">
+            {conversation?.messages.map((m: ConvoMessage) => (
+              <Messages
+                key={m.messageId}
+                messageId={m.messageId}
+                sender={m.sender}
+                receiver={m.receiver}
+                content={m.content}
+                read={m.read}
+                createdAt={m.createdAt}
+              />
+            ))}
+          </div>
           {/* <div className="chat chat-start mt-auto">
             <div className="chat-image avatar">
               <div className="w-10 rounded-full">
@@ -190,26 +196,26 @@ function ConversationPage() {
             <div className="chat-footer opacity-50">Seen</div>
           </div> */}
         </div>
-      </div>
-      <div className="flex flex-1 h-15 my-2 items-center ">
-        <div className="ml-4 mt-2 mr-0">
-          <img
-            className="rounded-full h-12 w-12 object-cover"
-            src={currUser?.profilePic}
-          />
+        <div className="flex flex-1 h-15 my-2 items-center ">
+          <div className="ml-2 md:ml-4 mt-2 mr-0">
+            <img
+              className="rounded-full h-12 w-12 object-cover"
+              src={currUser?.profilePic}
+            />
+          </div>
+          <form
+            onSubmit={handleSendingMessage}
+            className="w-9/10 h-12 ml-4 mr-auto flex items-center border border-gray-500 rounded-full"
+          >
+            <input
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              type="text"
+              placeholder="Message..."
+              className="w-full p-3 rounded-full focus:outline-1 focus:outline-white"
+            ></input>
+          </form>
         </div>
-        <form
-          onSubmit={handleSendingMessage}
-          className="w-9/10 h-12 ml-4 mr-auto flex items-center border border-gray-500 rounded-full"
-        >
-          <input
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            type="text"
-            placeholder="Message..."
-            className="w-full p-3 rounded-full focus:outline-1 focus:outline-white"
-          ></input>
-        </form>
       </div>
     </div>
   );

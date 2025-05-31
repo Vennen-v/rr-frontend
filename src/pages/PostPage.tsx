@@ -156,7 +156,7 @@ function PostPage() {
   const clean = DOMPurify.sanitize(`${post?.content}`);
 
   return (
-    <div className=" flex flex-col flex-1 w-fit h-screen mx-auto overflow-y-auto bg-[#141414]">
+    <div className=" flex flex-col flex-1 w-full md:w-fit h-screen mx-auto overflow-y-auto bg-[#141414]">
       <div className=" flex justify-between h-14 mb-8 border-b border-b-gray-500 w-full text-xl items-center text-[#eeeeee] font-semibold p-5">
         <Link
           to={`/${post?.userName}`}

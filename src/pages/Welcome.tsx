@@ -135,18 +135,18 @@ function Welcome() {
     <div className="text-[#eeeeee] flex flex-1 gap-20 w-full h-screen mx-auto bg-[#141414]">
       <div className="hidden md:flex w-40 md:w-85 h-screen ml-auto border-r border-r-[#8956FB]">
         <div
-          className="w-full my-auto mr-10 md:text-lg lg:text-7xl font-bold inline-block 
+          className="w-full my-auto mr-10 md:text-5xl lg:text-7xl font-bold inline-block 
        bg-gradient-to-r from-[#bcb6c7] to-[#8956FB]
        bg-clip-text text-transparent p-3"
         >
           {activeTab == "tab 1"
-            ? "Sign in"
+            ? "Sign In"
             : activeTab == "tab 2"
             ? "Sign Up"
             : activeTab == "tab 3" && "Reset"}
         </div>
       </div>
-      <div className="flex w-150 m-auto rounded-lg h-112 bg-[#202020]/60 backdrop-blur-2xl">
+      <div className="flex w-150 m-auto md:mr-7 lg:m-auto  rounded-lg h-112 md:bg-[#202020]/60 backdrop-blur-2xl">
         {activeTab == "tab 1" && (
           <div className="m-auto w-4/5 flex flex-col gap-4 items-center">
             <div className="flex flex-col gap-2 items-center mb-10 text-2xl font-extralight">

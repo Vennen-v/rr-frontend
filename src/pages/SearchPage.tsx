@@ -47,6 +47,7 @@ function SearchPage() {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     searchUsers();
+    searchPosts();
   };
 
   return (

@@ -5,7 +5,7 @@ function UserSearch({ userName, displayName, profilePic }: User) {
   return (
     <Link
       to={`/${userName}`}
-      className="flex gap-5 p-5 border-b w-full border-b-gray-500 duration-300 rounded-md hover:bg-[#383838] hover:cursor-pointer"
+      className="flex gap-5 p-5 border-b w-full border-b-gray-500 duration-300 rounded-t-md hover:bg-[#383838] hover:cursor-pointer"
     >
       <img className="rounded-lg h-10 w-10 object-cover" src={profilePic} />
       <div className="flex flex-col ">

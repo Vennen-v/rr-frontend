@@ -126,8 +126,8 @@ function SettingsPage() {
 
   return (
     <div className="h-screen overflow-y-auto w-full flex-1 text-gray-200 bg-[#141414]">
-      <div className="flex flex-col mt-15 container w-max mx-auto gap-4">
-        <div role="tablist" className="tabs tabs-border mb-10">
+      <div className="flex flex-col mt-10 md:mt-15 container w-max mx-auto gap-4">
+        <div role="tablist" className="tabs tabs-border mb-3 md:mb-10">
           <button
             onClick={() => handleTabChange("tab 1")}
             role="tab"
@@ -148,7 +148,7 @@ function SettingsPage() {
           </button>
         </div>
         {activeTab === "tab 1" && (
-          <div className="flex flex-col gap-3 items-center h-175 w-160 bg-[#202020] rounded-lg">
+          <div className="flex flex-col gap-3 items-center h-175 w-82 md:w-160 bg-[#202020] rounded-lg">
             <div className="mt-8 text-xl font-semibold">
               {" "}
               Edit Account Information
@@ -308,7 +308,7 @@ function SettingsPage() {
           </div>
         )}
         {activeTab === "tab 2" && (
-          <div className="flex flex-col gap-3 items-center h-175 w-160 bg-[#202020] rounded-lg">
+          <div className="flex flex-col gap-3 items-center h-175 w-82 md:w-160 bg-[#202020] rounded-lg">
             <div className="mt-8  text-xl font-semibold">
               {" "}
               Update Profile Pic
@@ -324,13 +324,13 @@ function SettingsPage() {
               <input
                 type="file"
                 onChange={handleFileChange}
-                className="file-input bg-[#202020] w-1/2 mx-auto"
+                className="file-input bg-[#202020] w-full md:w-1/2 mx-auto"
               />
               {file && status !== "uploading" && (
                 <button
                   onClick={handleFileUpload}
                   // disabled={}
-                  className="flex gap-3 rounded-lg h-10 w-20 mt-auto  bg-[#8956FB] duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer "
+                  className="flex gap-3 rounded-lg h-10 md:w-20 mt-auto  bg-[#8956FB] duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer "
                 >
                   <span className="text-center m-auto">Save</span>
                 </button>

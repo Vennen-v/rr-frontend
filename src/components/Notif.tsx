@@ -49,7 +49,7 @@ function Notif({
           navigate(`/${resourceString}`);
         }
       }}
-      className="flex gap-5 items-center p-5 border-b h-25 w-150 border-b-gray-500 duration-300 rounded-t-md hover:bg-[#383838] hover:cursor-pointer"
+      className="flex gap-5 items-center p-5 border-b h-25 w-80 md:w-150 border-b-gray-500 duration-300 rounded-t-md hover:bg-[#383838] hover:cursor-pointer"
     >
       <img
         className="rounded-lg h-10 w-10 object-cover"

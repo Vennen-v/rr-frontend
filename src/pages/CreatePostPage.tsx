@@ -127,7 +127,24 @@ function CreatePostPage() {
           Publish
         </button>
       </div>
-      <div className="flex container h-screen w-max justify-around gap-4 mx-auto">
+      <div className="mx-5 md:mx-10 lg:hidden">
+        <input
+          // {...register("password")}
+          placeholder="Title..."
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full h-20 p-4 rounded-lg bg-[#141414]"
+        />
+        <div className="w-full flex flex-col mx-auto p-5 gap-2">
+          <label className="text-sm">Feature Photo:</label>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            className="file-input h-8 bg-[#202020] "
+          />
+        </div>
+      </div>
+      <div className="flex container h-screen w-max justify-around mx-9 lg:mt-0 gap-4 md:mx-auto">
         <div className="">
           <ReactQuill
             theme="snow"
@@ -135,10 +152,10 @@ function CreatePostPage() {
             formats={formats}
             value={content}
             onChange={setContent}
-            className="w-200 mx-auto"
+            className="w-83 md:w-190 lg:w-180  mx-auto"
           />
         </div>
-        <div className="w-105 h-100 bg-[#202020] mt-20 rounded-lg">
+        <div className="hidden lg:block w-105 h-100 bg-[#202020] mt-20 rounded-lg">
           <form className="w-full h-full flex flex-col items-center gap-7 mt-10">
             <div className="flex flex-col gap-2 w-full p-5">
               <div className="w-full border border-gray-500 rounded-lg">
