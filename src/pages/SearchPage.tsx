@@ -128,9 +128,11 @@ function SearchPage() {
                 />
               ))
             ) : isLoading ? (
-              <div>Searching...</div>
-            ) : (
+              <span className="loading loading-spinner loading-md m-auto"></span>
+            ) : postPages?.content.length == 0 ? (
               <div>No Posts Found</div>
+            ) : (
+              <div>Search Posts</div>
             )}
           </div>
         )}
@@ -149,9 +151,11 @@ function SearchPage() {
                 />
               ))
             ) : isLoading ? (
-              <div>Searching...</div>
-            ) : (
+              <span className="loading loading-spinner loading-md m-auto"></span>
+            ) : userPages?.content.length == 0 ? (
               <div>No Users Found</div>
+            ) : (
+              <div>Search People</div>
             )}
             {/* <Link
               to={"/profile"}

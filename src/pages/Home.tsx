@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInView } from "react-intersection-observer";
 import Post from "../components/Post";
 import api from "../api/api";
 import { currentUser } from "../store/atoms";
@@ -11,8 +13,9 @@ import { Plus } from "lucide-react";
 function Home() {
   const [activeTab, setActiveTab] = useState<string>("tab 1");
   const [cuurUser, setCurrentUser] = useAtom(currentUser);
-  const [postPages, setPostsPages] = useState<PostsPages>();
+  // const [postPages, setPostsPages] = useState<PostsPages>();
   const [followPosts, setFollowPosts] = useState<Posts[] | undefined>();
+  const { ref, inView } = useInView();
 
   useSiteTitle("Home | The Rogue Road");
 
@@ -30,18 +33,65 @@ function Home() {
     console.log(followPosts);
   }, []);
 
+  async function getAllPostsQuery({
+    pageParam,
+  }: {
+    pageParam: number;
+  }): Promise<PostsPages> {
+    const { data } = await api.get(
+      `/posts?pageNumber=${pageParam}&pageSize=10`
+    );
+    console.log(data);
+    return data;
+  }
+
+  const { data, error, status, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["posts"],
+      queryFn: getAllPostsQuery,
+      initialPageParam: 0,
+      getNextPageParam: (lastPage) => lastPage.pageNumber + 1,
+    });
+
   useEffect(() => {
-    async function getAllPosts() {
-      try {
-        const { data } = await api.get(`/posts`);
-        setPostsPages(data);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
+    if (inView) {
     }
-    getAllPosts();
-  }, []);
+    fetchNextPage();
+  }, [inView, fetchNextPage]);
+
+  console.log(data);
+  // const content = data?.pages.map((posts) =>
+  //   posts.content.map((p) => (
+  //     <Post
+  //       key={p.postId}
+  //       postId={p.postId}
+  //       userName={p.userName}
+  //       title={p.title}
+  //       comments={p.comments}
+  //       displayName={p.displayName}
+  //       profilePic={p.profilePic}
+  //       postImg={p.postImg}
+  //       saves={p.saves}
+  //       content={p.content}
+  //       likes={p.likes}
+  //       createdAt={p.createdAt}
+  //     />
+  //   ))
+  // );
+  // const content = data?.pages.map((posts) => console.log(posts));
+
+  // useEffect(() => {
+  //   async function getAllPosts() {
+  //     try {
+  //       const { data } = await api.get(`/posts`);
+  //       setPostsPages(data);
+  //       console.log(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  //   getAllPosts();
+  // }, []);
 
   useEffect(() => {
     async function getFollowing() {
@@ -107,7 +157,63 @@ function Home() {
             </button>
           )}
         </div>
-        {activeTab === "tab 1" && (
+
+        {activeTab == "tab 1" && (
+          <div className="flex flex-col gap-7">
+            {status === "pending" ? (
+              <span className="loading loading-spinner loading-md m-auto mt-50"></span>
+            ) : status === "error" ? (
+              <div>Error: {error.message}</div>
+            ) : (
+              data?.pages.map((posts) =>
+                posts.content.map((p: Posts, index) => {
+                  if (posts.content.length == index + 1) {
+                    return (
+                      <Post
+                        innerRef={ref}
+                        key={p.postId}
+                        postId={p.postId}
+                        userName={p.userName}
+                        title={p.title}
+                        comments={p.comments}
+                        displayName={p.displayName}
+                        profilePic={p.profilePic}
+                        postImg={p.postImg}
+                        saves={p.saves}
+                        content={p.content}
+                        likes={p.likes}
+                        createdAt={p.createdAt}
+                      />
+                    );
+                  }
+                  return (
+                    <Post
+                      key={p.postId}
+                      postId={p.postId}
+                      userName={p.userName}
+                      title={p.title}
+                      comments={p.comments}
+                      displayName={p.displayName}
+                      profilePic={p.profilePic}
+                      postImg={p.postImg}
+                      saves={p.saves}
+                      content={p.content}
+                      likes={p.likes}
+                      createdAt={p.createdAt}
+                    />
+                  );
+                })
+              )
+            )}
+
+            <div ref={ref} className="mx-auto">
+              {isFetchingNextPage && (
+                <span className="loading loading-spinner loading-md m-auto"></span>
+              )}
+            </div>
+          </div>
+        )}
+        {/* {activeTab === "tab 1" && (
           <div className="flex flex-col gap-7">
             {postPages &&
               postPages.content.map((p: Posts) => (
@@ -127,7 +233,7 @@ function Home() {
                 />
               ))}
           </div>
-        )}
+        )} */}
         {activeTab === "tab 2" && (
           <div className="flex flex-col gap-7">
             {followPosts &&

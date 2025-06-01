@@ -8,6 +8,21 @@ import toast from "react-hot-toast";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
 
+interface PostsProps {
+  postId: number;
+  title: string;
+  content: string;
+  userName: string;
+  saves: number;
+  comments: Comment;
+  likes: number;
+  profilePic: string;
+  postImg: string;
+  displayName: string;
+  createdAt: string;
+  innerRef?: React.Ref<HTMLParagraphElement>;
+}
+
 function Post({
   postId,
   title,
@@ -19,7 +34,8 @@ function Post({
   postImg,
   userName,
   createdAt,
-}: Posts) {
+  innerRef,
+}: PostsProps) {
   const cuurUser = useAtomValue(currentUser);
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState<boolean>();
@@ -131,7 +147,10 @@ function Post({
   }
 
   return (
-    <div className="flex flex-col mx-auto w-92 h-60 sm:w-80 md:w-135 md:h-60 text-[#eeeeee] bg-[#202020] rounded-lg duration-300 hover:bg-[#303030]">
+    <div
+      ref={innerRef}
+      className="flex flex-col mx-auto w-92 h-60 sm:w-80 md:w-135 md:h-60 text-[#eeeeee] bg-[#202020] rounded-lg duration-300 hover:bg-[#303030]"
+    >
       <Link
         to={`/posts/${postId}`}
         className=" flex flex-col justify-between mx-auto w-92 h-60 sm:w-80 md:w-135 md:h-60 mb-0 bg-[#202020] rounded-lg duration-300 hover:bg-[#303030] hover:cursor-pointer"
