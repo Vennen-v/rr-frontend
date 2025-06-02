@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
 import { useWebSocket } from "../ws/Ws";
-import { formatDistance } from "date-fns";
+import { formatDistance, parse, parseISO } from "date-fns";
 import { format } from "date-fns-tz";
 
 const date = new Date();
 const formattedDate = format(date, "yyyy-MM-dd HH:mm:ss", {
   timeZone: "America/Chicago",
 });
+const formattedAgain = parseISO(formattedDate);
 
 function Conversation({
   conversationId,
@@ -90,7 +91,7 @@ function Conversation({
           <div className="ml-auto text-start text-xs text-[#a8a8a8]">
             {formatDistance(
               messages[messages.length - 1].createdAt,
-              formattedDate,
+              formattedAgain,
               {
                 addSuffix: true,
               }

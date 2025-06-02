@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 // import { Posts } from "../types/types";
 import api from "../api/api";
 import { useEffect, useState } from "react";
-import { formatDistance } from "date-fns";
+import { formatDistance, parseISO } from "date-fns";
 import toast from "react-hot-toast";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
@@ -29,6 +29,8 @@ const date = new Date();
 const formattedDate = format(date, "yyyy-MM-dd HH:mm:ss", {
   timeZone: "America/Chicago",
 });
+
+const formattedAgain = parseISO(formattedDate);
 
 function Post({
   postId,
@@ -177,7 +179,7 @@ function Post({
           <div className="flex flex-col gap-4 flex-1">
             <div className="text-base font-extralight md:text-lg">{title}</div>
             <div className="text-sm text-[#a8a8a8]">
-              {formatDistance(createdAt, formattedDate, {
+              {formatDistance(createdAt, formattedAgain, {
                 addSuffix: true,
               })}
             </div>
