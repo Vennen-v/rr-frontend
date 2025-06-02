@@ -19,7 +19,7 @@ export const WebSocketContextProvider = ({
   const [stompClient, setStompClient] = useState<CompatClient | null>(null);
 
   useEffect(() => {
-    const client = Stomp.client(`ws://${import.meta.env.VITE_STOMP_URL}/ws`);
+    const client = Stomp.client(`wss://${import.meta.env.VITE_STOMP_URL}/wss`);
 
     client.connect(
       {},
