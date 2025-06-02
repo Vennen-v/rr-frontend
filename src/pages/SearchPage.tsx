@@ -23,9 +23,9 @@ function SearchPage() {
     try {
       const { data } = await api.get(`/posts/search?keyword=${keyword}`);
       setPostsPages(data);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -36,9 +36,9 @@ function SearchPage() {
     try {
       const { data } = await api.get(`/users/search?keyword=${keyword}`);
       setUserPages(data);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setIsLoading(false);
     }

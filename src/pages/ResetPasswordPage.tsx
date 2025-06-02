@@ -1,7 +1,6 @@
 import { Eye } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { error } from "zod/v4/locales/ar.js";
 import api from "../api/api";
 import toast from "react-hot-toast";
 
@@ -20,7 +19,7 @@ function ResetPasswordPage() {
       navigate("*");
       return;
     }
-    console.log(t);
+    // console.log(t);
   }, []);
 
   async function handleResetPassword(e: FormEvent<HTMLFormElement>) {
@@ -40,7 +39,7 @@ function ResetPasswordPage() {
       toast.success("Password successfully reset");
     } catch (e) {
       toast.error("Something went wrong");
-      console.log(error);
+      // console.log(error);
     }
   }
 

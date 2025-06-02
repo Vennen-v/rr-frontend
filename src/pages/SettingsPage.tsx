@@ -75,7 +75,7 @@ function SettingsPage() {
         toast.success("Account info successfully updated!");
         signOut();
       } catch (e) {
-        console.log(e);
+        // console.log(e);
         toast.error(`${e}`);
       }
     },
@@ -87,9 +87,9 @@ function SettingsPage() {
       localStorage.removeItem("rrid");
       navigate("/welcome");
       toast.success("You have been logged out");
-      console.log(data);
+      // console.log(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
   async function deactivate() {
@@ -97,7 +97,7 @@ function SettingsPage() {
       await api.delete(`/user/delete-self`);
       toast.success("We're sad to see you go");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -108,7 +108,7 @@ function SettingsPage() {
     if (e.target.files) {
       setFile(e.target.files[0]);
     }
-    console.log(file?.name);
+    // console.log(file?.name);
   }
 
   async function handleFileUpload(e: any) {
@@ -146,7 +146,7 @@ function SettingsPage() {
       await api.post(`email-verification?email=${user?.email}`);
       toast.success("You will recieve a verification email shortly");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 

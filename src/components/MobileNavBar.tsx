@@ -16,8 +16,8 @@ function MobileNavBar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(location);
-  console.log(location.pathname.slice(0, 23));
+  // console.log(location);
+  // console.log(location.pathname.slice(0, 23));
 
   async function signOut() {
     try {
@@ -25,9 +25,9 @@ function MobileNavBar() {
       localStorage.removeItem("rrid");
       navigate("/welcome");
       toast.success("You have logged out");
-      console.log(data);
+      // console.log(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -46,9 +46,9 @@ function MobileNavBar() {
       try {
         const { data } = await api.get(`/user/notifs`);
         setNotifications(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     getNotifs();
@@ -59,9 +59,9 @@ function MobileNavBar() {
       try {
         const { data } = await api.get(`/conversations`);
         setConversations(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     getConversations();

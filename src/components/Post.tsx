@@ -1,9 +1,9 @@
 import { Heart, MessageSquare, Bookmark, EllipsisVertical } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { Posts } from "../types/types";
+// import { Posts } from "../types/types";
 import api from "../api/api";
 import { useEffect, useState } from "react";
-import { formatDistance, parseISO } from "date-fns";
+import { formatDistance } from "date-fns";
 import toast from "react-hot-toast";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
@@ -43,8 +43,6 @@ function Post({
   const [isSaved, setIsSaved] = useState<boolean>();
   const [saveCount, setSaveCount] = useState<number>(saves);
 
-  console.log(parseISO(createdAt));
-
   async function LikePost(e: any) {
     e.preventDefault();
     if (!cuurUser) {
@@ -61,19 +59,19 @@ function Post({
       setLikeCount(likeCount == 0 ? 0 : likeCount - 1);
       try {
         await api.delete(`/delete/like/${postId}`);
-        console.log("Unliked Post");
+        // console.log("Unliked Post");
         return;
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     } else {
       setIsLiked(true);
       setLikeCount(likeCount + 1);
       try {
         await api.post(`/posts/like/${postId}`);
-        console.log("Liked Post");
+        // console.log("Liked Post");
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
   }
@@ -83,9 +81,9 @@ function Post({
       try {
         const { data } = await api.get(`/isLiked/${postId}`);
         setIsLiked(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     isPostLiked();
@@ -96,9 +94,9 @@ function Post({
       try {
         const { data } = await api.get(`/isSaved/${postId}`);
         setIsSaved(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     isPostSaved();
@@ -119,18 +117,18 @@ function Post({
       setSaveCount(saveCount == 0 ? 0 : saveCount - 1);
       try {
         await api.delete(`/delete/save/${postId}`);
-        console.log("Removed Saved Post");
+        // console.log("Removed Saved Post");
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     } else {
       setIsSaved(true);
       setSaveCount(saveCount + 1);
       try {
         await api.put(`/posts/save/${postId}`);
-        console.log("Saved Post");
+        // console.log("Saved Post");
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     // }
@@ -142,7 +140,7 @@ function Post({
       navigate("/");
       toast.success("Post deleted successfully");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 

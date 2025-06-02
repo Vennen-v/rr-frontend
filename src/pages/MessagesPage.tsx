@@ -27,7 +27,7 @@ function MessagesPage() {
 
   useSiteTitle("Messaging | The Rogue Road");
 
-  console.log(location.pathname);
+  // console.log(location.pathname);
 
   useEffect(() => {
     if (!currUser) {
@@ -41,9 +41,9 @@ function MessagesPage() {
       try {
         const { data } = await api.get(`/users/search?keyword=${keyword}`);
         setUserPages(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       } finally {
         setIsLoading(false);
       }
@@ -59,9 +59,9 @@ function MessagesPage() {
       try {
         const { data } = await api.get(`/user/following`);
         setSuggestions(data.reverse());
-        console.log(data);
+        // console.log(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     getFollowing();
@@ -72,9 +72,9 @@ function MessagesPage() {
       try {
         const { data } = await api.get(`/conversations`);
         setConversations(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     getConversations();
@@ -85,7 +85,7 @@ function MessagesPage() {
       `/topic/users/${currUser?.id}/conversations`,
       (message) => {
         const conversation = JSON.parse(message.body);
-        console.log(conversation);
+        // console.log(conversation);
 
         setConversations((prev) => {
           const index = prev.findIndex(

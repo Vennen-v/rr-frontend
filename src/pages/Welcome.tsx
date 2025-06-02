@@ -47,22 +47,22 @@ function Welcome() {
       });
       toast.success("Welcome to the Rogue Road!");
 
-      console.log(statusText);
+      // console.log(statusText);
       try {
         const { data } = await api.post(`/auth/signin`, {
           username: userName,
           password: password,
         });
-        console.log(data);
+        // console.log(data);
 
         navigate("/");
       } catch (error) {
         setError("username", { message: "error of some kind" });
         toast.error(`${error}`);
       }
-      console.log("i tried it");
+      // console.log("i tried it");
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       toast.error(`${e}`);
     }
   }
@@ -95,7 +95,7 @@ function Welcome() {
   const onSignInSubmit: SubmitHandler<FormFields> = async (formData) => {
     try {
       const { data } = await api.post(`/auth/signin`, formData);
-      console.log(data);
+      // console.log(data);
 
       navigate("/");
     } catch (error) {
@@ -122,7 +122,7 @@ function Welcome() {
   // const onSignUpSubmit: SubmitHandler<FormFieldz> = async (formData) => {
   //   try {
   //     const { data } = await api.post(`/auth/signup`, formData);
-  //     console.log(data);
+  // console.log(data);
   //     navigate("/");
   //   } catch (error) {
   //     setError("username", { message: "error of some kind" });

@@ -7,7 +7,7 @@ import { currentUser } from "../store/atoms";
 import { useAtom } from "jotai";
 import { Posts, PostsPages } from "../types/types";
 import useSiteTitle from "../utils/title";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Plus } from "lucide-react";
 
 function Home() {
@@ -16,6 +16,7 @@ function Home() {
   // const [postPages, setPostsPages] = useState<PostsPages>();
   const [followPosts, setFollowPosts] = useState<Posts[] | undefined>();
   const { ref, inView } = useInView();
+  const location = useLocation();
 
   useSiteTitle("Home | The Rogue Road");
 
@@ -24,13 +25,13 @@ function Home() {
       try {
         const { data } = await api.get(`/user`);
         setCurrentUser(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     getCurrentUserInfo();
-    console.log(followPosts);
+    // console.log(followPosts);
   }, []);
 
   async function getAllPostsQuery({
@@ -41,16 +42,18 @@ function Home() {
     const { data } = await api.get(
       `/posts?pageNumber=${pageParam}&pageSize=10`
     );
-    console.log(data);
+    // console.log(data);
     return data;
   }
 
-  const { data, error, status, fetchNextPage, isFetchingNextPage } =
+  const { data, error, status, fetchNextPage, isFetchingNextPage, refetch } =
     useInfiniteQuery({
       queryKey: ["posts"],
       queryFn: getAllPostsQuery,
       initialPageParam: 0,
       getNextPageParam: (lastPage) => lastPage.pageNumber + 1,
+      staleTime: 0,
+      refetchOnMount: true,
     });
 
   useEffect(() => {
@@ -59,7 +62,11 @@ function Home() {
     fetchNextPage();
   }, [inView, fetchNextPage]);
 
-  console.log(data);
+  useEffect(() => {
+    refetch();
+  }, [location.pathname]);
+
+  // console.log(data);
   // const content = data?.pages.map((posts) =>
   //   posts.content.map((p) => (
   //     <Post
@@ -85,9 +92,9 @@ function Home() {
   //     try {
   //       const { data } = await api.get(`/posts`);
   //       setPostsPages(data);
-  //       console.log(data);
+  // console.log(data);
   //     } catch (error) {
-  //       console.log(error);
+  // console.log(error);
   //     }
   //   }
   //   getAllPosts();
@@ -97,7 +104,7 @@ function Home() {
     async function getFollowing() {
       try {
         const { data } = await api.get(`/user/following`);
-        console.log(data);
+        // console.log(data);
 
         const stuffs = [];
         const newStuffs: Posts[] = [];
@@ -105,7 +112,7 @@ function Home() {
         for (const thing of data) {
           stuffs.push(thing?.userPosts);
         }
-        console.log(stuffs);
+        // console.log(stuffs);
 
         stuffs.forEach((e) => {
           for (let i = 0; i < e.length; i++) {
@@ -113,15 +120,16 @@ function Home() {
           }
         });
 
-        console.log(newStuffs);
+        // console.log(newStuffs);
 
         const sortedStuffs = [...newStuffs].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
-        console.log(sortedStuffs);
+        // console.log(sortedStuffs);
         setFollowPosts(sortedStuffs);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        toast.error(`${error}`);
       }
     }
     getFollowing();
@@ -130,7 +138,7 @@ function Home() {
   function handleTabChange(tabId: string) {
     setActiveTab(tabId);
   }
-  console.log(followPosts);
+  // console.log(followPosts);
 
   return (
     <div className="h-screen overflow-y-auto w-full flex-1 text-[#eeeeee] bg-[#141414] relative">

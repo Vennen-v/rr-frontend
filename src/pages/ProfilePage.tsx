@@ -30,9 +30,9 @@ function ProfilePage() {
     try {
       const { data } = await api.get(`/user/${userName}`);
       setUser(data);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       navigate("*");
     }
   }
@@ -42,9 +42,9 @@ function ProfilePage() {
       try {
         const { data } = await api.get(`/isfollowing/${userName}`);
         setIsFollowing(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     isFollowingUser();
@@ -55,9 +55,9 @@ function ProfilePage() {
       try {
         const { data } = await api.get(`/posts/user/${user?.id}`);
         setPostsPages(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     fetchUserPosts();
@@ -72,19 +72,19 @@ function ProfilePage() {
       );
       try {
         await api.post(`/user/unfollow/${user?.id}`);
-        console.log("Unfollowed User");
+        // console.log("Unfollowed User");
         return;
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     } else {
       setIsFollowing(true);
       setFollowCount(user?.followers.length + 1);
       try {
         await api.post(`/user/follow/${user?.id}`);
-        console.log("Followed User");
+        // console.log("Followed User");
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
   }

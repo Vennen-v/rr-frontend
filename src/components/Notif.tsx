@@ -25,18 +25,18 @@ function Notif({
     try {
       const { data } = await api.get(`/user/${actor}`);
       setUser(data);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
   async function markNotifAsRead(notificationId: number) {
-    console.log("read notif");
+    // console.log("read notif");
     try {
       await api.put(`/user/notifs/${notificationId}`);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
   return (

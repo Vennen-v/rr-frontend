@@ -8,8 +8,11 @@ import toast from "react-hot-toast";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
 import useSiteTitle from "../utils/title";
+import { QueryClient } from "@tanstack/react-query";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
+
+const queryClient = new QueryClient();
 
 function CreatePostPage() {
   const user = useAtomValue(currentUser);
@@ -32,7 +35,7 @@ function CreatePostPage() {
     if (e.target.files) {
       setFile(e.target.files[0]);
     }
-    console.log(file?.name);
+    // console.log(file?.name);
   }
 
   useEffect(() => {
@@ -78,7 +81,7 @@ function CreatePostPage() {
         },
       });
 
-      console.log("i tried it");
+      // console.log("i tried it");
       toast.success("Your post has been published!");
       navigate("/");
       setStatus("success");

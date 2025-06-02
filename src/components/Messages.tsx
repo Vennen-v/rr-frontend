@@ -24,7 +24,7 @@ function Messages({
   useEffect(() => {
     if (!read && currUser?.id == receiver.id.toString()) {
       readMessages();
-      console.log(read);
+      // console.log(read);
     }
   }, [messageId, read, receiver.id, currUser?.id]);
 
@@ -32,7 +32,7 @@ function Messages({
     try {
       await api.put(`/conversations/messages/${messageId}`);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 

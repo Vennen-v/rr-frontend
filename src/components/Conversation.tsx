@@ -30,7 +30,7 @@ function Conversation({
     (message: ConvoMessage) =>
       message?.receiver.id.toString() == currUser?.id && !message.read
   ).length;
-  console.log(nonReadMessages);
+  // console.log(nonReadMessages);
 
   useEffect(() => {
     const subscription = ws?.subscribe(

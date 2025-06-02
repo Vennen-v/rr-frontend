@@ -43,19 +43,19 @@ function PostPage() {
       setLikeCount(post?.likes - 1);
       try {
         await api.delete(`/delete/like/${post?.postId}`);
-        console.log("Unliked Post");
+        // console.log("Unliked Post");
         return;
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     } else {
       setIsLiked(true);
       setLikeCount(post?.likes + 1);
       try {
         await api.post(`/posts/like/${post?.postId}`);
-        console.log("Liked Post");
+        // console.log("Liked Post");
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
   }
@@ -65,9 +65,9 @@ function PostPage() {
       try {
         const { data } = await api.get(`/isLiked/${post.postId}`);
         setIsLiked(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     isPostLiked();
@@ -78,9 +78,9 @@ function PostPage() {
       try {
         const { data } = await api.get(`/isSaved/${post.postId}`);
         setIsSaved(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     isPostSaved();
@@ -101,18 +101,18 @@ function PostPage() {
       setSaveCount(post?.saves - 1);
       try {
         await api.delete(`/delete/save/${post.postId}`);
-        console.log("Removed Saved Post");
+        // console.log("Removed Saved Post");
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     } else {
       setIsSaved(true);
       setSaveCount(post?.saves + 1);
       try {
         await api.put(`/posts/save/${post?.postId}`);
-        console.log("Saved Post");
+        // console.log("Saved Post");
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     // }
@@ -126,9 +126,9 @@ function PostPage() {
     try {
       const { data } = await api.get(`/posts/${id}`);
       setPost(data);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       naviagate("*");
     }
   }
@@ -139,7 +139,7 @@ function PostPage() {
       naviagate("/");
       toast.success("Post deleted successfully");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -159,13 +159,10 @@ function PostPage() {
 
     try {
       await api.post(`/comments/posts/${id}`, { content: content });
-      console.log("i tried it");
-      window.location.reload();
-      // commentRef.current?.scrollIntoView();
+      fetchPostInfo();
       toast.success("Comment pubished successfully");
     } catch (error) {
       toast.error(`${error}`);
-      console.log(error);
     }
   }
 

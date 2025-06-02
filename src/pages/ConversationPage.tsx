@@ -22,7 +22,7 @@ function ConversationPage() {
   );
   const [content, setContent] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  console.log(newConvo);
+  // console.log(newConvo);
 
   useEffect(() => {
     if (id == "new" && newConvo == null) {
@@ -30,7 +30,7 @@ function ConversationPage() {
     }
   }, [id]);
 
-  console.log(typeof id);
+  // console.log(typeof id);
 
   useEffect(() => {
     if (id == "new") {
@@ -38,9 +38,9 @@ function ConversationPage() {
         try {
           const { data } = await api.get(`/user/${newConvo}`);
           setNewConversationUser(data);
-          console.log(data);
+          // console.log(data);
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       }
       fetchUserInfo();
@@ -49,10 +49,10 @@ function ConversationPage() {
         try {
           const { data } = await api.get(`/conversations/${id}`);
           setConversation(data);
-          console.log(data);
-          console.log(data.messages);
+          // console.log(data);
+          // console.log(data.messages);
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       }
       getConversation();
@@ -64,7 +64,7 @@ function ConversationPage() {
       `/topic/conversations/${conversation?.conversationId}/messages`,
       (data) => {
         const message = JSON.parse(data.body);
-        console.log(message);
+        // console.log(message);
         setConversation((prev) => {
           if (!prev) return null;
           const index = prev.messages.findIndex(
@@ -91,6 +91,10 @@ function ConversationPage() {
 
   async function createConversation(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!currUser?.emailVerified) {
+      toast.error("Your email must be verified to send any message");
+      return;
+    }
     try {
       setIsLoading(true);
       await api.post(`/conversations`, {
@@ -100,7 +104,7 @@ function ConversationPage() {
       (conversation: ConversationType) =>
         navigate(`/messages/conversations/${conversation?.conversationId}`);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -108,6 +112,11 @@ function ConversationPage() {
 
   async function sendMessage(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (!currUser?.emailVerified) {
+      toast.error("Your email must be verified to send any message");
+      return;
+    }
     try {
       setIsLoading(true);
       await api.post(`/conversations/${id}/messages`, {
@@ -118,7 +127,7 @@ function ConversationPage() {
             : conversation?.recipient.id,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -126,11 +135,6 @@ function ConversationPage() {
 
   async function handleSendingMessage(e: FormEvent<HTMLFormElement>) {
     if (!content) {
-      return;
-    }
-
-    if (!currUser?.emailVerified) {
-      toast.error("Your email must be verified to send any message");
       return;
     }
 
