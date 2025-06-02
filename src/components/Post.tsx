@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
 import { Comments } from "../types/types";
+import { format } from "date-fns-tz";
 
 interface PostsProps {
   postId: number;
@@ -23,6 +24,11 @@ interface PostsProps {
   createdAt: number;
   innerRef?: React.Ref<HTMLParagraphElement>;
 }
+
+const date = new Date();
+const formattedDate = format(date, "yyyy-MM-dd HH:mm:ss", {
+  timeZone: "America/Chicago",
+});
 
 function Post({
   postId,
@@ -171,7 +177,7 @@ function Post({
           <div className="flex flex-col gap-4 flex-1">
             <div className="text-base font-extralight md:text-lg">{title}</div>
             <div className="text-sm text-[#a8a8a8]">
-              {formatDistance(createdAt, new Date(), {
+              {formatDistance(createdAt, formattedDate, {
                 addSuffix: true,
               })}
             </div>
