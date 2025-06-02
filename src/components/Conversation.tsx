@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
 import { useWebSocket } from "../ws/Ws";
-import { formatDistance, parse, parseISO } from "date-fns";
+import { formatDistance, parseISO } from "date-fns";
 import { format } from "date-fns-tz";
 
 const date = new Date();

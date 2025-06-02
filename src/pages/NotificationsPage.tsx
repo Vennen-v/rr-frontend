@@ -54,7 +54,7 @@ function NotificationsPage() {
             ))
           ) : (
             <div className="mx-auto w-92 h-60 sm:w-80 md:w-135 md:h-60 text-center mt-30">
-              No Notification
+              No Notifications
             </div>
           )}
         </div>
