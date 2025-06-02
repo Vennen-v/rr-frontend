@@ -66,6 +66,11 @@
   font-size: 1.5rem;
 }
 
+#heightAdjust {
+  height: 100vh;
+  height: -webkit-fill-available;
+}
+
 :root {
   /* line-height: 1.5;
   font-weight: 400;  */
@@ -76,6 +81,9 @@
   color: rgba(255, 255, 255, 0.87);
   /* background-color: rgb(20, 20, 20); */
 
+  height: 100vh;
+  height: -webkit-fill-available;
+
   /* rgb(236, 240, 245)
   bg-[rgb(85,85,85)] 
    rgb(168, 166, 163)
@@ -85,4 +93,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;  */
+}
+
+html {
+  height: -webkit-fill-available;
 }

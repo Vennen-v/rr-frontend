@@ -4,6 +4,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import { vh } from "./utils/view";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "./pages/Home";
@@ -28,7 +29,10 @@ const queryClient = new QueryClient();
 function Layout({ children }: any) {
   return (
     <WebSocketContextProvider>
-      <div className="flex flex-col md:flex-row lg:flex-row h-screen w-full ">
+      <div
+        id="heightAdjust"
+        className={`flex flex-col md:flex-row lg:flex-row w-full `}
+      >
         <Sidebar />
         {children}
         <MobileNavBar />
