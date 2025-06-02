@@ -208,6 +208,16 @@ function MobileNavBar() {
             </li>
           </>
         )}
+        {!user && (
+          <li>
+            <button
+              onClick={() => navigate("/welcome")}
+              className="bg-[#8956FB] duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer "
+            >
+              Sign In
+            </button>
+          </li>
+        )}
       </div>
     </ul>
   );
