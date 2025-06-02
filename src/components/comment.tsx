@@ -1,15 +1,7 @@
 import { Link } from "react-router-dom";
 import { Comments } from "../types/types";
 import { useRef } from "react";
-function Comment({
-  commentId,
-  content,
-  userName,
-  displayName,
-  profilePic,
-  replies,
-  likes,
-}: Comments) {
+function Comment({ content, userName, displayName, profilePic }: Comments) {
   const commentRef = useRef<HTMLDivElement>(null);
 
   return (

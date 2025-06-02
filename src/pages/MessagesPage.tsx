@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { SquarePen } from "lucide-react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import useSiteTitle from "../utils/title";
@@ -21,7 +23,7 @@ function MessagesPage() {
   const [keyword, setKeyword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userPages, setUserPages] = useState<UserPages>();
-  const [newConvo, setNewConvo] = useAtom(newConvoUser);
+  const [, setNewConvo] = useAtom(newConvoUser);
   const location = useLocation();
   const navigate = useNavigate();
 

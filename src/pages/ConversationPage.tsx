@@ -21,7 +21,7 @@ function ConversationPage() {
     null
   );
   const [content, setContent] = useState<string>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [, setIsLoading] = useState<boolean>(false);
   // console.log(newConvo);
 
   useEffect(() => {
@@ -122,7 +122,7 @@ function ConversationPage() {
       await api.post(`/conversations/${id}/messages`, {
         content: content,
         receiverId:
-          conversation?.recipient.id == currUser?.id
+          conversation?.recipient.id.toString() == currUser?.id
             ? conversation?.author.id
             : conversation?.recipient.id,
       });
@@ -155,7 +155,10 @@ function ConversationPage() {
       className={` flex flex-col flex-1 w-full max-h-full min-h-50 mx-auto bg-[#141414] relative overflow-y-clip`}
     >
       <div className="flex gap-5 lg:block h-15 border-b  border-b-gray-500 w-full text-xl text-[#eeeeee] font-bold p-5 ">
-        <button onClick={() => navigate("/messages")}>
+        <button
+          className="lg:hidden block"
+          onClick={() => navigate("/messages")}
+        >
           <ArrowLeft />
         </button>
         {id == "new" && newConversationUser?.displayName}

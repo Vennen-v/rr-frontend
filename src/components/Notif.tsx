@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Notification, User } from "../types/types";
 import { formatDistance } from "date-fns";
 import api from "../api/api";
@@ -6,13 +6,12 @@ import { useEffect, useState } from "react";
 
 function Notif({
   notificationId,
-  recipient,
+
   actor,
   createdAt,
   type,
   resourceId,
   resourceString,
-  read,
 }: Notification) {
   const [user, setUser] = useState<User | undefined>();
   const navigate = useNavigate();

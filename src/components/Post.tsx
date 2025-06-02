@@ -7,6 +7,7 @@ import { formatDistance } from "date-fns";
 import toast from "react-hot-toast";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
+import { Comments } from "../types/types";
 
 interface PostsProps {
   postId: number;
@@ -14,12 +15,12 @@ interface PostsProps {
   content: string;
   userName: string;
   saves: number;
-  comments: Comment;
+  comments: Comments[];
   likes: number;
   profilePic: string;
   postImg: string;
   displayName: string;
-  createdAt: string;
+  createdAt: number;
   innerRef?: React.Ref<HTMLParagraphElement>;
 }
 

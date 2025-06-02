@@ -40,6 +40,9 @@ function PostPage() {
 
     if (isLiked == true) {
       setIsLiked(false);
+      if (post?.likes === undefined) {
+        return;
+      }
       setLikeCount(post?.likes - 1);
       try {
         await api.delete(`/delete/like/${post?.postId}`);
@@ -50,6 +53,9 @@ function PostPage() {
       }
     } else {
       setIsLiked(true);
+      if (post?.likes === undefined) {
+        return;
+      }
       setLikeCount(post?.likes + 1);
       try {
         await api.post(`/posts/like/${post?.postId}`);
@@ -63,7 +69,7 @@ function PostPage() {
   useEffect(() => {
     async function isPostLiked() {
       try {
-        const { data } = await api.get(`/isLiked/${post.postId}`);
+        const { data } = await api.get(`/isLiked/${post?.postId}`);
         setIsLiked(data);
         // console.log(data);
       } catch (error) {
@@ -76,7 +82,7 @@ function PostPage() {
   useEffect(() => {
     async function isPostSaved() {
       try {
-        const { data } = await api.get(`/isSaved/${post.postId}`);
+        const { data } = await api.get(`/isSaved/${post?.postId}`);
         setIsSaved(data);
         // console.log(data);
       } catch (error) {
@@ -98,6 +104,9 @@ function PostPage() {
     }
     if (isSaved == true) {
       setIsSaved(false);
+      if (post?.saves === undefined) {
+        return;
+      }
       setSaveCount(post?.saves - 1);
       try {
         await api.delete(`/delete/save/${post.postId}`);
@@ -107,6 +116,9 @@ function PostPage() {
       }
     } else {
       setIsSaved(true);
+      if (post?.saves === undefined) {
+        return;
+      }
       setSaveCount(post?.saves + 1);
       try {
         await api.put(`/posts/save/${post?.postId}`);
@@ -208,7 +220,7 @@ function PostPage() {
                 {/* Still NEED DATES */}
 
                 <div className="text-xs text-[#a8a8a8]">
-                  {post?.createdAt.slice(0, 10)}
+                  {post?.createdAt.toString().slice(0, 10)}
                 </div>
               </div>
             </div>
@@ -269,7 +281,9 @@ function PostPage() {
                 className="flex gap-1 items-center text-[#a8a8a8] hover:cursor-pointer p-1 rounded-md hover:bg-[#383838]"
               >
                 <Heart size={25} fill={isLiked ? "#CC3D5C" : "none"} />{" "}
-                <span className="text-sm md:text-base">{post?.likes}</span>
+                <span className="text-sm md:text-base">
+                  {likeCount ?? post?.likes}
+                </span>
               </button>
               <button className="flex gap-1 items-center text-[#a8a8a8] hover:cursor-pointer p-1 rounded-md hover:bg-[#383838]">
                 <MessageSquare size={25} />{" "}
@@ -282,7 +296,9 @@ function PostPage() {
                 className="flex gap-1 items-center text-[#a8a8a8] hover:cursor-pointer p-1 rounded-md hover:bg-[#383838]"
               >
                 <Bookmark size={25} fill={isSaved ? "#a8a8a8" : "none"} />{" "}
-                <span className="text-sm md:text-base">{post?.saves}</span>
+                <span className="text-sm md:text-base">
+                  {saveCount ?? post?.saves}
+                </span>
               </button>
             </div>
             <div className="dropdown dropdown-top dropdown-end">

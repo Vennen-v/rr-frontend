@@ -123,13 +123,13 @@ function Home() {
         // console.log(newStuffs);
 
         const sortedStuffs = [...newStuffs].sort(
+          // @ts-ignore
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
         // console.log(sortedStuffs);
         setFollowPosts(sortedStuffs);
       } catch (error) {
         // console.log(error);
-        toast.error(`${error}`);
       }
     }
     getFollowing();

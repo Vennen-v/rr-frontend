@@ -26,12 +26,12 @@ export type Posts = {
   content: string;
   userName: string;
   saves: number;
-  comments: Comment;
+  comments: Comments[];
   likes: number;
   profilePic: string;
   postImg: string;
   displayName: string;
-  createdAt: string;
+  createdAt: number;
 };
 
 export type PostsPages = {

@@ -21,7 +21,7 @@ function MobileNavBar() {
 
   async function signOut() {
     try {
-      const { data } = await api.post(`/auth/signout`);
+      await api.post(`/auth/signout`);
       localStorage.removeItem("rrid");
       navigate("/welcome");
       toast.success("You have logged out");

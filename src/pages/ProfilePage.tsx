@@ -67,6 +67,10 @@ function ProfilePage() {
     e.preventDefault();
     if (isFollowing == true) {
       setIsFollowing(false);
+
+      if (user?.followers.length === undefined) {
+        return;
+      }
       setFollowCount(
         user?.followers.length == 0 ? 0 : user?.followers.length - 1
       );
@@ -79,6 +83,9 @@ function ProfilePage() {
       }
     } else {
       setIsFollowing(true);
+      if (user?.followers.length === undefined) {
+        return;
+      }
       setFollowCount(user?.followers.length + 1);
       try {
         await api.post(`/user/follow/${user?.id}`);

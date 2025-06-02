@@ -39,7 +39,7 @@ function Welcome() {
     if (!userName || !displayName || !password || !email) return;
 
     try {
-      const { statusText } = await api.post(`/auth/signup`, {
+      await api.post(`/auth/signup`, {
         username: userName,
         displayName: displayName,
         email: email,
@@ -49,7 +49,7 @@ function Welcome() {
 
       // console.log(statusText);
       try {
-        const { data } = await api.post(`/auth/signin`, {
+        await api.post(`/auth/signin`, {
           username: userName,
           password: password,
         });
@@ -94,7 +94,7 @@ function Welcome() {
 
   const onSignInSubmit: SubmitHandler<FormFields> = async (formData) => {
     try {
-      const { data } = await api.post(`/auth/signin`, formData);
+      await api.post(`/auth/signin`, formData);
       // console.log(data);
 
       navigate("/");

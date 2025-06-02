@@ -6,10 +6,6 @@ import { currentUser } from "../store/atoms";
 import { useWebSocket } from "../ws/Ws";
 import { formatDistance } from "date-fns";
 
-interface ConversationItemProps {
-  conversation: ConversationType;
-}
-
 function Conversation({
   conversationId,
   author,
@@ -17,8 +13,7 @@ function Conversation({
   messages,
   conversationc,
 }: ConversationType | any) {
-  const [conversation, setConversation] =
-    useState<ConversationType>(conversationc);
+  const [, setConversation] = useState<ConversationType>(conversationc);
   const currUser = useAtomValue(currentUser);
   const ws = useWebSocket();
   const navigate = useNavigate();

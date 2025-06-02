@@ -8,11 +8,6 @@ import toast from "react-hot-toast";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
 import useSiteTitle from "../utils/title";
-import { QueryClient } from "@tanstack/react-query";
-
-type UploadStatus = "idle" | "uploading" | "success" | "error";
-
-const queryClient = new QueryClient();
 
 function CreatePostPage() {
   const user = useAtomValue(currentUser);
@@ -20,7 +15,6 @@ function CreatePostPage() {
   const [content, setContent] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState<string>("");
-  const [status, setStatus] = useState<UploadStatus>("idle");
 
   useSiteTitle("Create New Post | The Rogue Road");
 
@@ -44,7 +38,7 @@ function CreatePostPage() {
     }
   }, []);
 
-  async function handlePostUpload(e: any) {
+  async function handlePostUpload() {
     // if (!file || !title || !content) {
     //   toast.error("All fields are required");
     //   return;
@@ -84,10 +78,7 @@ function CreatePostPage() {
       // console.log("i tried it");
       toast.success("Your post has been published!");
       navigate("/");
-      setStatus("success");
-    } catch (error) {
-      setStatus("error");
-    }
+    } catch (error) {}
   }
 
   const modules = {

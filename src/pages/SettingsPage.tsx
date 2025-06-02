@@ -5,7 +5,6 @@ import api from "../api/api";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useForm } from "@tanstack/react-form";
-import { z } from "zod/v4";
 import useSiteTitle from "../utils/title";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
@@ -34,19 +33,19 @@ function SettingsPage() {
     bio: string;
   }
 
-  const updateSchema = z.object({
-    displayName: z
-      .string()
-      .min(1, "Display Name is required")
-      .max(20, "Display Name cannot be more than 20 characters"),
-    username: z
-      .string()
-      .min(1, "Username is required")
-      .max(20, "Username cannot be more than 20 characters"),
-    email: z.email(),
-    // .max(50, "Email cannot be more than 20 characters"),
-    bio: z.string().max(120, "Bio cannot be more than 250 characters"),
-  });
+  // const updateSchema = z.object({
+  //   displayName: z
+  //     .string()
+  //     .min(1, "Display Name is required")
+  //     .max(20, "Display Name cannot be more than 20 characters"),
+  //   username: z
+  //     .string()
+  //     .min(1, "Username is required")
+  //     .max(20, "Username cannot be more than 20 characters"),
+  //   email: z.email(),
+  //   // .max(50, "Email cannot be more than 20 characters"),
+  //   bio: z.string().max(120, "Bio cannot be more than 250 characters"),
+  // });
 
   // type UpdateInfo = z.infer<typeof updateSchema>;
 
@@ -83,7 +82,7 @@ function SettingsPage() {
 
   async function signOut() {
     try {
-      const { data } = await api.post(`/auth/signout`);
+      await api.post(`/auth/signout`);
       localStorage.removeItem("rrid");
       navigate("/welcome");
       toast.success("You have been logged out");
@@ -111,7 +110,7 @@ function SettingsPage() {
     // console.log(file?.name);
   }
 
-  async function handleFileUpload(e: any) {
+  async function handleFileUpload() {
     if (!file) {
       toast.error("A picture is required to update");
       return;
