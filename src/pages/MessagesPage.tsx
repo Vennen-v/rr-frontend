@@ -223,6 +223,10 @@ function MessagesPage() {
                   conversationc={c}
                 />
               ))}
+            {!conversations ||
+              (conversations.length == 0 && (
+                <div className="m-auto">No Messages yet</div>
+              ))}
             {activeTab == "tab 2" && (
               <div
                 className={`${
