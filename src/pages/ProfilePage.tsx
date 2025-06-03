@@ -13,7 +13,7 @@ function ProfilePage() {
   const [activeTab, setActiveTab] = useState<string>("tab 1");
   const [user, setUser] = useState<CurrentUser | undefined>();
   const [postPages, setPostsPages] = useState<PostsPages>();
-  const [followCount, setFollowCount] = useState<number | undefined>(
+  const [, setFollowCount] = useState<number | undefined>(
     user?.followers.length
   );
   const [isFollowing, setIsFollowing] = useState<boolean>();
@@ -143,7 +143,7 @@ function ProfilePage() {
                     </div>
                     <div className=" flex gap-2  text-[#a8a8a8]">
                       <span className="text-sm md:text-base">
-                        {followCount || user?.followers.length} Followers
+                        {user?.followers.length} Followers
                       </span>
                       <span className="text-sm md:text-base">•</span>
                       <span className="text-sm md:text-base">
