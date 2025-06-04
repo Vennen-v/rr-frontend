@@ -6,7 +6,14 @@ import api from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
-import { ArrowLeft, AtSignIcon, LockKeyhole, Mail, User } from "lucide-react";
+import {
+  ArrowLeft,
+  AtSignIcon,
+  Eye,
+  LockKeyhole,
+  Mail,
+  User,
+} from "lucide-react";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import useSiteTitle from "../utils/title";
@@ -20,6 +27,7 @@ type FormFields = z.infer<typeof schema>;
 
 function Welcome() {
   const [activeTab, setActiveTab] = useState<string>("tab 1");
+  const [type, setType] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>("");
   const [displayName, setDisplayname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -32,6 +40,11 @@ function Welcome() {
 
   function handleTabChange(tabId: string) {
     setActiveTab(tabId);
+  }
+
+  function handlPassEye(e: any) {
+    e.preventDefault();
+    setType(!type);
   }
 
   async function handleSignUp(e: any) {
@@ -184,10 +197,13 @@ function Welcome() {
                 <LockKeyhole size={21} className="m-2 text-[#686868]" />
                 <input
                   {...register("password")}
-                  type="password"
+                  type={type == false ? "password" : "text"}
                   placeholder="Password"
                   className="w-full m-0 p-3 rounded-lg focus:outline-1 focus:outline-white"
                 />
+                <button onClick={handlPassEye}>
+                  <Eye className="hover:cursor-pointer mr-2" />
+                </button>
               </div>
               {/* {errors.password && (
                 <div className="text-red-500">{errors.password.message}</div>
@@ -272,10 +288,13 @@ function Welcome() {
                 <input
                   value={password}
                   onChange={handlePassChange}
-                  type="password"
+                  type={type == false ? "password" : "text"}
                   placeholder="Password"
                   className="w-full m-0 p-3 rounded-lg focus:outline-1 focus:outline-white"
                 />
+                <button onClick={handlPassEye}>
+                  <Eye className="hover:cursor-pointer mr-2" />
+                </button>
               </div>
               {/* {errors.password && (
                 <div className="text-red-500">{errors.password.message}</div>
