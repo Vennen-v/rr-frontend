@@ -26,6 +26,7 @@ interface PostsProps {
 }
 
 const date = new Date();
+date.setHours(date.getHours() + 5);
 const formattedDate = format(date, "yyyy-MM-dd HH:mm:ss", {
   timeZone: "America/Chicago",
 });
