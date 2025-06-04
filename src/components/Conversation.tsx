@@ -4,14 +4,15 @@ import { useEffect, useState } from "react";
 import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
 import { useWebSocket } from "../ws/Ws";
-import { formatDistance, parseISO } from "date-fns";
-import { format } from "date-fns-tz";
+import { formatDistance } from "date-fns";
+// import { format } from "date-fns-tz";
 
 const date = new Date();
-const formattedDate = format(date, "yyyy-MM-dd HH:mm:ss", {
-  timeZone: "America/Chicago",
-});
-const formattedAgain = parseISO(formattedDate);
+date.setHours(date.getHours() + 5);
+// const formattedDate = format(date, "yyyy-MM-dd HH:mm:ss", {
+//   timeZone: "America/Chicago",
+// });
+// // const formattedAgain = parseISO(formattedDate);
 
 function Conversation({
   conversationId,
@@ -89,13 +90,9 @@ function Conversation({
           </span>
 
           <div className="ml-auto text-start text-xs text-[#a8a8a8]">
-            {formatDistance(
-              messages[messages.length - 1].createdAt,
-              formattedAgain,
-              {
-                addSuffix: true,
-              }
-            )}
+            {formatDistance(messages[messages.length - 1].createdAt, date, {
+              addSuffix: true,
+            })}
           </div>
         </div>
         <div className="text-sm text-start truncate mr-8 ">

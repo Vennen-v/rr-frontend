@@ -4,6 +4,9 @@ import { formatDistance } from "date-fns";
 import api from "../api/api";
 import { useEffect, useState } from "react";
 
+const date = new Date();
+date.setHours(date.getHours() + 5);
+
 function Notif({
   notificationId,
 
@@ -67,7 +70,7 @@ function Notif({
           )}
         </div>
         <div className="text-start text-xs text-[#a8a8a8]">
-          {formatDistance(createdAt, new Date(), {
+          {formatDistance(createdAt, date, {
             addSuffix: true,
           })}
         </div>

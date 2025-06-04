@@ -5,6 +5,9 @@ import { useAtomValue } from "jotai";
 import { currentUser } from "../store/atoms";
 import { formatDistance } from "date-fns";
 
+const date = new Date();
+date.setHours(date.getHours() + 5);
+
 function Messages({
   messageId,
   sender,
@@ -53,7 +56,7 @@ function Messages({
           {sender.displayName}
           <time className="text-xs opacity-50">
             {" "}
-            {formatDistance(createdAt, new Date(), {
+            {formatDistance(createdAt, date, {
               addSuffix: true,
             })}
           </time>
