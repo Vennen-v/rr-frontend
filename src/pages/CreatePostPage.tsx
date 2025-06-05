@@ -12,6 +12,7 @@ import useSiteTitle from "../utils/title";
 function CreatePostPage() {
   const user = useAtomValue(currentUser);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean | undefined>();
   const [content, setContent] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState<string>("");
@@ -68,6 +69,7 @@ function CreatePostPage() {
     formData.append("title", title);
     formData.append("content", content);
 
+    setIsLoading(true);
     try {
       await api.post(`/posts`, formData, {
         headers: {
@@ -78,7 +80,11 @@ function CreatePostPage() {
       // console.log("i tried it");
       toast.success("Your post has been published!");
       navigate("/");
-    } catch (error) {}
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const modules = {
@@ -120,9 +126,13 @@ function CreatePostPage() {
           <ArrowLeft />
         </button>
         <button
+          disabled={isLoading}
           onClick={handlePostUpload}
           className="w-20 h-10 mr-4 p-1 text-sm bg-[#8956FB] rounded-lg duration-300 ease-in-out hover:bg-[#674b9b] hover:cursor-pointer"
         >
+          {isLoading && (
+            <span className="loading loading-spinner loading-xs m-auto"></span>
+          )}{" "}
           Publish
         </button>
       </div>

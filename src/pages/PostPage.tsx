@@ -18,6 +18,7 @@ function PostPage() {
   const [likeCount, setLikeCount] = useState<number | undefined>(post?.likes);
   const [isSaved, setIsSaved] = useState<boolean | undefined>();
   const [isLoading, setIsLoading] = useState<boolean | undefined>();
+  const [isLoadingCom, setIsLoadingCom] = useState<boolean | undefined>();
   const [saveCount, setSaveCount] = useState<number | undefined>(post?.saves);
   const [content, setContent] = useState<string>("");
 
@@ -172,13 +173,15 @@ function PostPage() {
       toast.error("Your email must be verified to comment on a post");
       return;
     }
-
+    setIsLoadingCom(true);
     try {
       await api.post(`/comments/posts/${id}`, { content: content });
       fetchPostInfo();
       toast.success("Comment pubished successfully");
     } catch (error) {
       toast.error(`${error}`);
+    } finally {
+      setIsLoadingCom(false);
     }
   }
 
@@ -362,12 +365,16 @@ function PostPage() {
                       ></textarea>
                       {content && (
                         <button
+                          disabled={isLoadingCom}
                           onClick={() => {
                             cuurUser ? handleCommentUpload : naviagate("/");
                           }}
                           type="submit"
                           className="w-20 h-10 p-1 text-sm bg-[#8956FB] rounded-lg duration-300 ease-in-out ml-auto hover:bg-[#674b9b] hover:cursor-pointer"
                         >
+                          {isLoadingCom && (
+                            <span className="loading loading-spinner loading-xs m-auto"></span>
+                          )}{" "}
                           Post
                         </button>
                       )}
